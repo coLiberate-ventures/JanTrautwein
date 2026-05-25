@@ -105,22 +105,39 @@
       transition: opacity 0.4s ease;
     }
     .hero-rotator.fading { opacity: 0; }
-    .hero-rotator::after {
-      content: '';
+    .hero-rotator .rotator-word {
+      position: relative;
+      z-index: 1;
+    }
+    .rotator-underline {
       position: absolute;
-      left: 0; right: 0; bottom: 0.08em;
-      height: 3px;
-      background: var(--gold);
-      border-radius: 2px;
-      transform: scaleX(0);
+      left: -3%;
+      right: -3%;
+      bottom: -0.18em;
+      width: 106%;
+      height: 0.55em;
+      overflow: visible;
+      pointer-events: none;
+      transform: rotate(-1.2deg);
       transform-origin: left center;
     }
-    .hero-rotator.animating::after {
-      animation: drawUnderline 6s ease-out forwards;
+    .rotator-underline path {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      vector-effect: non-scaling-stroke;
+      opacity: 0.92;
     }
-    @keyframes drawUnderline {
-      0%, 33%  { transform: scaleX(0); }
-      66%, 100% { transform: scaleX(1); }
+    .hero-rotator.animating .rotator-underline path {
+      animation: drawMarker 6s ease-out forwards;
+    }
+    @keyframes drawMarker {
+      0%, 33%   { stroke-dashoffset: 1; }
+      66%, 100% { stroke-dashoffset: 0; }
     }
     .hero-subtitle { font-family: 'Lora', serif; font-size: 1.15rem; line-height: 1.65; color: var(--muted); }
     .hero-subtitle p { margin-bottom: 0.5rem; }
@@ -457,7 +474,7 @@
 <section id="hero">
   <div class="hero-grid">
     <div class="hero-text">
-      <h1 class="hero-headline">I coach the <span class="hero-rotator" id="heroRotator">founders</span> building the future we actually want to live in.</h1>
+      <h1 class="hero-headline">I coach the <span class="hero-rotator" id="heroRotator"><span class="rotator-word">founders</span><svg class="rotator-underline" viewBox="0 0 200 18" preserveAspectRatio="none" aria-hidden="true"><path d="M 4 11 C 55 5 110 14 134 9 S 180 13 196 8" pathLength="1"/></svg></span> building the future we actually want to live in.</h1>
       <div class="hero-subtitle">
         <p>The ones who will get us there aren't the ones who hustle and burn out.</p>
         <p>But the ones who build from a place of genuine aliveness and inspiration.</p>
@@ -831,6 +848,8 @@
   (function() {
     var el = document.getElementById('heroRotator');
     if (!el) return;
+    var wordEl = el.querySelector('.rotator-word');
+    if (!wordEl) return;
     var words = ['founders', 'creators', 'educators'];
     var i = 0;
 
@@ -838,7 +857,7 @@
       el.classList.remove('animating', 'fading');
       // force reflow so the animation restarts cleanly
       void el.offsetWidth;
-      el.textContent = words[i];
+      wordEl.textContent = words[i];
       el.classList.add('animating');
 
       setTimeout(function() {

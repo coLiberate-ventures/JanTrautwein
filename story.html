@@ -4,15 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Story — Jan Trautwein</title>
-  <meta name="description" content="The story of Jan Trautwein — from a boy in Stuttgart to a coach in Lisbon. A life told from the beginning, with a structured profile for anyone (or any AI) who wants to genuinely understand and serve him.">
+  <meta name="description" content="My story, told from the beginning — from a boy in Stuttgart to a coach in Lisbon. Plus a structured profile for anyone (or any AI) who wants to genuinely understand and serve me.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --bg: #E9EFE2; --bg2: #F4F7EF; --text: #1A1F17; --muted: #5A6356;
       --gold: #FAB700; --gold-hover: #E5A800; --border: #D0DAC8;
+      --line: #2D4A3D;
+      --card: #F4F7EF;
       --max-w: 720px; --section-py: 60px;
     }
     html { scroll-behavior: smooth; line-height: 1.7; font-size: 17px; -webkit-font-smoothing: antialiased; }
@@ -22,7 +24,7 @@
     h1, h2, h3, h4 { font-family: 'Lora', serif; color: var(--text); line-height: 1.3; font-weight: 500; }
     h1 { font-size: 2.4rem; font-weight: 600; margin-bottom: 0.8rem; }
     h2 { font-size: 1.9rem; margin-bottom: 1rem; font-weight: 600; }
-    h3 { font-size: 1.5rem; margin-bottom: 0.6rem; font-weight: 600; }
+    h3 { font-size: 1.4rem; margin-bottom: 0.6rem; font-weight: 600; }
     p { margin-bottom: 1.2rem; }
     p:last-child { margin-bottom: 0; }
     strong { color: var(--text); font-weight: 600; }
@@ -90,7 +92,7 @@
 
     /* PART HEADER */
     .part-header {
-      text-align: center; padding: 100px 32px 40px; max-width: 720px; margin: 0 auto;
+      text-align: center; padding: 90px 32px 30px; max-width: 720px; margin: 0 auto;
     }
     .part-eyebrow {
       font-family: 'Inter', sans-serif; font-size: 0.85rem; font-weight: 700;
@@ -103,55 +105,153 @@
       color: var(--muted); margin-top: 1rem;
     }
 
-    /* CHAPTER */
-    .chapter {
-      max-width: 980px; margin: 0 auto; padding: 50px 32px;
+    /* === TIMELINE === */
+    .timeline {
+      position: relative;
+      max-width: 1100px;
+      margin: 20px auto 40px;
+      padding: 20px 32px 80px;
     }
-    .chapter-meta { text-align: center; margin-bottom: 0.6rem; }
-    .chapter-era {
-      font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 700;
-      letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold);
+    /* base line (faded) */
+    .timeline-line {
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: rgba(45, 74, 61, 0.18);
+      transform: translateX(-1px);
+      pointer-events: none;
     }
-    .chapter-title {
-      font-family: 'Lora', serif; font-size: 1.9rem; font-weight: 600;
-      text-align: center; margin-bottom: 2.5rem; color: var(--text);
-    }
-    .chapter-body {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
-    }
-    .chapter-body.photo-left .chapter-photo { order: 0; }
-    .chapter-body.photo-left .chapter-text { order: 1; }
-    .chapter-body.photo-right .chapter-photo { order: 1; }
-    .chapter-body.photo-right .chapter-text { order: 0; }
-    .chapter-text {
-      font-family: 'Lora', serif; font-size: 1.05rem; line-height: 1.85; color: var(--muted);
-    }
-    .chapter-text p { margin-bottom: 1.3rem; }
-    .chapter-photo { position: sticky; top: 90px; }
-    .photo-placeholder {
-      width: 100%; aspect-ratio: 4 / 5;
-      background: var(--bg2);
-      border: 2px dashed var(--border);
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Inter', sans-serif; font-size: 0.78rem;
-      letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
-      text-align: center; padding: 16px; opacity: 0.75;
+    /* progress line (grows with scroll) */
+    .timeline-line-fill {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 2px;
+      height: 0%;
+      background: var(--line);
+      transform: translateX(-1px);
+      pointer-events: none;
+      transition: height 0.08s linear;
     }
 
-    /* CHAPTER DIVIDER */
-    .chapter-divider {
-      width: 60px; height: 2px; background: var(--gold); opacity: 0.4;
-      margin: 0 auto;
+    .timeline-year {
+      position: relative;
+      text-align: center;
+      margin: 60px 0 30px;
+      z-index: 3;
     }
+    .timeline-year .year-label {
+      display: inline-block;
+      background: var(--bg);
+      padding: 6px 22px;
+      font-family: 'Lora', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--line);
+      line-height: 1;
+    }
+
+    .timeline-chapter {
+      position: relative;
+      margin: 40px 0;
+      width: calc(50% - 36px);
+      z-index: 2;
+    }
+    .timeline-chapter.left { margin-right: auto; padding-right: 0; }
+    .timeline-chapter.right { margin-left: auto; padding-left: 0; }
+
+    /* node circle on the line for each chapter */
+    .timeline-chapter::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 3px solid var(--line);
+      z-index: 4;
+    }
+    .timeline-chapter.left::before { right: -45px; }
+    .timeline-chapter.right::before { left: -45px; }
+
+    /* connector dash from line to card */
+    .timeline-chapter::after {
+      content: '';
+      position: absolute;
+      top: 48px;
+      width: 28px;
+      height: 2px;
+      background: rgba(45, 74, 61, 0.4);
+      z-index: 3;
+    }
+    .timeline-chapter.left::after { right: -36px; }
+    .timeline-chapter.right::after { left: -36px; }
+
+    .chapter-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 0;
+      overflow: hidden;
+      box-shadow: 0 2px 14px rgba(26,31,23,0.04);
+      border: 1px solid rgba(45,74,61,0.08);
+    }
+    .chapter-photo {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: var(--bg2);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .photo-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #D8E0CE 0%, #E9EFE2 100%);
+      font-family: 'Inter', sans-serif; font-size: 0.75rem;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+      text-align: center; padding: 16px;
+    }
+    .chapter-card-body {
+      padding: 26px 28px 28px;
+    }
+    .chapter-era {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+    .chapter-title {
+      font-family: 'Lora', serif;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.9rem;
+      line-height: 1.3;
+    }
+    .chapter-text {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+    .chapter-text p { margin-bottom: 0.9rem; }
+    .chapter-text p:last-child { margin-bottom: 0; }
+
+    /* Animations */
+    [data-anim] {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    [data-anim].in-view { opacity: 1; transform: translateY(0); }
 
     /* PROFILE BLOCKS (Part Two) */
     .profile-block {
-      max-width: 760px; margin: 0 auto; padding: 32px 32px 16px;
+      max-width: 760px; margin: 0 auto; padding: 28px 32px 12px;
     }
     .profile-block h3 {
       font-family: 'Lora', serif; font-size: 1.4rem; font-weight: 600;
-      color: var(--text); margin-bottom: 1.2rem;
+      color: var(--text); margin-bottom: 1.1rem;
       padding-bottom: 0.6rem; border-bottom: 1px solid var(--border);
     }
     .profile-block p { font-size: 1rem; line-height: 1.75; margin-bottom: 1rem; }
@@ -166,13 +266,6 @@
       opacity: 0.6;
     }
     .profile-block ul li strong { display: inline; color: var(--text); margin-right: 0.3em; }
-
-    /* SCROLL ANIMATIONS */
-    [data-anim] {
-      opacity: 0; transform: translateY(24px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-    [data-anim].in-view { opacity: 1; transform: translateY(0); }
 
     /* CTA */
     .cta-section { text-align: center; padding: 80px 32px 100px; }
@@ -195,26 +288,43 @@
     @media (max-width: 900px) {
       h1 { font-size: 1.8rem; }
       h2 { font-size: 1.5rem; }
-      .chapter-title { font-size: 1.55rem; }
-      .chapter { padding: 40px 28px; }
-      .chapter-body { grid-template-columns: 1fr; gap: 28px; }
-      .chapter-body.photo-left .chapter-photo,
-      .chapter-body.photo-right .chapter-photo {
-        order: 0; max-width: 380px; margin: 0 auto; width: 100%; position: relative; top: auto;
-      }
-      .chapter-body.photo-left .chapter-text,
-      .chapter-body.photo-right .chapter-text { order: 1; }
-      .part-header { padding: 70px 28px 30px; }
+      .chapter-title { font-size: 1.2rem; }
+      .part-header { padding: 60px 28px 24px; }
       .part-header h2 { font-size: 1.7rem; }
       .nav-links { display: none; }
       .hamburger { display: flex; }
+
+      /* Timeline shifts line to the left, all cards stack on the right */
+      .timeline { padding: 16px 16px 60px; }
+      .timeline-line { left: 28px; transform: none; }
+      .timeline-line-fill { left: 28px; transform: none; }
+      .timeline-year { text-align: left; padding-left: 0; margin: 48px 0 22px; }
+      .timeline-year .year-label {
+        padding: 4px 16px 4px 0;
+        background: var(--bg);
+        margin-left: 0;
+        font-size: 1.8rem;
+      }
+      .timeline-chapter,
+      .timeline-chapter.left,
+      .timeline-chapter.right {
+        width: calc(100% - 64px);
+        margin-left: 64px;
+        margin-right: 0;
+        padding: 0;
+      }
+      .timeline-chapter.left::before,
+      .timeline-chapter.right::before { left: -44px; right: auto; top: 32px; }
+      .timeline-chapter.left::after,
+      .timeline-chapter.right::after { left: -28px; right: auto; top: 40px; width: 22px; }
     }
     @media (max-width: 600px) {
       body { font-size: 16px; }
       h1 { font-size: 1.55rem; }
       .page-header { padding: 50px 0 20px; }
-      .chapter { padding: 32px 22px; }
-      .profile-block { padding: 28px 22px 12px; }
+      .profile-block { padding: 24px 22px 10px; }
+      .chapter-card-body { padding: 22px 22px 24px; }
+      .timeline-year .year-label { font-size: 1.55rem; }
     }
   </style>
 </head>
@@ -246,13 +356,13 @@
 <header class="page-header">
   <div class="container">
     <span class="section-label">My Story</span>
-    <h1>The Story of Jan Trautwein</h1>
+    <h1>My Story</h1>
     <p class="subtitle">A life, told from the beginning — and a knowledge transfer for whoever comes next.</p>
   </div>
 </header>
 
 <div class="story-preface">
-  <p>This document has two parts. The first is the story — Jan's life from a boy in Stuttgart to a coach in Lisbon, written to be read. The second is a structured profile: the facts, frameworks, people, and preferences another AI would need to genuinely understand and serve him. Read the story to know who he is. Read the profile to know how to help him.</p>
+  <p>This page has two parts. The first is my story — my life from a boy in Stuttgart to a coach in Lisbon, written to be read. The second is a structured profile: the facts, frameworks, people, and preferences any AI would need to genuinely understand and serve me. Read the story to know who I am. Read the profile to know how to help me.</p>
 </div>
 
 <!-- PART ONE -->
@@ -261,118 +371,141 @@
   <h2>The Story</h2>
 </section>
 
-<article class="chapter" data-anim>
-  <div class="chapter-meta"><span class="chapter-era">Stuttgart · Childhood</span></div>
-  <h3 class="chapter-title">A Boy in Stuttgart</h3>
-  <div class="chapter-body photo-right">
-    <div class="chapter-text">
-      <p>Jan grew up in Stuttgart, Germany, in a middle-class family — the eldest of three brothers, with Levin and Maik coming after him. It was not a household of pressure or strictness. His parents gave him room. He could do largely what he wanted, and what he wanted, mostly, was to play.</p>
-      <p>School came easily. The more engaged he was, the easier it got, and he sailed through Schickard-Schule without ever needing the discipline that other kids had drilled into them. There were no soft drinks at home, just water and the occasional juice — but with friends came the LAN parties, whole nights of gaming and pizza and sweets, no awareness of any of it, just the pure short-term pleasure of a kid who liked to indulge. That part of him — playful, pleasure-seeking, allergic to boredom — never fully left. He would spend his adult life learning not to suppress it but to build a life where it could play without wrecking him.</p>
-      <p>What did stay constant from the start: sport, nature, adventure, and books. He read for fun and he read to grow. He valued contribution, freedom, and autonomy long before he had words for them.</p>
-    </div>
-    <div class="chapter-photo">
-      <div class="photo-placeholder">Photo — childhood / Stuttgart</div>
-    </div>
+<section class="timeline" id="timeline">
+  <div class="timeline-line"></div>
+  <div class="timeline-line-fill" id="timelineFill"></div>
+
+  <!-- 1991 -->
+  <div class="timeline-year" data-anim>
+    <span class="year-label">1991</span>
   </div>
-</article>
 
-<div class="chapter-divider"></div>
+  <article class="timeline-chapter left" data-anim>
+    <div class="chapter-card">
+      <div class="chapter-photo"><div class="photo-placeholder">Photo — Childhood / Stuttgart</div></div>
+      <div class="chapter-card-body">
+        <span class="chapter-era">Stuttgart · Childhood</span>
+        <h3 class="chapter-title">Growing Up in Stuttgart</h3>
+        <div class="chapter-text">
+          <p>I grew up in Stuttgart, Germany, in a middle-class family — the eldest of three brothers, with Levin and Maik coming after me. It wasn't a household of pressure or strictness. My parents gave me room. I could mostly do what I wanted, and what I wanted, mostly, was to play.</p>
+          <p>School came easily. The more engaged I was, the easier it got, and I sailed through Schickard-Schule without ever needing the discipline that other kids had drilled into them. There were no soft drinks at home, just water and the occasional juice — but with friends came the LAN parties, whole nights of gaming and pizza and sweets, no awareness of any of it, just the pure short-term pleasure of a kid who liked to indulge. That part of me — playful, pleasure-seeking, allergic to boredom — never fully left. I would spend my adult life learning not to suppress it but to build a life where it could play without wrecking me.</p>
+          <p>What stayed constant from the start: sport, nature, adventure, and books. I read for fun and I read to grow. I valued contribution, freedom, and autonomy long before I had words for them.</p>
+        </div>
+      </div>
+    </div>
+  </article>
 
-<article class="chapter" data-anim>
-  <div class="chapter-meta"><span class="chapter-era">University · First Startup</span></div>
-  <h3 class="chapter-title">Physics, and the First Startup</h3>
-  <div class="chapter-body photo-left">
-    <div class="chapter-text">
-      <p>He studied physics — a discipline that gave him a particular way of seeing: systems, first principles, the search for what is actually true beneath the appearance of things. He never took the path most physics graduates take. In fact, he never held a traditional job in his life.</p>
-      <p>Instead, after his degree, he co-founded a social startup and secured EU funding — part of a government founders' grant worth around €72,000, paid out at roughly €2,000 a month over a planned 36 months. At first it was aligned and fun. Then it wasn't. Two years in, he was burned out and depressed, and he didn't have the tools or the support system to climb back out.</p>
-      <p>So he did something that, at the time, looked like failure: he walked away mid-funding, after about eighteen months, leaving the rest of the money on the table. He was in his mid-twenties, anxious, unsure what came next. But out of that collapse came the single realization that would organize the rest of his life — <em>happiness is fuel, not a reward</em>. He saw that if he didn't feel more energized and alive, no business he touched would ever truly work. Happiness wasn't the prize at the finish line. It was the engine. He decided it would come first.</p>
-    </div>
-    <div class="chapter-photo">
-      <div class="photo-placeholder">Photo — physics / first startup</div>
-    </div>
+  <!-- 2011 -->
+  <div class="timeline-year" data-anim>
+    <span class="year-label">2011</span>
   </div>
-</article>
 
-<div class="chapter-divider"></div>
+  <article class="timeline-chapter right" data-anim>
+    <div class="chapter-card">
+      <div class="chapter-photo"><div class="photo-placeholder">Photo — Physics / First Startup</div></div>
+      <div class="chapter-card-body">
+        <span class="chapter-era">University · First Startup</span>
+        <h3 class="chapter-title">Physics, and the First Startup</h3>
+        <div class="chapter-text">
+          <p>I studied physics — a discipline that gave me a particular way of seeing: systems, first principles, the search for what's actually true beneath the appearance of things. I never took the path most physics graduates take. In fact, I've never held a traditional job.</p>
+          <p>Instead, after my degree, I co-founded a social startup and secured EU funding — part of a government founders' grant worth around €72,000, paid out at roughly €2,000 a month over a planned 36 months. At first it was aligned and fun. Then it wasn't. Two years in, I was burned out and depressed, and I didn't have the tools or the support system to climb back out.</p>
+          <p>So I did something that, at the time, looked like failure: I walked away mid-funding, after about eighteen months, leaving the rest of the money on the table. I was in my mid-twenties, anxious, unsure what came next. But out of that collapse came the single realization that has organized the rest of my life — <em>happiness is fuel, not a reward</em>. I saw that if I didn't feel more energized and alive, no business I touched would ever truly work. Happiness wasn't the prize at the finish line. It was the engine. I decided it would come first.</p>
+        </div>
+      </div>
+    </div>
+  </article>
 
-<article class="chapter" data-anim>
-  <div class="chapter-meta"><span class="chapter-era">Age 22 · Australia</span></div>
-  <h3 class="chapter-title">The Year That Cracked Him Open</h3>
-  <div class="chapter-body photo-right">
-    <div class="chapter-text">
-      <p>Then came the travel. Australia for a year. A camper van. Life stripped down to the road and the landscape and a lot of time to think. Somewhere in there the spiritual awakenings began — the first cracks in the ordinary way of seeing, the first hints that the self he'd taken for granted was more fluid, more constructed, more open than he'd believed.</p>
-      <p>He became location-independent at twenty-two and never really stopped. Over the years the map filled in: Bali for a year and a half, Koh Phangan in Thailand, Brazil, Sweden — each place another layer of the same education in freedom and inner work.</p>
-    </div>
-    <div class="chapter-photo">
-      <div class="photo-placeholder">Photo — Australia / camper van</div>
-    </div>
+  <!-- 2017 -->
+  <div class="timeline-year" data-anim>
+    <span class="year-label">2017</span>
   </div>
-</article>
 
-<div class="chapter-divider"></div>
+  <article class="timeline-chapter left" data-anim>
+    <div class="chapter-card">
+      <div class="chapter-photo"><div class="photo-placeholder">Photo — Australia / Camper Van</div></div>
+      <div class="chapter-card-body">
+        <span class="chapter-era">Australia · The Road</span>
+        <h3 class="chapter-title">The Year Everything Shifted</h3>
+        <div class="chapter-text">
+          <p>Then came the travel. Australia for a year. A camper van. Life stripped down to the road and the landscape and a lot of time to think. Somewhere in there the spiritual awakenings began — the first cracks in the ordinary way of seeing, the first hints that the self I'd taken for granted was more fluid, more constructed, more open than I'd believed.</p>
+          <p>I became location-independent that year and never really stopped. Over the years the map filled in: Bali for a year and a half, Koh Phangan in Thailand, Brazil, Sweden — each place another layer of the same education in freedom and inner work.</p>
+        </div>
+      </div>
+    </div>
+  </article>
 
-<article class="chapter" data-anim>
-  <div class="chapter-meta"><span class="chapter-era">Bali · Brazil · Sweden</span></div>
-  <h3 class="chapter-title">Silence, and the Medicine</h3>
-  <div class="chapter-body photo-left">
-    <div class="chapter-text">
-      <p>He sat his first 10-day Vipassana — ten days of silent meditation in the tradition of S.N. Goenka — and then a second. No talking, no reading, no distraction; just the mind turned back on itself until it quieted. If you know, you know.</p>
-      <p>And then the medicine. In Brazil and beyond, he worked with ayahuasca — four ceremonies in time — and added psilocybin and, most profoundly, Bufo alvarius, the 5-MeO-DMT that took him to a state he describes as pure nothingness: all possibilities at once, the quantum field, the moment where the personal self dissolves and something far larger becomes obvious. At one point he moved through a three-ceremony combination inside a single week. Later would come an 8-day darkness retreat, a tantra sangha, and a steady study of Dr. Joe Dispenza's work on the mind, neuroplasticity, and subconscious reprogramming.</p>
-      <p>None of this was spiritual tourism. It was, as he understands it now, the real work — learning to be sovereign while staying soft, to hold strong boundaries while remaining open, to heal old trauma and become genuinely more free.</p>
-    </div>
-    <div class="chapter-photo">
-      <div class="photo-placeholder">Photo — silence / ceremony</div>
-    </div>
+  <!-- 2018 -->
+  <div class="timeline-year" data-anim>
+    <span class="year-label">2018</span>
   </div>
-</article>
 
-<div class="chapter-divider"></div>
+  <article class="timeline-chapter right" data-anim>
+    <div class="chapter-card">
+      <div class="chapter-photo"><div class="photo-placeholder">Photo — AirVideo / Brothers</div></div>
+      <div class="chapter-card-body">
+        <span class="chapter-era">AirVideo · With Family</span>
+        <h3 class="chapter-title">AirVideo — Last Startup</h3>
+        <div class="chapter-text">
+          <p>The second startup came as a co-founder alongside my brother — airvideo.com. We ran a Kickstarter that raised €120,000, with more than 2,000 people pre-ordering the product. It was real validation, real momentum, a different chapter of building — this time with family.</p>
+        </div>
+      </div>
+    </div>
+  </article>
 
-<article class="chapter" data-anim>
-  <div class="chapter-meta"><span class="chapter-era">AirVideo · With Family</span></div>
-  <h3 class="chapter-title">AirVideo, and a Brother's Kickstarter</h3>
-  <div class="chapter-body photo-right">
-    <div class="chapter-text">
-      <p>The second startup came as a co-founder alongside his brother — airvideo.com. They ran a Kickstarter that raised €120,000, with more than 2,000 people pre-ordering the product. It was a real validation, real momentum, a different chapter of building — this time with family.</p>
+  <article class="timeline-chapter left" data-anim>
+    <div class="chapter-card">
+      <div class="chapter-photo"><div class="photo-placeholder">Photo — Coaching / First Clients</div></div>
+      <div class="chapter-card-body">
+        <span class="chapter-era">November 2018 · The Work</span>
+        <h3 class="chapter-title">Life-Purpose Unlocked</h3>
+        <div class="chapter-text">
+          <p>In November 2018, I found what I'd been circling the whole time. I discovered my passion in coaching and gave myself to it fully. Everything before — the physics, the burnout, the silence, the medicine, the travel — turned out to be preparation.</p>
+          <p>Since then I've worked with more than a hundred clients across the world: founders, high-level executives, actors, and others who wanted to uplevel their lives and their work. I built my practice on the principle I'd paid so dearly to learn — that <em>happiness is fuel</em> — and on a deeper conviction that who you are <em>being</em> determines the action you take, which creates the results you get. Being, then action, then results, in that order.</p>
+        </div>
+      </div>
     </div>
-    <div class="chapter-photo">
-      <div class="photo-placeholder">Photo — AirVideo / brothers</div>
-    </div>
+  </article>
+
+  <!-- 2019 -->
+  <div class="timeline-year" data-anim>
+    <span class="year-label">2019</span>
   </div>
-</article>
 
-<div class="chapter-divider"></div>
+  <article class="timeline-chapter right" data-anim>
+    <div class="chapter-card">
+      <div class="chapter-photo"><div class="photo-placeholder">Photo — Silence / Ceremony</div></div>
+      <div class="chapter-card-body">
+        <span class="chapter-era">Silence · Medicine · Practice</span>
+        <h3 class="chapter-title">Going Deeper</h3>
+        <div class="chapter-text">
+          <p>Once the work was clear, I went deeper into the inner work that made the outer work possible. I sat my first 10-day Vipassana — ten days of silent meditation in the tradition of S.N. Goenka — and then a second. No talking, no reading, no distraction; just the mind turned back on itself until it quieted. If you know, you know.</p>
+          <p>And then the medicine. In Brazil and beyond, I worked with ayahuasca — four ceremonies in time — and added psilocybin and, most profoundly, Bufo alvarius, the 5-MeO-DMT that took me to a state I'd describe as pure nothingness: all possibilities at once, the quantum field, the moment where the personal self dissolves and something far larger becomes obvious. At one point I moved through a three-ceremony combination inside a single week. Later came an 8-day darkness retreat, a tantra sangha, and a steady study of Dr. Joe Dispenza's work on the mind, neuroplasticity, and subconscious reprogramming.</p>
+          <p>None of this was spiritual tourism. It was, as I understand it now, the real work — learning to be sovereign while staying soft, to hold strong boundaries while remaining open, to heal old trauma and become genuinely more free. Every year since has been another step in the same direction.</p>
+        </div>
+      </div>
+    </div>
+  </article>
 
-<article class="chapter" data-anim>
-  <div class="chapter-meta"><span class="chapter-era">November 2018 · The Work</span></div>
-  <h3 class="chapter-title">Finding the Work — Coaching, 2018</h3>
-  <div class="chapter-body photo-left">
-    <div class="chapter-text">
-      <p>In November 2018, Jan found what he'd been circling the whole time. He discovered his passion in coaching and gave himself to it fully. Everything before — the physics, the burnout, the silence, the medicine, the travel — turned out to be preparation.</p>
-      <p>Since then he has worked with over a hundred clients across the world: founders, high-level executives, actors, and others who wanted to uplevel their lives and their work. He built his practice on the principle he'd paid so dearly to learn — that <em>happiness is fuel</em> — and on a deeper conviction that who you are <em>being</em> determines the action you take, which creates the results you get. Being, then action, then results, in that order.</p>
-    </div>
-    <div class="chapter-photo">
-      <div class="photo-placeholder">Photo — coaching / first clients</div>
-    </div>
+  <!-- October 2023 -->
+  <div class="timeline-year" data-anim>
+    <span class="year-label">October 2023</span>
   </div>
-</article>
 
-<div class="chapter-divider"></div>
-
-<article class="chapter" data-anim>
-  <div class="chapter-meta"><span class="chapter-era">2022 · Lisbon</span></div>
-  <h3 class="chapter-title">Lisbon, Diara, and Now</h3>
-  <div class="chapter-body photo-right">
-    <div class="chapter-text">
-      <p>After five years as a digital nomad, he chose Lisbon as home — landing there around 2022. He lives there with Diara, his partner and the best life-partner he can imagine: someone with an enormous capacity to love, an absolute A-player, and his best friend. They share an apartment outside the city center and a rich community of friends and entrepreneurs.</p>
-      <p>And there are the cats — Luno, a rescued male with a history of food anxiety, and Koda, a young kitten more recently brought into the home. Jan plays padel and volleyball and frisbee and table tennis, keeps learning European Portuguese, and keeps refining a life designed so that the playful boy from Stuttgart still gets to come out and play — just without wrecking anything this time.</p>
-      <p>His long-term vision points further out still: intentional community living on land, a camper van, children raised in a nature-connected, values-aligned world. The throughline from the LAN parties to the Vipassana hall to the coaching calls has always been the same — a life that feels as good on the inside as it looks on the outside.</p>
+  <article class="timeline-chapter left" data-anim>
+    <div class="chapter-card">
+      <div class="chapter-photo"><div class="photo-placeholder">Photo — Lisbon / Diara / Cats</div></div>
+      <div class="chapter-card-body">
+        <span class="chapter-era">Lisbon · Home</span>
+        <h3 class="chapter-title">New Home in Portugal</h3>
+        <div class="chapter-text">
+          <p>After years as a digital nomad, I chose Lisbon as home — landing here in October 2023. I live here with Diara, my partner and the best life-partner I can imagine: someone with an enormous capacity to love, an absolute A-player, and my best friend. We share an apartment outside the city center and a rich community of friends and entrepreneurs.</p>
+          <p>And there are the cats — Luno, a rescued male with a history of food anxiety, and Koda, a young kitten more recently brought into the home. I play padel and volleyball and frisbee and table tennis, keep learning European Portuguese, and keep refining a life designed so that the playful boy from Stuttgart still gets to come out and play — just without wrecking anything this time.</p>
+          <p>My long-term vision points further out still: intentional community living on land, a camper van, children raised in a nature-connected, values-aligned world. The throughline from the LAN parties to the Vipassana hall to the coaching calls has always been the same — a life that feels as good on the inside as it looks on the outside.</p>
+        </div>
+      </div>
     </div>
-    <div class="chapter-photo">
-      <div class="photo-placeholder">Photo — Lisbon / Diara / cats</div>
-    </div>
-  </div>
-</article>
+  </article>
+</section>
 
 <!-- PART TWO -->
 <section class="part-header">
@@ -387,20 +520,20 @@
     <li><strong>Name:</strong> Jan Trautwein. From Stuttgart, Germany. Eldest of three brothers (Levin — levinpablo.com, and Maik — backyard99.com).</li>
     <li><strong>Role:</strong> Transformative business coach based in Lisbon, Portugal. 7+ years coaching full-time (started Nov 2018). 100+ clients worldwide.</li>
     <li><strong>Website:</strong> jantrautwein.com (static HTML/CSS/JS on Netlify).</li>
-    <li><strong>Background:</strong> Physics degree. Never held a traditional job. Location-independent since age 22. Has lived in Germany, Australia, Bali (~1.5 yrs), Thailand (Koh Phangan), Brazil, Sweden, and now Portugal.</li>
+    <li><strong>Background:</strong> Physics degree. Never held a traditional job. Location-independent since 2017. Has lived in Germany, Australia, Bali (~1.5 yrs), Thailand (Koh Phangan), Brazil, Sweden, and now Portugal.</li>
     <li><strong>Personal life:</strong> Lives in Lisbon with partner Diara and two cats, Luno (rescue, food-anxiety history) and Koda (young kitten). Timezone: Europe/Lisbon.</li>
   </ul>
 </section>
 
 <section class="profile-block" data-anim>
   <h3>Positioning</h3>
-  <p>Jan is a transformative business coach for ambitious, heart-led entrepreneurs who want to create meaningful success without burning out or losing themselves. He helps impact-driven founders clarify their vision and build and scale purpose-driven businesses that reflect who they truly are. His clients want to grow — but not at the cost of their values, energy, or creative freedom. He asks hard questions that open new doors, and brings structure where it's needed and space where it matters most.</p>
+  <p>I'm a transformative business coach for ambitious, heart-led entrepreneurs who want to create meaningful success without burning out or losing themselves. I help impact-driven founders clarify their vision and build and scale purpose-driven businesses that reflect who they truly are. My clients want to grow — but not at the cost of their values, energy, or creative freedom. I ask hard questions that open new doors, and bring structure where it's needed and space where it matters most.</p>
 </section>
 
 <section class="profile-block" data-anim>
   <h3>Coaching Philosophy</h3>
   <ul>
-    <li><strong>Foundational belief:</strong> "Happiness is fuel, not reward." Born from walking away from his €72k founders' grant mid-funding after burnout.</li>
+    <li><strong>Foundational belief:</strong> "Happiness is fuel, not reward." Born from walking away from my €72k founders' grant mid-funding after burnout.</li>
     <li><strong>The Creating Perspective:</strong> clients are creating everything while being at fault for nothing (learned from the coach JP Morgan).</li>
     <li><strong>Being → Action → Results:</strong> who you are being drives the action you take, which creates the results you experience.</li>
     <li><strong>Key influences:</strong> Sydney Banks, Michael Neill, Steve Hardison, Rich Litton, JP Morgan (the coach), Dr. Joe Dispenza.</li>
@@ -408,7 +541,7 @@
 </section>
 
 <section class="profile-block" data-anim>
-  <h3>Frameworks He's Built</h3>
+  <h3>Frameworks I've Built</h3>
   <ul>
     <li><strong>The VER™ Method:</strong> Vision Architecture, Execution Engineering, Rewiring Mastery.</li>
     <li><strong>The VSO Framework:</strong> Vision, Strategy, Overcome Resistance.</li>
@@ -418,7 +551,7 @@
 
 <section class="profile-block" data-anim>
   <h3>The Business — and the One Metric That Matters</h3>
-  <p>Jan's number-one priority is creating more coaching clients, which happens through direct outreach and real conversations. When he asks for help with other projects, gently check whether it actually serves client creation or whether it's a sophisticated distraction. Challenge softly but honestly.</p>
+  <p>My number-one priority is creating more coaching clients, which happens through direct outreach and real conversations. When I ask for help with other projects, gently check whether it actually serves client creation or whether it's a sophisticated distraction. Challenge softly but honestly.</p>
   <ul>
     <li><strong>Client engine:</strong> LinkedIn outreach, serve-first / sell-by-chat. Booking link: coliberate.neetocal.com/intro-call-with-jan.</li>
     <li><strong>Tools:</strong> Grain (session recordings), Notion (CRM is "CRM - Change Makers"), Canva (invoicing), finances across Mercury and Wise.</li>
@@ -450,7 +583,7 @@
 </section>
 
 <section class="profile-block" data-anim>
-  <h3>Words &amp; Structures to Avoid in His Writing</h3>
+  <h3>Words &amp; Structures to Avoid in My Writing</h3>
   <p><strong>Never use:</strong> unlock, revolutionize, game-changing, unleash, dive into, delve, craft, leverage. Avoid contrast structures like "Not just X, but Y."</p>
 </section>
 
@@ -494,6 +627,36 @@
   } else {
     document.querySelectorAll('[data-anim]').forEach(el => el.classList.add('in-view'));
   }
+
+  // Timeline progress line — grows as the user scrolls through the timeline
+  (function() {
+    const timeline = document.getElementById('timeline');
+    const fill = document.getElementById('timelineFill');
+    if (!timeline || !fill) return;
+
+    let ticking = false;
+    function update() {
+      const rect = timeline.getBoundingClientRect();
+      const viewH = window.innerHeight;
+      const triggerOffset = viewH * 0.5; // fill follows roughly the middle of the viewport
+      const start = rect.top + window.scrollY - triggerOffset;
+      const end = rect.top + window.scrollY + rect.height - triggerOffset;
+      const cur = window.scrollY;
+      let progress = (cur - start) / (end - start);
+      progress = Math.max(0, Math.min(1, progress));
+      fill.style.height = (progress * 100) + '%';
+      ticking = false;
+    }
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  })();
 </script>
 </body>
 </html>

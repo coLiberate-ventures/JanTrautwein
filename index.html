@@ -111,33 +111,27 @@
     }
     .rotator-underline {
       position: absolute;
-      left: -3%;
-      right: -3%;
-      bottom: -0.18em;
-      width: 106%;
-      height: 0.55em;
+      left: -4%;
+      right: -4%;
+      bottom: -0.28em;
+      width: 108%;
+      height: 0.6em;
       overflow: visible;
       pointer-events: none;
-      transform: rotate(-1.2deg);
+      transform: rotate(-2deg);
       transform-origin: left center;
+      clip-path: inset(-20% 105% -20% -2%);
     }
     .rotator-underline path {
-      fill: none;
-      stroke: var(--gold);
-      stroke-width: 4;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-dasharray: 1;
-      stroke-dashoffset: 1;
-      vector-effect: non-scaling-stroke;
+      fill: var(--gold);
       opacity: 0.92;
     }
-    .hero-rotator.animating .rotator-underline path {
-      animation: drawMarker 6s ease-out forwards;
+    .hero-rotator.animating .rotator-underline {
+      animation: drawSwoosh 6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
     }
-    @keyframes drawMarker {
-      0%, 33%   { stroke-dashoffset: 1; }
-      66%, 100% { stroke-dashoffset: 0; }
+    @keyframes drawSwoosh {
+      0%, 33%   { clip-path: inset(-20% 105% -20% -2%); }
+      66%, 100% { clip-path: inset(-20% -5% -20% -2%); }
     }
     .hero-subtitle { font-family: 'Lora', serif; font-size: 1.15rem; line-height: 1.65; color: var(--muted); }
     .hero-subtitle p { margin-bottom: 0.5rem; }
@@ -474,7 +468,7 @@
 <section id="hero">
   <div class="hero-grid">
     <div class="hero-text">
-      <h1 class="hero-headline">I coach the <span class="hero-rotator" id="heroRotator"><span class="rotator-word">founders</span><svg class="rotator-underline" viewBox="0 0 200 18" preserveAspectRatio="none" aria-hidden="true"><path d="M 4 11 C 55 5 110 14 134 9 S 180 13 196 8" pathLength="1"/></svg></span> building the future we actually want to live in.</h1>
+      <h1 class="hero-headline">I coach the <span class="hero-rotator" id="heroRotator"><span class="rotator-word">founders</span><svg class="rotator-underline" viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M 2 11 C 35 5 110 2 175 6 C 188 7 196 8 198 9 C 196 11 188 12 175 13 C 110 16 35 16 2 11 Z"/></svg></span> building the future we actually want to live in.</h1>
       <div class="hero-subtitle">
         <p>The ones who will get us there aren't the ones who hustle and burn out.</p>
         <p>But the ones who build from a place of genuine aliveness and inspiration.</p>

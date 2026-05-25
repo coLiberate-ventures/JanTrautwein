@@ -96,23 +96,6 @@
       color: var(--text); font-weight: 500; margin-bottom: 1.2rem;
     }
     .hero-headline .highlight { color: var(--gold); font-style: italic; }
-    .hero-headline strong { font-weight: 700; color: var(--text); }
-    /* ROTATING WORD */
-    .rotator-wrap { position: relative; display: inline-block; min-width: 4.5ch; text-align: left; }
-    .rotator-word {
-      color: var(--gold); font-style: italic; display: inline-block;
-      opacity: 1; transition: opacity 350ms ease;
-      position: relative;
-    }
-    .rotator-word.fading { opacity: 0; }
-    .rotator-word::after {
-      content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 3px;
-      background: var(--gold); border-radius: 2px;
-      transform: scaleX(0); transform-origin: left center;
-      transition: transform 2000ms cubic-bezier(0.65, 0.05, 0.36, 1);
-    }
-    .rotator-word.underlined::after { transform: scaleX(1); }
-    .rotator-word.instant::after { transition: none; }
     .hero-subtitle { font-family: 'Lora', serif; font-size: 1.15rem; line-height: 1.65; color: var(--muted); }
     .hero-subtitle p { margin-bottom: 0.5rem; }
 
@@ -129,38 +112,6 @@
     }
     .quote-attr { font-family: 'Inter', sans-serif; font-style: normal; font-size: 0.88rem; color: var(--muted); margin-top: 1rem; display: block; }
     .quote-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; margin: 0 auto 1.2rem; display: block; }
-
-    /* WHO I WORK WITH */
-    #who-i-work-with { padding: 50px 0 30px; }
-    .who-intro { max-width: 720px; margin: 0 auto 2.5rem; text-align: center; padding: 0 32px; }
-    .who-intro h2 {
-      font-family: 'Lora', serif; font-size: 1.7rem; line-height: 1.3; color: var(--text);
-      font-weight: 500; margin-top: 0.4rem;
-    }
-    .clients-grid {
-      max-width: 1000px; margin: 0 auto; padding: 0 32px;
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px;
-    }
-    .client-card { text-align: center; display: flex; flex-direction: column; align-items: center; }
-    .client-photo {
-      width: 110px; height: 110px; border-radius: 50%; object-fit: cover;
-      margin-bottom: 1rem; display: block;
-    }
-    .client-photo.placeholder {
-      background: linear-gradient(135deg, #F5EBC9 0%, #FAB700 100%);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Lora', serif; font-size: 1.6rem; color: #1A1F17; font-weight: 600;
-      opacity: 0.55;
-    }
-    .client-name {
-      font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600;
-      color: var(--text); margin-bottom: 0.3rem;
-    }
-    .client-role {
-      font-family: 'Inter', sans-serif; font-size: 0.88rem; line-height: 1.5;
-      color: var(--muted);
-    }
-    .client-role .org { color: var(--text); font-weight: 500; }
 
     /* DIVIDERS */
     .divider { position: relative; height: 60px; overflow: visible; margin: 0; pointer-events: none; }
@@ -259,7 +210,6 @@
     /* FOOTER */
     footer { background: var(--text); color: rgba(233,239,226,0.45); padding: 48px 24px; text-align: center; font-size: 0.85rem; }
     footer a { color: rgba(233,239,226,0.65); }
-    footer a.muted-link { color: rgba(233,239,226,0.45); }
     footer a:hover { color: var(--gold); }
 
     /* BOTANICAL ACCENTS */
@@ -322,8 +272,6 @@
       .voices-layout { flex-direction: column; align-items: center; gap: 32px; }
       .voices-photo-grid { width: 200px; gap: 10px; }
       .voices-testimonial { text-align: center; min-height: auto; }
-      .clients-grid { grid-template-columns: 1fr; gap: 28px; max-width: 360px; }
-      .who-intro h2 { font-size: 1.4rem; }
 
       .next-grid { grid-template-columns: 1fr; text-align: center; }
       .next-image { text-align: center; }
@@ -439,7 +387,7 @@
 <section id="hero">
   <div class="hero-grid">
     <div class="hero-text">
-      <h1 class="hero-headline">We need impact-driven <span class="rotator-wrap"><span class="rotator-word" id="rotatorWord">founders</span></span> to manifest the <strong>more beautiful world</strong> our hearts know is possible.</h1>
+      <h1 class="hero-headline">We need impact-driven entrepreneurs to create the <span class="highlight">more</span> beautiful world our hearts know is possible.</h1>
       <div class="hero-subtitle">
         <p>The ones who will get us there aren't the ones who hustle and burn out.</p>
         <p>But the ones who build from a place of genuine aliveness and inspiration.</p>
@@ -450,30 +398,6 @@
       <script src="https://fast.wistia.com/embed/9juvnwy87i.js" async type="module"></script>
       <style>wistia-player[media-id='9juvnwy87i']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/9juvnwy87i/swatch'); display: block; filter: blur(5px); padding-top:50.63%; }</style>
       <wistia-player media-id="9juvnwy87i" aspect="1.9753086419753085"><div class="wistia_preload_transcript_outer_wrapper" style="width: 100%; height: 100%; display:flex; justify-content:center; align-items: center; margin-top:-50.63%;"><div class="wistia_preload_transcript_inner_wrapper" style=" overflow: auto;"><p class="wistia_preload_transcript_text" aria-hidden="true" tabindex="-1" style="text-align: justify; font-size: 5px !important;">Hi. My name is Jan, and in this video, I'm going to share with you how I might be able to help you. So thank you for your interest in that. And, yeah, it's it's very funny in a way that I'm doing this work now since seven years, and I still haven't found the perfect way to explain what it actually is. Because usually, I give someone an experience to receive my coaching, and then they just know themselves if it's helpful or not. But let's give it a shot here. And what I want to focus on is this piece here, the holistic business coaching. Because holistic, I use it in two different ways. The first way is let's start with that. Holistic business coaching, like, yes, business coaching, and most of my clients, they have their own business, and they have a specific goal with their business. They wanna bring it to the next level. They wanna make more money with their business, bigger impact, and that's cool. We can have a laser focus on one specific outcome, and still, it does make sense a lot of the time to look at the person, the founder, the CEO in a more holistic way because all areas of life are interconnected. How we show up in business has to do with how our energy levels in general, our mental clarity, our relationships. So there's this. The other part that I feel very passionate about is, yes, let's focus on your business and creating an even bigger impact in the world. But and this is the vision here for the world. Right? Protecting nature, transitioning to regenerative agriculture. Those are all just examples. Building community, education. There's so many different ways we can contribute that I feel aligned with and, yeah, passionate about. But then there's also this. I don't want anyone, especially people who run an impact driven business, to sacrifice themselves for it. So your own well-being, the your own life, the qualities of your relationship, your health and fitness, financial freedom, whatever you desire, let's also bring that onto the table. And let's tackle both of them. So that we make sure that we don't have your private fulfillment and life fall to the wayside because you're focusing too much on the business or the other way around. So it's holistic in this way. And then it's holistic because we're working on multiple different layers. There is the goals, the milestones, creating an action plan, the road map. Awesome. Right? More clarity, more focus. Cool. Then we have accountability. Pretty straightforward, but it just helps. We all want to avoid the things that we don't wanna do, that are outside of our comfort zone. And having me there as an accountability coach and partner who checks in week after week, we are aligned, and we make sure that you don't get distracted and the thing that was really important doesn't happen at all. That's there. Then environment here means how can you optimize your environment so that the things that you don't want to do, that there's more friction. Right? That might be scrolling on social media. Right? So your digital environment, it might be the people that don't really lift you up, that struggle to believe in you and in your mission. Know, removing those people from your environment a little bit more and surrounding yourself with people who really believe in you, who see the potential, who see your power. Yeah. So there's different kinds of environments and just optimizing them so that they energize us and not drain our energy. That also has to do with what are the tasks that you are doing that maybe you can outsource. Then I, of course, I help with decisions. As founders, entrepreneurs, CEOs, we need to make a lot of decisions, and sometimes it helps to have aspiring partners to just be quicker with making decisions, and therefore, the business can move forward faster. Then we go to a deeper lay layer, which is meaning making. What is the meaning that we attach to things that happen in our business with our cofounders, with investors, with our employees? Because the stories that we tell, they shape the experience that we have, the emotional experience. So that work is very profound and very impactful, and it links to the last one here, which is identity, which is the meaning that we hold about ourselves. And when we want to get to a new level in our business, usually, that goes along with a shift in identity that we need to make. Maybe we need to learn to delegate more. Maybe we need to, yeah, stop micromanaging so much and letting other people step up into leadership. And that comes with a shift in our identity so that when we shift our identity, our behavior, and our actions, they naturally change rather than trying to stay who we are but get different results by by by acting in a different way, much, much harder to do that. So that's it for now. There's a lot more I could share. And if you're curious, just get in touch with me, and then I can explain more. And, if it makes sense, I will just gift you a coaching session. We will block out ninety minutes, and I'm just there to help you as much as I can. And if it makes sense after that, we can continue the conversation to see if we want to properly partner up and go on a bigger journey together where I help you scale your business, have more impact, and have fun and enjoyment along the way. Alright. Talk soon.</p></div></div></wistia-player>
-    </div>
-  </div>
-</section>
-
-<section id="who-i-work-with">
-  <div class="who-intro">
-    <div class="section-label">Who I Work With</div>
-    <h2>Founders, creators &amp; educators shaping what's next.</h2>
-  </div>
-  <div class="clients-grid">
-    <div class="client-card">
-      <div class="client-photo placeholder">RV</div>
-      <div class="client-name">Rui Vas</div>
-      <div class="client-role">AI Educator &amp; Founder<br>Teaches at <span class="org">Mindvalley</span>, runs his own AI program &amp; community</div>
-    </div>
-    <div class="client-card">
-      <div class="client-photo placeholder">PB</div>
-      <div class="client-name">Philippe Birker</div>
-      <div class="client-role">Founder &amp; Community Builder<br>Behind <span class="org">ClimateFarmers</span> &amp; <span class="org">Love Foundation</span>, regenerating land &amp; people</div>
-    </div>
-    <div class="client-card">
-      <div class="client-photo placeholder">KF</div>
-      <div class="client-name">Kyle Findley-Meier</div>
-      <div class="client-role">Co-Founder &amp; Builder<br>Currently shaping a <span class="org">secret AI startup</span> for the next wave of tools</div>
     </div>
   </div>
 </section>
@@ -519,7 +443,7 @@
       <p>I value contribution, freedom and autonomy.</p>
       <p>I've never had a traditional job.</p>
       <p>After I finished my physics degree, I co-founded a social startup. It was aligned and fun… until it wasn't.</p>
-      <p>I started to ask a question that would change my life: What if my own state is more important than what I focus on?</p>
+      <p>The biggest realization I had after I left: Happiness as fuel, not a reward.</p>
       <p>In 2018 I found my passion in coaching and dedicated myself fully to it.</p>
       <p>Since then I've worked with over 100 clients across the world, helping impact-driven founders build businesses that feel as good on the inside as they look on the outside.</p>
       <p>I continuously invest in my own development, learning from the best coaches in the world.</p>
@@ -779,7 +703,7 @@
 </section>
 
 <footer>
-  <p>&copy; 2026 Jan Trautwein &middot; <a href="https://www.linkedin.com/in/jantrautwein/" target="_blank">LinkedIn</a> &middot; <a href="https://www.instagram.com/jan_trautwein/" target="_blank">Instagram</a> &middot; <a href="https://privacy.coliberate.ventures/" target="_blank" class="muted-link">Privacy</a></p>
+  <p>&copy; 2026 Jan Trautwein &middot; <a href="https://www.linkedin.com/in/jantrautwein/" target="_blank">LinkedIn</a> &middot; <a href="https://www.instagram.com/jan_trautwein/" target="_blank">Instagram</a></p>
 </footer>
 
 <script>
@@ -801,48 +725,6 @@
 
   hamburger.addEventListener('click', toggleMenu);
   menuOverlay.addEventListener('click', toggleMenu);
-</script>
-
-<script>
-(function() {
-  var el = document.getElementById('rotatorWord');
-  if (!el) return;
-  var words = ['founders', 'creators', 'educators'];
-  var idx = 0;
-
-  function runPhase() {
-    // Phase A (immediate): word visible, no underline. Wait 2s.
-    el.classList.remove('underlined');
-    setTimeout(function() {
-      // Phase B: draw underline (2s CSS transition).
-      el.classList.add('underlined');
-      setTimeout(function() {
-        // Phase C: full underline visible for 2s.
-        setTimeout(function() {
-          // Phase D: fade out, swap word, fade in.
-          el.classList.add('fading');
-          setTimeout(function() {
-            // Reset underline INSTANTLY (no transition) while word is hidden
-            el.classList.add('instant');
-            el.classList.remove('underlined');
-            void el.offsetWidth; // force reflow so the reset takes effect
-            el.classList.remove('instant'); // re-enable transition for next draw
-            // Swap word while still faded out
-            idx = (idx + 1) % words.length;
-            el.textContent = words[idx];
-            void el.offsetWidth;
-            // Fade new word back in (no underline yet)
-            el.classList.remove('fading');
-            runPhase();
-          }, 350);
-        }, 2000);
-      }, 2000);
-    }, 2000);
-  }
-
-  // Kick off
-  runPhase();
-})();
 </script>
 </body>
 </html>

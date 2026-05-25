@@ -96,7 +96,6 @@
       color: var(--text); font-weight: 500; margin-bottom: 1.2rem;
     }
     .hero-headline .highlight { color: var(--gold); font-style: italic; }
-    .hero-headline strong { font-weight: 700; color: var(--text); }
     /* ROTATING WORD */
     .rotator-wrap { position: relative; display: inline-block; min-width: 4.5ch; text-align: left; }
     .rotator-word {
@@ -112,7 +111,6 @@
       transition: transform 2000ms cubic-bezier(0.65, 0.05, 0.36, 1);
     }
     .rotator-word.underlined::after { transform: scaleX(1); }
-    .rotator-word.instant::after { transition: none; }
     .hero-subtitle { font-family: 'Lora', serif; font-size: 1.15rem; line-height: 1.65; color: var(--muted); }
     .hero-subtitle p { margin-bottom: 0.5rem; }
 
@@ -259,7 +257,6 @@
     /* FOOTER */
     footer { background: var(--text); color: rgba(233,239,226,0.45); padding: 48px 24px; text-align: center; font-size: 0.85rem; }
     footer a { color: rgba(233,239,226,0.65); }
-    footer a.muted-link { color: rgba(233,239,226,0.45); }
     footer a:hover { color: var(--gold); }
 
     /* BOTANICAL ACCENTS */
@@ -439,7 +436,7 @@
 <section id="hero">
   <div class="hero-grid">
     <div class="hero-text">
-      <h1 class="hero-headline">We need impact-driven <span class="rotator-wrap"><span class="rotator-word" id="rotatorWord">founders</span></span> to manifest the <strong>more beautiful world</strong> our hearts know is possible.</h1>
+      <h1 class="hero-headline">I coach the <span class="rotator-wrap"><span class="rotator-word" id="rotatorWord">founders</span></span> building the future we actually want to live in.</h1>
       <div class="hero-subtitle">
         <p>The ones who will get us there aren't the ones who hustle and burn out.</p>
         <p>But the ones who build from a place of genuine aliveness and inspiration.</p>
@@ -468,12 +465,12 @@
     <div class="client-card">
       <div class="client-photo placeholder">PB</div>
       <div class="client-name">Philippe Birker</div>
-      <div class="client-role">Founder &amp; Community Builder<br>Behind <span class="org">ClimateFarmers</span> &amp; <span class="org">Love Foundation</span>, regenerating land &amp; people</div>
+      <div class="client-role">Founder of <span class="org">ClimateFarmers</span> and <span class="org">Love Foundation</span></div>
     </div>
     <div class="client-card">
       <div class="client-photo placeholder">KF</div>
       <div class="client-name">Kyle Findley-Meier</div>
-      <div class="client-role">Co-Founder &amp; Builder<br>Currently shaping a <span class="org">secret AI startup</span> for the next wave of tools</div>
+      <div class="client-role">Co-founder of an <span class="org">AI startup</span></div>
     </div>
   </div>
 </section>
@@ -519,7 +516,7 @@
       <p>I value contribution, freedom and autonomy.</p>
       <p>I've never had a traditional job.</p>
       <p>After I finished my physics degree, I co-founded a social startup. It was aligned and fun… until it wasn't.</p>
-      <p>I started to ask a question that would change my life: What if my own state is more important than what I focus on?</p>
+      <p>The biggest realization I had after I left: Happiness as fuel, not a reward.</p>
       <p>In 2018 I found my passion in coaching and dedicated myself fully to it.</p>
       <p>Since then I've worked with over 100 clients across the world, helping impact-driven founders build businesses that feel as good on the inside as they look on the outside.</p>
       <p>I continuously invest in my own development, learning from the best coaches in the world.</p>
@@ -779,7 +776,7 @@
 </section>
 
 <footer>
-  <p>&copy; 2026 Jan Trautwein &middot; <a href="https://www.linkedin.com/in/jantrautwein/" target="_blank">LinkedIn</a> &middot; <a href="https://www.instagram.com/jan_trautwein/" target="_blank">Instagram</a> &middot; <a href="https://privacy.coliberate.ventures/" target="_blank" class="muted-link">Privacy</a></p>
+  <p>&copy; 2026 Jan Trautwein &middot; <a href="https://www.linkedin.com/in/jantrautwein/" target="_blank">LinkedIn</a> &middot; <a href="https://www.instagram.com/jan_trautwein/" target="_blank">Instagram</a></p>
 </footer>
 
 <script>
@@ -822,16 +819,11 @@
           // Phase D: fade out, swap word, fade in.
           el.classList.add('fading');
           setTimeout(function() {
-            // Reset underline INSTANTLY (no transition) while word is hidden
-            el.classList.add('instant');
-            el.classList.remove('underlined');
-            void el.offsetWidth; // force reflow so the reset takes effect
-            el.classList.remove('instant'); // re-enable transition for next draw
-            // Swap word while still faded out
             idx = (idx + 1) % words.length;
             el.textContent = words[idx];
+            el.classList.remove('underlined');
+            // force reflow so the underline reset isn't transitioned
             void el.offsetWidth;
-            // Fade new word back in (no underline yet)
             el.classList.remove('fading');
             runPhase();
           }, 350);

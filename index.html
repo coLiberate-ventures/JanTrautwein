@@ -5,16 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jan Trautwein — Coaching for Impact-Driven Founders</title>
   <meta name="description" content="Transformative business coaching for ambitious, heart-led entrepreneurs who want to create meaningful success without burning out.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+  @font-face { font-family: 'Creato Display'; src: url('fonts/CreatoDisplay-Light.otf') format('opentype'); font-weight: 300; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Creato Display'; src: url('fonts/CreatoDisplay-LightItalic.otf') format('opentype'); font-weight: 300; font-style: italic; font-display: swap; }
+  @font-face { font-family: 'Creato Display'; src: url('fonts/CreatoDisplay-Regular.otf') format('opentype'); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Creato Display'; src: url('fonts/CreatoDisplay-RegularItalic.otf') format('opentype'); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: 'Creato Display'; src: url('fonts/CreatoDisplay-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Creato Display'; src: url('fonts/CreatoDisplay-MediumItalic.otf') format('opentype'); font-weight: 500; font-style: italic; font-display: swap; }
+  @font-face { font-family: 'Creato Display'; src: url('fonts/CreatoDisplay-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Creato Display'; src: url('fonts/CreatoDisplay-BoldItalic.otf') format('opentype'); font-weight: 700; font-style: italic; font-display: swap; }
+</style>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #E9EFE2;
-      --bg2: #F4F7EF;
-      --text: #1A1F17;
-      --muted: #5A6356;
+      --bg: #DAE7DE;
+      --bg2: #E8F0EA;
+      --text: #1A2B28;
+      --muted: #5A7872;
+      --heading: #2A3F3A;
+      --border: #B8CEC9;
+      --highlight: #B8CEC9;
       --gold: #FAB700;
       --gold-hover: #E5A800;
       --border: #D0DAC8;
@@ -23,7 +33,7 @@
     }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Creato Display', sans-serif;
       color: var(--muted);
       background-color: var(--bg);
       position: relative;
@@ -45,7 +55,8 @@
       font-size: 17px;
       -webkit-font-smoothing: antialiased;
     }
-    h1, h2, h3, h4 { font-family: 'Lora', serif; color: var(--text); line-height: 1.3; font-weight: 500; }
+    h1, h2, h3, h4 { font-family: 'Creato Display', sans-serif; color: var(--text); line-height: 1.3; font-weight: 500; }
+    /* heading-color-override */ h1, h2 { color: var(--heading); }
     h2 { font-size: 2.4rem; margin-bottom: 1.5rem; font-weight: 600; }
     h3 { font-size: 1.5rem; margin-bottom: 1rem; }
     p { margin-bottom: 1.2rem; }
@@ -55,7 +66,7 @@
     a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
     a:hover { color: var(--gold-hover); }
     .section-label {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Creato Display', sans-serif;
       font-size: 0.85rem; font-weight: 700;
       letter-spacing: 0.15em; text-transform: uppercase;
       color: var(--gold); margin-bottom: 1.2rem;
@@ -75,7 +86,7 @@
       max-width: 1100px; margin: 0 auto; padding: 0 32px;
       display: flex; align-items: center; justify-content: space-between; height: 60px;
     }
-    .nav-logo { font-family: 'Lora', serif; font-size: 1.15rem; font-weight: 600; color: var(--text); text-decoration: none; }
+    .nav-logo { font-family: 'Creato Display', sans-serif; font-size: 1.15rem; font-weight: 600; color: var(--text); text-decoration: none; }
     .nav-right { display: flex; align-items: center; gap: 28px; }
     .nav-link { font-size: 0.88rem; color: var(--muted); text-decoration: none; transition: color 0.2s; font-weight: 500; }
     .nav-link:hover { color: var(--text); }
@@ -92,7 +103,7 @@
       max-width: 1100px; margin: 0 auto; padding: 0 32px;
     }
     .hero-headline {
-      font-family: 'Lora', serif; font-size: 2.6rem; line-height: 1.25;
+      font-family: 'Creato Display', sans-serif; font-size: 2.6rem; line-height: 1.25;
       color: var(--text); font-weight: 500; margin-bottom: 1.2rem;
     }
     .hero-headline .highlight { color: var(--gold); font-style: italic; }
@@ -113,28 +124,26 @@
     }
     .rotator-word.underlined::after { transform: scaleX(1); }
     .rotator-word.instant::after { transition: none; }
-    .hero-subtitle { font-family: 'Lora', serif; font-size: 1.15rem; line-height: 1.65; color: var(--muted); }
+    .hero-subtitle { font-family: 'Creato Display', sans-serif; font-size: 1.15rem; line-height: 1.65; color: var(--muted); }
     .hero-subtitle p { margin-bottom: 0.5rem; }
 
-    .hero-video-wrap {
-      position: relative; border-radius: 6px; overflow: hidden; background: var(--bg2);
-    }
-    .hero-video-wrap wistia-player { display: block; width: 100%; border-radius: 6px; }
+    .hero-image-wrap { position: relative; border-radius: 6px; overflow: hidden; }
+    .hero-image-wrap img { display: block; width: 100%; height: auto; border-radius: 6px; }
 
     /* FEATURED QUOTE */
     #featured-quote { padding: 30px 0 50px; }
     .featured-quote-inner { max-width: 680px; margin: 0 auto; text-align: center; padding: 0 32px; }
     .featured-quote-inner blockquote {
-      font-family: 'Lora', serif; font-size: 1.05rem; font-style: italic; color: var(--muted); line-height: 1.75;
+      font-family: 'Creato Display', sans-serif; font-size: 1.05rem; font-style: italic; color: var(--muted); line-height: 1.75;
     }
-    .quote-attr { font-family: 'Inter', sans-serif; font-style: normal; font-size: 0.88rem; color: var(--muted); margin-top: 1rem; display: block; }
+    .quote-attr { font-family: 'Creato Display', sans-serif; font-style: normal; font-size: 0.88rem; color: var(--muted); margin-top: 1rem; display: block; }
     .quote-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; margin: 0 auto 1.2rem; display: block; }
 
     /* WHO I WORK WITH */
     #who-i-work-with { padding: 50px 0 30px; }
     .who-intro { max-width: 720px; margin: 0 auto 2.5rem; text-align: center; padding: 0 32px; }
     .who-intro h2 {
-      font-family: 'Lora', serif; font-size: 1.7rem; line-height: 1.3; color: var(--text);
+      font-family: 'Creato Display', sans-serif; font-size: 1.7rem; line-height: 1.3; color: var(--text);
       font-weight: 500; margin-top: 0.4rem;
     }
     .clients-grid {
@@ -149,15 +158,15 @@
     .client-photo.placeholder {
       background: linear-gradient(135deg, #F5EBC9 0%, #FAB700 100%);
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Lora', serif; font-size: 1.6rem; color: #1A1F17; font-weight: 600;
+      font-family: 'Creato Display', sans-serif; font-size: 1.6rem; color: #1A2B28; font-weight: 600;
       opacity: 0.55;
     }
     .client-name {
-      font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600;
+      font-family: 'Creato Display', sans-serif; font-size: 1rem; font-weight: 600;
       color: var(--text); margin-bottom: 0.3rem;
     }
     .client-role {
-      font-family: 'Inter', sans-serif; font-size: 0.88rem; line-height: 1.5;
+      font-family: 'Creato Display', sans-serif; font-size: 0.88rem; line-height: 1.5;
       color: var(--muted);
     }
     .client-role .org { color: var(--text); font-weight: 500; }
@@ -185,7 +194,7 @@
 
     /* REALITY */
     .reality-text { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; text-align: center; }
-    .stat-line { font-family: 'Lora', serif; font-size: 1.2rem; color: var(--text); margin-bottom: 1.2rem; }
+    .stat-line { font-family: 'Creato Display', sans-serif; font-size: 1.2rem; color: var(--text); margin-bottom: 1.2rem; }
 
     /* ABOUT */
     .about-grid {
@@ -241,16 +250,16 @@
       min-height: 240px;
     }
     .voices-testimonial blockquote {
-      font-family: 'Lora', serif; font-style: italic; font-size: 1.05rem;
+      font-family: 'Creato Display', sans-serif; font-style: italic; font-size: 1.05rem;
       line-height: 1.75; color: var(--muted); margin-bottom: 1.5rem;
       quotes: '\201C' '\201D';
     }
     .voices-testimonial-name {
-      font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600;
+      font-family: 'Creato Display', sans-serif; font-size: 1.1rem; font-weight: 600;
       color: var(--text); margin-bottom: 0.25rem;
     }
     .voices-testimonial-role {
-      font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 400;
+      font-family: 'Creato Display', sans-serif; font-size: 0.88rem; font-weight: 400;
       color: var(--muted);
     }
     .voices-grid, .voice-card, .voice-attr, .voice-role { display: none; }
@@ -264,7 +273,7 @@
     }
     .cta-button {
       display: inline-block; background: var(--gold); color: var(--text);
-      font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem;
+      font-family: 'Creato Display', sans-serif; font-weight: 600; font-size: 1rem;
       padding: 14px 36px; border-radius: 8px; text-decoration: none;
       transition: background 0.2s, transform 0.2s; margin-top: 1rem;
     }
@@ -272,21 +281,17 @@
     .next-image img { width: 100%; max-width: 380px; border-radius: 4px; }
 
     /* FOOTER */
-    footer { background: var(--text); color: rgba(233,239,226,0.45); padding: 48px 24px; text-align: center; font-size: 0.85rem; }
-    footer a { color: rgba(233,239,226,0.65); }
-    footer a.muted-link { color: rgba(233,239,226,0.45); }
+    footer { background: var(--text); color: rgba(218,231,222,0.45); padding: 48px 24px; text-align: center; font-size: 0.85rem; }
+    footer a { color: rgba(218,231,222,0.65); }
+    footer a.muted-link { color: rgba(218,231,222,0.45); }
     footer a:hover { color: var(--gold); }
-
-    /* BOTANICAL ACCENTS */
-    .botanical { position: absolute; pointer-events: none; opacity: 0.35; z-index: 0; }
-    .botanical img { width: 100%; height: auto; }
 
     
 
     /* DESKTOP NAV LINKS */
     .nav-links { display: flex; align-items: center; gap: 28px; }
     .nav-links a {
-      font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 500;
+      font-family: 'Creato Display', sans-serif; font-size: 0.88rem; font-weight: 500;
       color: var(--muted); text-decoration: none; transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--text); }
@@ -310,7 +315,7 @@
     }
     .mobile-menu.open { right: 0; }
     .mobile-menu a {
-      display: block; font-family: 'Lora', serif; font-size: 1.15rem; color: var(--text);
+      display: block; font-family: 'Creato Display', sans-serif; font-size: 1.15rem; color: var(--text);
       text-decoration: none; padding: 14px 0; border-bottom: 1px solid var(--border); transition: color 0.2s;
     }
     .mobile-menu a:hover { color: var(--gold); }
@@ -327,7 +332,7 @@
       .hero-headline { font-size: 2rem; }
       .hero-grid { grid-template-columns: 1fr; gap: 32px; text-align: center; }
       .hero-text { order: 1; }
-      .hero-video-wrap { order: 0; max-width: 400px; margin: 0 auto; }
+      .hero-image-wrap { order: 0; max-width: 400px; margin: 0 auto; }
       .about-grid { grid-template-columns: 1fr; gap: 32px; }
       .about-image { text-align: center; }
       .about-image img { max-width: 280px; }
@@ -345,7 +350,6 @@
       .next-image img { max-width: 300px; }
       .divider img { width: 260px; }
       .faq-inner h2 { margin-bottom: 32px; }
-      .botanical { opacity: 0.2; }
       .nav-links { display: none; }
       .hamburger { display: flex; }
     }
@@ -377,7 +381,7 @@
       cursor: pointer;
       text-align: left;
       padding: 22px 4px;
-      font-family: 'Lora', Georgia, serif;
+      font-family: 'Creato Display', Georgia, serif;
       font-size: 1.05rem;
       font-weight: 600;
       color: var(--text);
@@ -460,11 +464,8 @@
         <p>But the ones who know what they're building - and why it matters.</p>
       </div>
     </div>
-    <div class="hero-video-wrap">
-      <script src="https://fast.wistia.com/player.js" async></script>
-      <script src="https://fast.wistia.com/embed/9juvnwy87i.js" async type="module"></script>
-      <style>wistia-player[media-id='9juvnwy87i']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/9juvnwy87i/swatch'); display: block; filter: blur(5px); padding-top:50.63%; }</style>
-      <wistia-player media-id="9juvnwy87i" aspect="1.9753086419753085"><div class="wistia_preload_transcript_outer_wrapper" style="width: 100%; height: 100%; display:flex; justify-content:center; align-items: center; margin-top:-50.63%;"><div class="wistia_preload_transcript_inner_wrapper" style=" overflow: auto;"><p class="wistia_preload_transcript_text" aria-hidden="true" tabindex="-1" style="text-align: justify; font-size: 5px !important;">Hi. My name is Jan, and in this video, I'm going to share with you how I might be able to help you. So thank you for your interest in that. And, yeah, it's it's very funny in a way that I'm doing this work now since seven years, and I still haven't found the perfect way to explain what it actually is. Because usually, I give someone an experience to receive my coaching, and then they just know themselves if it's helpful or not. But let's give it a shot here. And what I want to focus on is this piece here, the holistic business coaching. Because holistic, I use it in two different ways. The first way is let's start with that. Holistic business coaching, like, yes, business coaching, and most of my clients, they have their own business, and they have a specific goal with their business. They wanna bring it to the next level. They wanna make more money with their business, bigger impact, and that's cool. We can have a laser focus on one specific outcome, and still, it does make sense a lot of the time to look at the person, the founder, the CEO in a more holistic way because all areas of life are interconnected. How we show up in business has to do with how our energy levels in general, our mental clarity, our relationships. So there's this. The other part that I feel very passionate about is, yes, let's focus on your business and creating an even bigger impact in the world. But and this is the vision here for the world. Right? Protecting nature, transitioning to regenerative agriculture. Those are all just examples. Building community, education. There's so many different ways we can contribute that I feel aligned with and, yeah, passionate about. But then there's also this. I don't want anyone, especially people who run an impact driven business, to sacrifice themselves for it. So your own well-being, the your own life, the qualities of your relationship, your health and fitness, financial freedom, whatever you desire, let's also bring that onto the table. And let's tackle both of them. So that we make sure that we don't have your private fulfillment and life fall to the wayside because you're focusing too much on the business or the other way around. So it's holistic in this way. And then it's holistic because we're working on multiple different layers. There is the goals, the milestones, creating an action plan, the road map. Awesome. Right? More clarity, more focus. Cool. Then we have accountability. Pretty straightforward, but it just helps. We all want to avoid the things that we don't wanna do, that are outside of our comfort zone. And having me there as an accountability coach and partner who checks in week after week, we are aligned, and we make sure that you don't get distracted and the thing that was really important doesn't happen at all. That's there. Then environment here means how can you optimize your environment so that the things that you don't want to do, that there's more friction. Right? That might be scrolling on social media. Right? So your digital environment, it might be the people that don't really lift you up, that struggle to believe in you and in your mission. Know, removing those people from your environment a little bit more and surrounding yourself with people who really believe in you, who see the potential, who see your power. Yeah. So there's different kinds of environments and just optimizing them so that they energize us and not drain our energy. That also has to do with what are the tasks that you are doing that maybe you can outsource. Then I, of course, I help with decisions. As founders, entrepreneurs, CEOs, we need to make a lot of decisions, and sometimes it helps to have aspiring partners to just be quicker with making decisions, and therefore, the business can move forward faster. Then we go to a deeper lay layer, which is meaning making. What is the meaning that we attach to things that happen in our business with our cofounders, with investors, with our employees? Because the stories that we tell, they shape the experience that we have, the emotional experience. So that work is very profound and very impactful, and it links to the last one here, which is identity, which is the meaning that we hold about ourselves. And when we want to get to a new level in our business, usually, that goes along with a shift in identity that we need to make. Maybe we need to learn to delegate more. Maybe we need to, yeah, stop micromanaging so much and letting other people step up into leadership. And that comes with a shift in our identity so that when we shift our identity, our behavior, and our actions, they naturally change rather than trying to stay who we are but get different results by by by acting in a different way, much, much harder to do that. So that's it for now. There's a lot more I could share. And if you're curious, just get in touch with me, and then I can explain more. And, if it makes sense, I will just gift you a coaching session. We will block out ninety minutes, and I'm just there to help you as much as I can. And if it makes sense after that, we can continue the conversation to see if we want to properly partner up and go on a bigger journey together where I help you scale your business, have more impact, and have fun and enjoyment along the way. Alright. Talk soon.</p></div></div></wistia-player>
+    <div class="hero-image-wrap">
+      <img src="images/hero.png" alt="Jan Trautwein in nature">
     </div>
   </div>
 </section>
@@ -506,7 +507,6 @@
 <div class="divider divider-left"><img src="images/divider-left-1.png" alt=""></div>
 
 <section id="reality">
-  <div class="botanical" style="top: -20px; right: 30px; width: 80px; transform: rotate(15deg);"><img src="images/botanical-reality.png" alt=""></div>
   <div class="reality-text">
     <div class="section-label">The Reality</div>
     <h2>The AI space is one of the most exciting places to be building right now.</h2>
@@ -519,14 +519,13 @@
     <p>The people who thrive long-term aren't the ones who moved fastest. They're the ones who knew what they were actually building, and why, and could hold that steady when everything around them kept shifting.</p>
   </div>
   <div style="text-align: center; margin-top: 2.5rem;">
-    <a href="client-voices.html" style="font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;">More Client Voices &rarr;</a>
+    <a href="client-voices.html" style="font-family: 'Creato Display', sans-serif; font-size: 0.9rem; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;">More Client Voices &rarr;</a>
   </div>
 </section>
 
 <div class="divider divider-right"><img src="images/divider-right-1.png" alt=""></div>
 
 <section id="who-i-am">
-  <div class="botanical" style="bottom: 40px; left: 20px; width: 70px; transform: rotate(-10deg);"><img src="images/botanical-who.png" alt=""></div>
   <div class="about-grid">
     <div class="about-image"><img src="images/about-photo.png" alt="Jan Trautwein"></div>
     <div class="about-text">
@@ -550,7 +549,6 @@
 <div class="divider divider-left"><img src="images/divider-left-2.png" alt=""></div>
 
 <section id="how-i-work">
-  <div class="botanical" style="top: 20px; right: 40px; width: 65px; transform: rotate(20deg);"><img src="images/botanical-how.png" alt=""></div>
   <div class="how-grid">
     <div class="how-text">
       <div class="section-label">How I Work</div>
@@ -567,7 +565,6 @@
 <div class="divider divider-right"><img src="images/divider-right-2.png" alt=""></div>
 
 <section id="holistic">
-  <div class="botanical" style="bottom: 60px; left: 10px; width: 75px; transform: rotate(5deg);"><img src="images/botanical-holistic.png" alt=""></div>
   <div class="holistic-intro">
     <div class="section-label">A Holistic Approach to Growth</div>
     <h2>It's both and.</h2>
@@ -603,7 +600,6 @@
 <div class="divider divider-left"><img src="images/divider-left-3.png" alt=""></div>
 
 <section id="voices">
-  <div class="botanical" style="top: 10px; right: 20px; width: 70px; transform: rotate(-15deg);"><img src="images/botanical-voices.png" alt=""></div>
   <div class="container" style="text-align: center; margin-bottom: 2.5rem;">
     <div class="section-label">Client Voices</div>
   </div>
@@ -629,7 +625,7 @@
     </div>
   </div>
   <div style="text-align: center; margin-top: 2.5rem;">
-    <a href="client-voices.html" style="font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;">More Client Voices &rarr;</a>
+    <a href="client-voices.html" style="font-family: 'Creato Display', sans-serif; font-size: 0.9rem; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;">More Client Voices &rarr;</a>
   </div>
   <script>
   (function() {

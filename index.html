@@ -333,12 +333,13 @@
     @media (max-width: 900px) {
       :root { --section-py: 72px; }
       h2 { font-size: 1.8rem; }
-      .hero-headline { font-size: 2rem; }
-      #hero { display: flex; flex-direction: column; }
-      .hero-text-wrap { position: relative; order: 1; padding: 36px 5% 28px; align-items: flex-start; }
-      .hero-img-wrap { order: 2; overflow: hidden; }
-      .hero-img-wrap img { height: 260px; object-fit: cover; object-position: center center; }
+      .hero-headline { font-size: 1.55rem; }
+      #hero { min-height: 360px; }
+      .hero-img-wrap { position: absolute; inset: 0; }
+      .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+      .hero-text-wrap { padding: 28px 5% 28px; align-items: flex-start; }
       .hero-text { max-width: 100%; padding: 0; }
+      #hero::before { background: linear-gradient(135deg, rgba(218,231,222,0.93) 42%, rgba(218,231,222,0.55) 68%, transparent 88%); }
       .about-grid { grid-template-columns: 1fr; gap: 32px; }
       .about-image { text-align: center; }
       .about-image img { max-width: 280px; }
@@ -363,7 +364,7 @@
     @media (max-width: 600px) {
       body { font-size: 16px; }
       h2 { font-size: 1.55rem; }
-      .hero-headline { font-size: 1.65rem; }
+      .hero-headline { font-size: 1.3rem; }
 
       .divider img { width: 200px; }
     }

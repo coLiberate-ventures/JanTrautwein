@@ -11,8 +11,8 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #E9EFE2; --bg2: #F4F7EF; --text: #1A1F17; --muted: #5A6356;
-      --gold: #FAB700; --gold-hover: #E5A800; --border: #D0DAC8; --max-w: 720px; --section-py: 60px;
+      --bg: #DAE7DE; --bg2: #E8F0EA; --text: #1A2B28; --muted: #5A7872;
+      --gold: #FAB700; --gold-hover: #E5A800; --border: #B8CEC9; --max-w: 720px; --section-py: 60px;
     }
     html { scroll-behavior: smooth; line-height: 1.7; font-size: 17px; -webkit-font-smoothing: antialiased; }
     body { font-family: 'Inter', sans-serif; color: var(--muted); background-color: var(--bg); position: relative; }
@@ -38,7 +38,7 @@
     .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
 
     /* NAV */
-    nav { position: relative; top: 0; left: 0; right: 0; z-index: 100; background: rgba(233, 239, 226, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
+    nav { position: relative; top: 0; left: 0; right: 0; z-index: 100; background: rgba(218, 231, 222, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
     nav.scrolled { box-shadow: 0 2px 20px rgba(26, 31, 23, 0.06); }
     .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 60px; }
     .nav-logo { font-family: 'Lora', serif; font-size: 1.15rem; font-weight: 600; color: var(--text); text-decoration: none; }
@@ -98,8 +98,8 @@
     .influences { font-family: 'Lora', serif; font-style: italic; font-size: 0.95rem; color: var(--muted); line-height: 1.8; }
 
     /* FOOTER */
-    footer { background: var(--text); color: rgba(233,239,226,0.45); padding: 48px 24px; text-align: center; font-size: 0.85rem; }
-    footer a { color: rgba(233,239,226,0.65); }
+    footer { background: var(--text); color: rgba(218,231,222,0.45); padding: 48px 24px; text-align: center; font-size: 0.85rem; }
+    footer a { color: rgba(218,231,222,0.65); }
     footer a:hover { color: var(--gold); }
 
     /* RESPONSIVE */
@@ -123,6 +123,7 @@
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">Jan Trautwein</a>
     <div class="nav-links">
+      <a href="story.html">My Story</a>
       <a href="client-voices.html">Client Voices</a>
       <a href="worldview.html">Worldview</a>
       <a href="https://call.coliberate.ventures/15-min" target="_blank" class="nav-cta">Let's Talk</a>
@@ -135,6 +136,7 @@
 
 <div class="menu-overlay" id="menuOverlay"></div>
 <div class="mobile-menu" id="mobileMenu">
+  <a href="story.html">My Story</a>
   <a href="client-voices.html">Client Voices</a>
   <a href="worldview.html">Worldview</a>
   <a href="https://call.coliberate.ventures/15-min" target="_blank">Let's Talk</a>

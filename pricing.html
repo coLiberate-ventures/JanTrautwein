@@ -11,13 +11,13 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #E9EFE2;
-      --bg2: #F4F7EF;
-      --text: #1A1F17;
-      --muted: #5A6356;
+      --bg: #DAE7DE;
+      --bg2: #E8F0EA;
+      --text: #1A2B28;
+      --muted: #5A7872;
       --gold: #FAB700;
       --gold-hover: #E5A800;
-      --border: #D0DAC8;
+      --border: #B8CEC9;
       --max-w: 900px;
       --section-py: 80px;
     }
@@ -51,7 +51,7 @@
     /* NAV */
     nav {
       position: relative; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(233, 239, 226, 0.95);
+      background: rgba(218, 231, 222, 0.95);
       backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
@@ -75,7 +75,7 @@
       .hamburger { display: block; }
       .mobile-menu {
         display: none; position: absolute; top: 60px; left: 0; right: 0;
-        background: rgba(233,239,226,0.98); border-bottom: 1px solid var(--border);
+        background: rgba(218,231,222,0.98); border-bottom: 1px solid var(--border);
         padding: 20px 32px; flex-direction: column; gap: 16px; z-index: 200;
       }
       .mobile-menu.open { display: flex; }
@@ -125,14 +125,14 @@
     .tier-card:hover { box-shadow: 0 8px 32px rgba(26,31,23,0.08); transform: translateY(-2px); }
     .tier-card.featured {
       background: var(--text); border-color: var(--text);
-      color: rgba(233,239,226,0.85);
+      color: rgba(218,231,222,0.85);
     }
     .tier-card.featured .tier-name { color: var(--gold); }
     .tier-card.featured .tier-duration,
     .tier-card.featured .tier-cadence,
-    .tier-card.featured .tier-footnote { color: rgba(233,239,226,0.6); }
-    .tier-card.featured .tier-price-main { color: #E9EFE2; }
-    .tier-card.featured .tier-price-alt { color: rgba(233,239,226,0.65); }
+    .tier-card.featured .tier-footnote { color: rgba(218,231,222,0.6); }
+    .tier-card.featured .tier-price-main { color: #DAE7DE; }
+    .tier-card.featured .tier-price-alt { color: rgba(218,231,222,0.65); }
     .tier-badge {
       position: absolute; top: -13px; right: 24px;
       background: var(--gold); color: var(--text);
@@ -142,7 +142,7 @@
     .tier-name { font-family: 'Lora', serif; font-size: 1.4rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
     .tier-duration { font-size: 0.85rem; color: var(--muted); margin-bottom: 20px; font-weight: 500; }
     .tier-price { margin-bottom: 20px; border-top: 1px solid var(--border); padding-top: 20px; }
-    .tier-card.featured .tier-price { border-color: rgba(233,239,226,0.15); }
+    .tier-card.featured .tier-price { border-color: rgba(218,231,222,0.15); }
     .tier-price-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
     .tier-price-main { font-family: 'Lora', serif; font-size: 1.9rem; font-weight: 600; color: var(--text); line-height: 1.1; }
     .tier-price-alt { font-size: 0.88rem; color: var(--muted); margin-top: 6px; }
@@ -178,8 +178,8 @@
     .cta-button:hover { background: var(--gold-hover); color: var(--text); transform: translateY(-1px); }
 
     /* FOOTER */
-    footer { background: var(--text); color: rgba(233,239,226,0.45); padding: 40px 24px; text-align: center; font-size: 0.85rem; }
-    footer a { color: rgba(233,239,226,0.65); }
+    footer { background: var(--text); color: rgba(218,231,222,0.45); padding: 40px 24px; text-align: center; font-size: 0.85rem; }
+    footer a { color: rgba(218,231,222,0.65); }
     footer a:hover { color: var(--gold); }
   </style>
 </head>

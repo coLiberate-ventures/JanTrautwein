@@ -11,13 +11,13 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #E9EFE2;
-      --bg2: #F4F7EF;
-      --text: #1A1F17;
-      --muted: #5A6356;
+      --bg: #DAE7DE;
+      --bg2: #E8F0EA;
+      --text: #1A2B28;
+      --muted: #5A7872;
       --gold: #FAB700;
       --gold-hover: #E5A800;
-      --border: #D0DAC8;
+      --border: #B8CEC9;
       --max-w: 780px;
       --section-py: 100px;
     }
@@ -66,7 +66,7 @@
     /* NAV */
     nav {
       position: relative; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(233, 239, 226, 0.95);
+      background: rgba(218, 231, 222, 0.95);
       backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border); transition: box-shadow 0.3s;
     }
@@ -149,7 +149,7 @@
     .client-photo.placeholder {
       background: linear-gradient(135deg, #F5EBC9 0%, #FAB700 100%);
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Lora', serif; font-size: 1.6rem; color: #1A1F17; font-weight: 600;
+      font-family: 'Lora', serif; font-size: 1.6rem; color: #1A2B28; font-weight: 600;
       opacity: 0.55;
     }
     .client-name {
@@ -272,9 +272,9 @@
     .next-image img { width: 100%; max-width: 380px; border-radius: 4px; }
 
     /* FOOTER */
-    footer { background: var(--text); color: rgba(233,239,226,0.45); padding: 48px 24px; text-align: center; font-size: 0.85rem; }
-    footer a { color: rgba(233,239,226,0.65); }
-    footer a.muted-link { color: rgba(233,239,226,0.45); }
+    footer { background: var(--text); color: rgba(218,231,222,0.45); padding: 48px 24px; text-align: center; font-size: 0.85rem; }
+    footer a { color: rgba(218,231,222,0.65); }
+    footer a.muted-link { color: rgba(218,231,222,0.45); }
     footer a:hover { color: var(--gold); }
 
     /* BOTANICAL ACCENTS */
@@ -434,6 +434,7 @@
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">Jan Trautwein</a>
     <div class="nav-links">
+      <a href="story.html">My Story</a>
       <a href="client-voices.html">Client Voices</a>
       <a href="worldview.html">Worldview</a>
       <a href="https://contact.jantrautwein.com" target="_blank" class="nav-cta">Connect</a>
@@ -446,6 +447,7 @@
 
 <div class="menu-overlay" id="menuOverlay"></div>
 <div class="mobile-menu" id="mobileMenu">
+  <a href="story.html">My Story</a>
   <a href="client-voices.html">Client Voices</a>
   <a href="worldview.html">Worldview</a>
   <a href="https://contact.jantrautwein.com" target="_blank">Connect</a>

@@ -91,12 +91,43 @@
 
     /* FEATURED (full-width) */
     .featured-testimonial {
-      max-width: 700px; margin: 0 auto; padding: 48px 32px; text-align: center;
+      max-width: 780px; margin: 0 auto; padding: 48px 32px;
+    }
+    .featured-inner {
+      display: flex; flex-direction: row; align-items: flex-start; gap: 40px;
+    }
+    .featured-image {
+      flex: 0 0 auto; order: -1;
+    }
+    .featured-image img {
+      width: 160px; height: 160px; border-radius: 12px; object-fit: cover; display: block;
+    }
+    .featured-content {
+      flex: 1 1 0;
     }
     .featured-testimonial blockquote {
-      font-family: 'Lora', serif; font-style: italic; font-size: 1.1rem; line-height: 1.75; color: var(--muted); margin-bottom: 1.2rem;
+      font-family: 'Lora', serif; font-style: italic; font-size: 1.05rem; line-height: 1.75; color: var(--muted); margin-bottom: 1.2rem; text-align: left;
     }
-    .featured-testimonial .voice-attr { font-size: 0.88rem; }
+    .featured-attr {
+      font-family: 'Inter', sans-serif; font-size: 0.88rem; text-align: left;
+    }
+    .featured-attr strong {
+      display: block; font-weight: 600; color: var(--text);
+    }
+    .featured-attr .voice-role {
+      display: block; margin-top: 2px;
+    }
+    @media (max-width: 600px) {
+      .featured-inner {
+        flex-direction: column; align-items: flex-start; gap: 24px;
+      }
+      .featured-image {
+        order: 1;
+      }
+      .featured-image img {
+        width: 120px; height: 120px;
+      }
+    }
 
     /* CTA */
     .cta-section { text-align: center; padding: 60px 32px 100px; }
@@ -171,8 +202,18 @@
 
 <section style="padding: 40px 0;">
   <div class="featured-testimonial">
-    <blockquote>"I feel that I have grown professionally as well as personally in ways that I never expected. There are lessons that I've learned in communicating with you that I trust will serve me for years to come. Frankly, you could not put a price on these services. If you're an entrepreneur, a business person, or anyone looking to grow personally or professionally, I could not give a more glowing recommendation."</blockquote>
-    <div class="voice-attr">Alex Nicita</div>
+    <div class="featured-inner">
+      <div class="featured-content">
+        <blockquote>"I feel that I have grown professionally as well as personally in ways that I never expected. There are lessons that I've learned in communicating with you that I trust will serve me for years to come. Frankly, you could not put a price on these services. If you're an entrepreneur, a business person, or anyone looking to grow personally or professionally, I could not give a more glowing recommendation."</blockquote>
+        <div class="featured-attr">
+          <strong>Alex Nikita</strong>
+          <span class="voice-role">entrepreneur and AI builder</span>
+        </div>
+      </div>
+      <div class="featured-image">
+        <img src="images/cv-alex.jpg" alt="Alex Nikita">
+      </div>
+    </div>
   </div>
 </section>
 

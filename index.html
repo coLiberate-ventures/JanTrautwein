@@ -130,12 +130,12 @@
 
     /* FEATURED QUOTE */
     #featured-quote { padding: 30px 0 50px; }
-    .featured-quote-inner { max-width: 680px; margin: 0 auto; text-align: center; padding: 0 32px; }
+    .featured-quote-inner { max-width: 900px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; gap: 40px; text-align: left; }
     .featured-quote-inner blockquote {
       font-family: 'Lora', serif; font-size: 1.05rem; font-style: italic; color: var(--muted); line-height: 1.75;
     }
     .quote-attr { font-family: 'Inter', sans-serif; font-style: normal; font-size: 0.88rem; color: var(--muted); margin-top: 1rem; display: block; }
-    .quote-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; margin: 1rem auto 0; display: block; }
+    .quote-photo { width: 144px; height: 144px; border-radius: 50%; object-fit: cover; display: block; flex-shrink: 0; }
 
     /* WHO I WORK WITH */
     #who-i-work-with { padding: 50px 0 30px; }
@@ -351,6 +351,8 @@
       .hero-text-wrap { padding: 28px 5% 28px; align-items: flex-start; }
       .hero-text { max-width: 100%; padding: 0; }
       #hero::before { background: linear-gradient(135deg, rgba(218,231,222,0.93) 42%, rgba(218,231,222,0.55) 68%, transparent 88%); }
+      .featured-quote-inner { flex-direction: column; text-align: center; gap: 20px; }
+      .quote-photo { margin: 0 auto; }
       .hi-jan-grid { grid-template-columns: 1fr; gap: 28px; }
       .hi-jan-image { text-align: center; }
       .hi-jan-image img { max-width: 220px; margin: 0 auto; }
@@ -491,20 +493,6 @@
     </div>
   </div>
 </section>
-
-
-
-<section id="featured-quote">
-  <div class="featured-quote-inner">
-    <blockquote>
-      "I feel that I have grown professionally as well as personally in ways that I never expected. There are lessons that I've learned in communicating with Jan that I trust will serve me for years to come, and frankly, you could not put a price on these services."
-    </blockquote>
-    <span class="quote-attr">— Alex Nicita</span>
-    <img class="quote-photo" src="images/featured-quote.png" alt="Alex Nicita">
-  </div>
-</section>
-
-
 <section id="hi-jan">
   <div class="hi-jan-grid">
     <div class="hi-jan-text">
@@ -515,6 +503,19 @@
     </div>
     <div class="hi-jan-image">
       <img src="images/jan-profile.png" alt="Jan Trautwein">
+    </div>
+  </div>
+</section>
+
+
+<section id="featured-quote">
+  <div class="featured-quote-inner">
+    <img class="quote-photo" src="images/featured-quote.png" alt="Alex Nicita">
+    <div class="quote-content">
+      <blockquote>
+        "I feel that I have grown professionally as well as personally in ways that I never expected. There are lessons that I've learned in communicating with Jan that I trust will serve me for years to come, and frankly, you could not put a price on these services."
+      </blockquote>
+      <span class="quote-attr">— Alex Nicita</span>
     </div>
   </div>
 </section>

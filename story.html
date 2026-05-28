@@ -201,23 +201,16 @@
     .slideshow-slide img { width: 100%; height: 100%; display: block; }
     .slideshow-nav {
       position: absolute; top: 0; bottom: 0; width: 50%;
-      display: flex; align-items: center; z-index: 8;
-      background: transparent; border: none; padding: 0; margin: 0;
-      cursor: pointer; -webkit-tap-highlight-color: transparent;
-      transition: background 0.25s ease; touch-action: pan-y;
+      z-index: 8; background: transparent; border: none;
+      padding: 0; margin: 0; cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.25s ease; touch-action: pan-y; outline: none;
     }
-    .slideshow-nav.prev  { left: 0;  justify-content: flex-start; }
-    .slideshow-nav.next  { right: 0; justify-content: flex-end; }
-    .slideshow-nav .chev {
-      width: 44px; height: 44px; margin: 0 14px;
-      display: flex; align-items: center; justify-content: center;
-      color: rgba(244,247,239,0.96); border-radius: 50%;
-      background: rgba(26,31,23,0); opacity: 0;
-      transition: opacity 0.22s ease, background 0.22s ease, transform 0.18s ease;
-      pointer-events: none;
-    }
-    .slideshow-nav .chev svg { width: 22px; height: 22px; display: block; }
-    /* Desktop: elegant directional overlay + arrow on hover */
+    .slideshow-nav:focus, .slideshow-nav:focus-visible { outline: none; }
+    .photo-slideshow:focus, .photo-slideshow:focus-visible { outline: none; }
+    .slideshow-nav.prev  { left: 0; }
+    .slideshow-nav.next  { right: 0; }
+    /* Desktop: subtle directional darken on hover */
     @media (hover: hover) {
       .slideshow-nav.prev:hover {
         background: linear-gradient(to right, rgba(26,31,23,0.42), rgba(26,31,23,0) 62%);
@@ -225,17 +218,13 @@
       .slideshow-nav.next:hover {
         background: linear-gradient(to left, rgba(26,31,23,0.42), rgba(26,31,23,0) 62%);
       }
-      .slideshow-nav:hover .chev { opacity: 1; background: rgba(26,31,23,0.42); }
     }
-    /* Press feedback (click + tap) on all devices */
+    /* Press / tap darken feedback */
     .slideshow-nav.pressing.prev {
       background: linear-gradient(to right, rgba(26,31,23,0.6), rgba(26,31,23,0.04) 72%);
     }
     .slideshow-nav.pressing.next {
       background: linear-gradient(to left, rgba(26,31,23,0.6), rgba(26,31,23,0.04) 72%);
-    }
-    .slideshow-nav.pressing .chev {
-      opacity: 1; background: rgba(26,31,23,0.58); transform: scale(0.9);
     }
     .slideshow-dots {
       position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
@@ -561,16 +550,12 @@
 
     // Navigation zones (left half = prev, right half = next) - only when multiple images
     if (ch.images.length > 1) {
-      var chevL = '<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></span>';
-      var chevR = '<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>';
       var prev = document.createElement('button');
       prev.className = 'slideshow-nav prev';
       prev.setAttribute('aria-label', 'Previous photo');
-      prev.innerHTML = chevL;
       var next = document.createElement('button');
       next.className = 'slideshow-nav next';
       next.setAttribute('aria-label', 'Next photo');
-      next.innerHTML = chevR;
       sw.appendChild(prev);
       sw.appendChild(next);
     }

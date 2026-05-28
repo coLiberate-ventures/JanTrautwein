@@ -196,6 +196,17 @@
     .footnote-ref { color: inherit; text-decoration: none; font-size: 0.72em; vertical-align: super; line-height: 0; }
     .footnote-ref:hover { color: inherit; }
 
+
+    /* HI, I'M JAN */
+    .hi-jan-grid {
+      max-width: 900px; margin: 0 auto; padding: 0 32px;
+      display: grid; grid-template-columns: 1fr 300px; gap: 48px; align-items: center;
+    }
+    .hi-jan-text .section-label { margin-bottom: 0.6rem; }
+    .hi-jan-text h2 { font-family: 'Lora', serif; font-size: 1.6rem; font-weight: 500; margin-bottom: 1rem; color: var(--text); }
+    .hi-jan-text p { font-family: 'Inter', sans-serif; font-size: 1rem; line-height: 1.7; color: var(--muted); margin-bottom: 0.75rem; }
+    .hi-jan-image img { width: 100%; max-width: 300px; display: block; }
+
     /* ABOUT */
     .about-grid {
       max-width: 1000px; margin: 0 auto; padding: 0 32px;
@@ -340,6 +351,9 @@
       .hero-text-wrap { padding: 28px 5% 28px; align-items: flex-start; }
       .hero-text { max-width: 100%; padding: 0; }
       #hero::before { background: linear-gradient(135deg, rgba(218,231,222,0.93) 42%, rgba(218,231,222,0.55) 68%, transparent 88%); }
+      .hi-jan-grid { grid-template-columns: 1fr; gap: 28px; }
+      .hi-jan-image { text-align: center; }
+      .hi-jan-image img { max-width: 220px; margin: 0 auto; }
       .about-grid { grid-template-columns: 1fr; gap: 32px; }
       .about-image { text-align: center; }
       .about-image img { max-width: 280px; }
@@ -478,29 +492,7 @@
   </div>
 </section>
 
-<section id="who-i-work-with">
-  <div class="who-intro">
-    <div class="section-label">Who I Work With</div>
-    <h2>Founders, creators &amp; educators shaping what's next.</h2>
-  </div>
-  <div class="clients-grid">
-    <div class="client-card">
-      <img class="client-photo client-photo-img" data-toggle src="images/client-1.jpg" alt="Rui Vas">
-      <div class="client-name">Rui Vas</div>
-      <div class="client-role"><span class="client-role-title">AI Educator &amp; Founder</span><br>Teaches at <span class="org">Mindvalley</span>, runs his own AI program &amp; community</div>
-    </div>
-    <div class="client-card">
-      <img class="client-photo client-photo-img" data-toggle src="images/client-2.jpg" alt="Philippe Birker">
-      <div class="client-name">Philippe Birker</div>
-      <div class="client-role"><span class="client-role-title">Founder &amp; Community Builder</span><br>Behind <span class="org">ClimateFarmers</span> &amp; <span class="org">Love Foundation</span>, regenerating land &amp; people</div>
-    </div>
-    <div class="client-card">
-      <img class="client-photo client-photo-img" data-toggle src="images/client-3.jpg" alt="Kyle Findley-Meier">
-      <div class="client-name">Kyle Findley-Meier</div>
-      <div class="client-role"><span class="client-role-title">Co-Founder &amp; Builder</span><br>Currently shaping a <span class="org">secret AI startup</span> for the next wave of tools</div>
-    </div>
-  </div>
-</section>
+
 
 <section id="featured-quote">
   <div class="featured-quote-inner">
@@ -509,6 +501,21 @@
     </blockquote>
     <span class="quote-attr">— Alex Nicita</span>
     <img class="quote-photo" src="images/featured-quote.png" alt="Alex Nicita">
+  </div>
+</section>
+
+
+<section id="hi-jan">
+  <div class="hi-jan-grid">
+    <div class="hi-jan-text">
+      <div class="section-label">Hi, I'm Jan</div>
+      <p>I'm a business and life coach for founders and creators building in the AI space.</p>
+      <p>I help ambitious people grow with more clarity, direction, and purpose — without burning out or losing themselves in the process.</p>
+      <p>Based in Lisbon. Working with clients worldwide.</p>
+    </div>
+    <div class="hi-jan-image">
+      <img src="images/jan-profile.png" alt="Jan Trautwein">
+    </div>
   </div>
 </section>
 
@@ -564,6 +571,31 @@
       <p>I'm selective about who I work with. When I work with someone, I'm all in to support them and their mission and their life, so I choose my clients as carefully as they choose me.</p>
     </div>
     <div class="how-image"><img src="images/how-image.png" alt="Looking up through the trees"></div>
+  </div>
+</section>
+
+
+<section id="who-i-work-with">
+  <div class="who-intro">
+    <div class="section-label">Who I Work With</div>
+    <h2>Founders, creators &amp; educators shaping what's next.</h2>
+  </div>
+  <div class="clients-grid">
+    <div class="client-card">
+      <img class="client-photo client-photo-img" data-toggle src="images/client-1.jpg" alt="Rui Vas">
+      <div class="client-name">Rui Vas</div>
+      <div class="client-role"><span class="client-role-title">AI Educator &amp; Founder</span><br>Teaches at <span class="org">Mindvalley</span>, runs his own AI program &amp; community</div>
+    </div>
+    <div class="client-card">
+      <img class="client-photo client-photo-img" data-toggle src="images/client-2.jpg" alt="Philippe Birker">
+      <div class="client-name">Philippe Birker</div>
+      <div class="client-role"><span class="client-role-title">Founder &amp; Community Builder</span><br>Behind <span class="org">ClimateFarmers</span> &amp; <span class="org">Love Foundation</span>, regenerating land &amp; people</div>
+    </div>
+    <div class="client-card">
+      <img class="client-photo client-photo-img" data-toggle src="images/client-3.jpg" alt="Kyle Findley-Meier">
+      <div class="client-name">Kyle Findley-Meier</div>
+      <div class="client-role"><span class="client-role-title">Co-Founder &amp; Builder</span><br>Currently shaping a <span class="org">secret AI startup</span> for the next wave of tools</div>
+    </div>
   </div>
 </section>
 

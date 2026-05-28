@@ -199,44 +199,19 @@
     }
     .slideshow-slide.active { opacity: 1; pointer-events: auto; }
     .slideshow-slide img { width: 100%; height: 100%; display: block; }
-    .slideshow-nav {
-      position: absolute; top: 0; bottom: 0; width: 50%;
-      display: flex; align-items: center; z-index: 8;
-      background: transparent; border: none; padding: 0; margin: 0;
-      cursor: pointer; -webkit-tap-highlight-color: transparent;
-      transition: background 0.25s ease; touch-action: pan-y;
-    }
-    .slideshow-nav.prev  { left: 0;  justify-content: flex-start; }
-    .slideshow-nav.next  { right: 0; justify-content: flex-end; }
-    .slideshow-nav .chev {
-      width: 44px; height: 44px; margin: 0 14px;
+    .slideshow-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(26,31,23,0.32); color: rgba(244,247,239,0.92);
+      border: none; cursor: pointer; width: 38px; height: 38px;
+      border-radius: 50%; font-size: 1.5rem; line-height: 1;
       display: flex; align-items: center; justify-content: center;
-      color: rgba(244,247,239,0.96); border-radius: 50%;
-      background: rgba(26,31,23,0); opacity: 0;
-      transition: opacity 0.22s ease, background 0.22s ease, transform 0.18s ease;
-      pointer-events: none;
+      transition: background 0.18s, opacity 0.18s;
+      z-index: 10; opacity: 0; padding: 0;
     }
-    .slideshow-nav .chev svg { width: 22px; height: 22px; display: block; }
-    /* Desktop: elegant directional overlay + arrow on hover */
-    @media (hover: hover) {
-      .slideshow-nav.prev:hover {
-        background: linear-gradient(to right, rgba(26,31,23,0.42), rgba(26,31,23,0) 62%);
-      }
-      .slideshow-nav.next:hover {
-        background: linear-gradient(to left, rgba(26,31,23,0.42), rgba(26,31,23,0) 62%);
-      }
-      .slideshow-nav:hover .chev { opacity: 1; background: rgba(26,31,23,0.42); }
-    }
-    /* Press feedback (click + tap) on all devices */
-    .slideshow-nav.pressing.prev {
-      background: linear-gradient(to right, rgba(26,31,23,0.6), rgba(26,31,23,0.04) 72%);
-    }
-    .slideshow-nav.pressing.next {
-      background: linear-gradient(to left, rgba(26,31,23,0.6), rgba(26,31,23,0.04) 72%);
-    }
-    .slideshow-nav.pressing .chev {
-      opacity: 1; background: rgba(26,31,23,0.58); transform: scale(0.9);
-    }
+    .photo-slideshow:hover .slideshow-arrow { opacity: 0.7; }
+    .slideshow-arrow:hover { background: rgba(26,31,23,0.62) !important; opacity: 1 !important; }
+    .slideshow-arrow.prev { left: 10px; }
+    .slideshow-arrow.next { right: 10px; }
     .slideshow-dots {
       position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
       display: flex; gap: 6px; z-index: 10;
@@ -559,21 +534,17 @@
     });
     sw.appendChild(track);
 
-    // Navigation zones (left half = prev, right half = next) - only when multiple images
-    if (ch.images.length > 1) {
-      var chevL = '<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></span>';
-      var chevR = '<span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>';
-      var prev = document.createElement('button');
-      prev.className = 'slideshow-nav prev';
-      prev.setAttribute('aria-label', 'Previous photo');
-      prev.innerHTML = chevL;
-      var next = document.createElement('button');
-      next.className = 'slideshow-nav next';
-      next.setAttribute('aria-label', 'Next photo');
-      next.innerHTML = chevR;
-      sw.appendChild(prev);
-      sw.appendChild(next);
-    }
+    // Arrows
+    var prev = document.createElement('button');
+    prev.className = 'slideshow-arrow prev';
+    prev.setAttribute('aria-label', 'Previous photo');
+    prev.innerHTML = '&#8249;';
+    var next = document.createElement('button');
+    next.className = 'slideshow-arrow next';
+    next.setAttribute('aria-label', 'Next photo');
+    next.innerHTML = '&#8250;';
+    sw.appendChild(prev);
+    sw.appendChild(next);
 
     // Dots (if more than 1 image)
     if (ch.images.length > 1) {
@@ -590,14 +561,13 @@
   });
 
   // Initialize adaptive-height carousels
-  var SLIDESHOWS = [];
   document.querySelectorAll('.photo-slideshow').forEach(function(sw) {
     var slides = Array.from(sw.querySelectorAll('.slideshow-slide'));
     if (!slides.length) return;
     var imgs  = slides.map(function(s) { return s.querySelector('img'); });
     var dots  = Array.from(sw.querySelectorAll('.slideshow-dot'));
-    var prevBtn = sw.querySelector('.slideshow-nav.prev');
-    var nextBtn = sw.querySelector('.slideshow-nav.next');
+    var prevBtn = sw.querySelector('.slideshow-arrow.prev');
+    var nextBtn = sw.querySelector('.slideshow-arrow.next');
     var total = slides.length;
     var current = 0;
 
@@ -639,73 +609,20 @@
       firstImg.addEventListener('load', function() { updateHeight(0); }, { once: true });
     }
 
-    // Tap / click navigation + press-darkening feedback
-    var suppressClickUntil = 0;
-    function bindNav(btn, dir) {
-      if (!btn) return;
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (Date.now() < suppressClickUntil) return;
-        go(current + dir);
-      });
-      btn.addEventListener('pointerdown', function() { btn.classList.add('pressing'); });
-      ['pointerup', 'pointerleave', 'pointercancel'].forEach(function(ev) {
-        btn.addEventListener(ev, function() { btn.classList.remove('pressing'); });
-      });
-    }
-    bindNav(prevBtn, -1);
-    bindNav(nextBtn, 1);
-    dots.forEach(function(d, i) { d.addEventListener('click', function(e) { e.stopPropagation(); go(i); }); });
+    // Buttons
+    if (prevBtn) prevBtn.addEventListener('click', function(e) { e.stopPropagation(); go(current - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function(e) { e.stopPropagation(); go(current + 1); });
+    dots.forEach(function(d, i) { d.addEventListener('click', function() { go(i); }); });
 
-    // Swipe (touch): horizontal drag changes image
-    var tStartX = 0, tStartY = 0, tracking = false;
-    sw.addEventListener('touchstart', function(e) {
-      if (e.touches.length !== 1) { tracking = false; return; }
-      tStartX = e.touches[0].clientX;
-      tStartY = e.touches[0].clientY;
-      tracking = true;
-    }, { passive: true });
-    sw.addEventListener('touchend', function(e) {
-      if (!tracking) return;
-      tracking = false;
-      var t = e.changedTouches[0];
-      var dx = t.clientX - tStartX;
-      var dy = t.clientY - tStartY;
-      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
-        suppressClickUntil = Date.now() + 450;
-        go(current + (dx < 0 ? 1 : -1));
-      }
-    }, { passive: true });
+    // Keyboard nav (when slideshow is focused)
+    sw.tabIndex = 0;
+    sw.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); go(current - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(current + 1); }
+    });
 
     // Resize: recalculate height for current image
     window.addEventListener('resize', function() { updateHeight(current); });
-
-    // Register for global keyboard control
-    sw.tabIndex = 0;
-    SLIDESHOWS.push({ el: sw, step: function(d) { go(current + d); } });
-  });
-
-  // Global keyboard: left/right controls whichever slideshow is centered in view
-  function activeSlideshow() {
-    var vh = window.innerHeight || document.documentElement.clientHeight;
-    var center = vh / 2, best = null, bestDist = Infinity;
-    SLIDESHOWS.forEach(function(s) {
-      var r = s.el.getBoundingClientRect();
-      if (r.bottom < 40 || r.top > vh - 40) return;
-      var cy = r.top + r.height / 2;
-      var d = Math.abs(cy - center);
-      if (d < bestDist) { bestDist = d; best = s; }
-    });
-    return best;
-  }
-  document.addEventListener('keydown', function(e) {
-    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-    var tag = (e.target.tagName || '').toLowerCase();
-    if (tag === 'input' || tag === 'textarea' || e.target.isContentEditable) return;
-    var s = activeSlideshow();
-    if (!s) return;
-    e.preventDefault();
-    s.step(e.key === 'ArrowLeft' ? -1 : 1);
   });
 
   // Nav scroll shadow

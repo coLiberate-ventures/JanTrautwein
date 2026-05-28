@@ -86,22 +86,10 @@
     .nav-cta:hover { background: var(--gold-hover); color: var(--text); }
 
     /* HERO */
-    #hero { position: relative; overflow: hidden; padding: 0; }
-    .hero-img-wrap { width: 100%; line-height: 0; }
-    .hero-img-wrap img { display: block; width: 100%; height: auto; }
-    #hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to right, rgba(218,231,222,0.82) 38%, rgba(218,231,222,0.2) 62%, transparent 80%);
-      z-index: 1; pointer-events: none;
-    }
-    .hero-text-wrap {
-      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      display: flex; align-items: center;
-      pointer-events: none; z-index: 2;
-    }
-    .hero-text {
-      max-width: 520px; padding: 0 0 0 6%;
-      pointer-events: auto;
+    #hero { padding-top: 60px; padding-bottom: 40px; }
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+      max-width: 1100px; margin: 0 auto; padding: 0 32px;
     }
     .hero-headline {
       font-family: 'Lora', serif; font-size: 2.6rem; line-height: 1.25;
@@ -127,6 +115,11 @@
     .rotator-word.instant::after { transition: none; }
     .hero-subtitle { font-family: 'Lora', serif; font-size: 1.15rem; line-height: 1.65; color: var(--muted); }
     .hero-subtitle p { margin-bottom: 0.5rem; }
+
+    .hero-video-wrap {
+      position: relative; border-radius: 6px; overflow: hidden; background: var(--bg2);
+    }
+    .hero-video-wrap wistia-player { display: block; width: 100%; border-radius: 6px; }
 
     /* FEATURED QUOTE */
     #featured-quote { padding: 30px 0 50px; }
@@ -199,14 +192,14 @@
       max-width: 1000px; margin: 0 auto; padding: 0 32px;
       display: grid; grid-template-columns: 320px 1fr; gap: 60px; align-items: start;
     }
-    .about-image img { width: 100%; }
+    .about-image img { width: 100%; border-radius: 4px; }
 
     /* HOW I WORK */
     .how-grid {
       max-width: 1000px; margin: 0 auto; padding: 0 32px;
       display: grid; grid-template-columns: 1fr 300px; gap: 60px; align-items: start;
     }
-    .how-image img { width: 100%; }
+    .how-image img { width: 100%; border-radius: 4px; }
 
     /* HOLISTIC */
     .holistic-intro { max-width: var(--max-w); margin: 0 auto 2rem; padding: 0 32px; text-align: center; }
@@ -234,14 +227,14 @@
     }
     .voices-photo-cell img {
       width: 100%; height: 100%; object-fit: cover; display: block;
-      filter: none;
+      filter: grayscale(100%);
       transition: filter 0.4s ease;
     }
     .voices-photo-cell.active {
-      border-color: var(--gold);
+      border-color: transparent;
     }
     .voices-photo-cell.active img {
-      filter: brightness(1.12);
+      filter: grayscale(0%);
     }
     .voices-testimonial {
       flex: 1; display: flex; flex-direction: column; justify-content: center;
@@ -276,7 +269,7 @@
       transition: background 0.2s, transform 0.2s; margin-top: 1rem;
     }
     .cta-button:hover { background: var(--gold-hover); color: var(--text); transform: translateY(-1px); }
-    .next-image img { width: 100%; max-width: 380px; }
+    .next-image img { width: 100%; max-width: 380px; border-radius: 4px; }
 
     /* FOOTER */
     footer { background: var(--text); color: rgba(218,231,222,0.45); padding: 48px 24px; text-align: center; font-size: 0.85rem; }
@@ -332,11 +325,9 @@
       :root { --section-py: 72px; }
       h2 { font-size: 1.8rem; }
       .hero-headline { font-size: 2rem; }
-      #hero { display: flex; flex-direction: column; }
-      .hero-text-wrap { position: relative; order: 1; padding: 36px 5% 28px; align-items: flex-start; }
-      .hero-img-wrap { order: 2; overflow: hidden; }
-      .hero-img-wrap img { height: 260px; object-fit: cover; object-position: center center; }
-      .hero-text { max-width: 100%; padding: 0; }
+      .hero-grid { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+      .hero-text { order: 1; }
+      .hero-video-wrap { order: 0; max-width: 400px; margin: 0 auto; }
       .about-grid { grid-template-columns: 1fr; gap: 32px; }
       .about-image { text-align: center; }
       .about-image img { max-width: 280px; }
@@ -362,6 +353,7 @@
       body { font-size: 16px; }
       h2 { font-size: 1.55rem; }
       .hero-headline { font-size: 1.65rem; }
+      #hero { padding-top: 40px; }
 
       .divider img { width: 200px; }
     }
@@ -462,16 +454,19 @@
 </div>
 
 <section id="hero">
-  <div class="hero-img-wrap">
-    <img src="images/hero-image.png" alt="Jan Trautwein — coaching for heart-led founders">
-  </div>
-  <div class="hero-text-wrap">
+  <div class="hero-grid">
     <div class="hero-text">
       <h1 class="hero-headline">The AI age needs <span class="rotator-wrap"><span class="rotator-word" id="rotatorWord">founders</span></span> who build toward the <strong>more beautiful world</strong> our hearts know is possible.</h1>
       <div class="hero-subtitle">
         <p>The ones who will get us there aren't the ones moving fastest.</p>
         <p>But the ones who know what they're building - and why it matters.</p>
       </div>
+    </div>
+    <div class="hero-video-wrap">
+      <script src="https://fast.wistia.com/player.js" async></script>
+      <script src="https://fast.wistia.com/embed/9juvnwy87i.js" async type="module"></script>
+      <style>wistia-player[media-id='9juvnwy87i']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/9juvnwy87i/swatch'); display: block; filter: blur(5px); padding-top:50.63%; }</style>
+      <wistia-player media-id="9juvnwy87i" aspect="1.9753086419753085"><div class="wistia_preload_transcript_outer_wrapper" style="width: 100%; height: 100%; display:flex; justify-content:center; align-items: center; margin-top:-50.63%;"><div class="wistia_preload_transcript_inner_wrapper" style=" overflow: auto;"><p class="wistia_preload_transcript_text" aria-hidden="true" tabindex="-1" style="text-align: justify; font-size: 5px !important;">Hi. My name is Jan, and in this video, I'm going to share with you how I might be able to help you. So thank you for your interest in that. And, yeah, it's it's very funny in a way that I'm doing this work now since seven years, and I still haven't found the perfect way to explain what it actually is. Because usually, I give someone an experience to receive my coaching, and then they just know themselves if it's helpful or not. But let's give it a shot here. And what I want to focus on is this piece here, the holistic business coaching. Because holistic, I use it in two different ways. The first way is let's start with that. Holistic business coaching, like, yes, business coaching, and most of my clients, they have their own business, and they have a specific goal with their business. They wanna bring it to the next level. They wanna make more money with their business, bigger impact, and that's cool. We can have a laser focus on one specific outcome, and still, it does make sense a lot of the time to look at the person, the founder, the CEO in a more holistic way because all areas of life are interconnected. How we show up in business has to do with how our energy levels in general, our mental clarity, our relationships. So there's this. The other part that I feel very passionate about is, yes, let's focus on your business and creating an even bigger impact in the world. But and this is the vision here for the world. Right? Protecting nature, transitioning to regenerative agriculture. Those are all just examples. Building community, education. There's so many different ways we can contribute that I feel aligned with and, yeah, passionate about. But then there's also this. I don't want anyone, especially people who run an impact driven business, to sacrifice themselves for it. So your own well-being, the your own life, the qualities of your relationship, your health and fitness, financial freedom, whatever you desire, let's also bring that onto the table. And let's tackle both of them. So that we make sure that we don't have your private fulfillment and life fall to the wayside because you're focusing too much on the business or the other way around. So it's holistic in this way. And then it's holistic because we're working on multiple different layers. There is the goals, the milestones, creating an action plan, the road map. Awesome. Right? More clarity, more focus. Cool. Then we have accountability. Pretty straightforward, but it just helps. We all want to avoid the things that we don't wanna do, that are outside of our comfort zone. And having me there as an accountability coach and partner who checks in week after week, we are aligned, and we make sure that you don't get distracted and the thing that was really important doesn't happen at all. That's there. Then environment here means how can you optimize your environment so that the things that you don't want to do, that there's more friction. Right? That might be scrolling on social media. Right? So your digital environment, it might be the people that don't really lift you up, that struggle to believe in you and in your mission. Know, removing those people from your environment a little bit more and surrounding yourself with people who really believe in you, who see the potential, who see your power. Yeah. So there's different kinds of environments and just optimizing them so that they energize us and not drain our energy. That also has to do with what are the tasks that you are doing that maybe you can outsource. Then I, of course, I help with decisions. As founders, entrepreneurs, CEOs, we need to make a lot of decisions, and sometimes it helps to have aspiring partners to just be quicker with making decisions, and therefore, the business can move forward faster. Then we go to a deeper lay layer, which is meaning making. What is the meaning that we attach to things that happen in our business with our cofounders, with investors, with our employees? Because the stories that we tell, they shape the experience that we have, the emotional experience. So that work is very profound and very impactful, and it links to the last one here, which is identity, which is the meaning that we hold about ourselves. And when we want to get to a new level in our business, usually, that goes along with a shift in identity that we need to make. Maybe we need to learn to delegate more. Maybe we need to, yeah, stop micromanaging so much and letting other people step up into leadership. And that comes with a shift in our identity so that when we shift our identity, our behavior, and our actions, they naturally change rather than trying to stay who we are but get different results by by by acting in a different way, much, much harder to do that. So that's it for now. There's a lot more I could share. And if you're curious, just get in touch with me, and then I can explain more. And, if it makes sense, I will just gift you a coaching session. We will block out ninety minutes, and I'm just there to help you as much as I can. And if it makes sense after that, we can continue the conversation to see if we want to properly partner up and go on a bigger journey together where I help you scale your business, have more impact, and have fun and enjoyment along the way. Alright. Talk soon.</p></div></div></wistia-player>
     </div>
   </div>
 </section>
@@ -531,7 +526,7 @@
 
 <section id="who-i-am">
   <div class="about-grid">
-    <div class="about-image"><img src="images/about-photo.png" alt="Jan Trautwein"></div>
+    <div class="about-image"><img src="images/about-photo.jpg" alt="Jan Trautwein"></div>
     <div class="about-text">
       <div class="section-label">Who I Am</div>
       <p>I value contribution, freedom and autonomy.</p>
@@ -561,7 +556,7 @@
       <p>Sessions happen over video call or over audio while we're both outside walking in nature. The best conversations don't always happen sitting down.</p>
       <p>I'm selective about who I work with. When I work with someone, I'm all in to support them and their mission and their life, so I choose my clients as carefully as they choose me.</p>
     </div>
-    <div class="how-image"><img src="images/how-image.png" alt="Looking up through the trees"></div>
+    <div class="how-image"><img src="images/how-image.jpg" alt="Looking up through the trees"></div>
   </div>
 </section>
 
@@ -572,7 +567,7 @@
     <h2>It's both and.</h2>
     <p>Building in the AI space means your attention is naturally pulled outward - new tools, new opportunities, new decisions every week. That matters, and you'll have my full support there. But lasting progress requires looking at the full picture - your business, your mindset, your patterns, your vision.</p>
   </div>
-  <div class="holistic-image-wrap"><img src="images/holistic-image.png" alt="A holistic approach — sky, water, earth"></div>
+  <div class="holistic-image-wrap"><img src="images/holistic-image.jpg" alt="A holistic approach — sky, water, earth"></div>
   <div class="holistic-areas">
     <p>We move between the following areas as needed. Some weeks it's strategy and priorities. Others it's the deeper internal work.</p>
     <div class="holistic-area">
@@ -785,7 +780,7 @@
       <h2>If any of what you've read here resonates, let's talk.</h2>
       <a href="https://contact.jantrautwein.com" target="_blank" class="cta-button">Connect</a>
     </div>
-    <div class="next-image"><img src="images/next-image.png" alt="An open door leading to a green path"></div>
+    <div class="next-image"><img src="images/next-image.jpg" alt="An open door leading to a green path"></div>
   </div>
 </section>
 

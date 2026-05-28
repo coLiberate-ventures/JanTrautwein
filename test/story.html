@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Story — Jan Trautwein</title>
+  <meta name="description" content="A timeline of the moments and turning points that shaped Jan Trautwein's life and work.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #DAE7DE;
+      --bg2: #E8F0EA;
+      --text: #1A2B28;
+      --heading: #2A3F3A;
+      --muted: #5A7872;
+      --border: #B8CEC9;
+      --highlight: #B8CEC9;
+      --gold: #FAB700;
+      --gold-hover: #E5A800;
+      --max-w: 880px;
+      --section-py: 80px;
+    }
+    html { scroll-behavior: smooth; line-height: 1.7; font-size: 17px; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', sans-serif; color: var(--text); background-color: var(--bg); }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(218, 231, 222, 0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .nav-logo { font-family: 'Lora', serif; font-size: 1.15rem; font-weight: 600; color: var(--heading); text-decoration: none; }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a { font-size: 0.88rem; color: var(--muted); text-decoration: none; transition: color 0.2s; font-weight: 500; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links .nav-cta { background: var(--gold); color: var(--text); padding: 8px 18px; border-radius: 999px; font-weight: 600; }
+    .nav-links .nav-cta:hover { background: var(--gold-hover); }
+
+    main { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
+
+    .page-header { padding: 80px 0 40px; text-align: center; }
+    .eyebrow { font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.78rem; color: var(--muted); margin-bottom: 18px; font-weight: 600; }
+    h1 { font-family: 'Lora', serif; font-weight: 600; font-size: 3rem; line-height: 1.15; color: var(--heading); letter-spacing: -0.01em; }
+    .page-header p.lede { margin-top: 22px; font-size: 1.1rem; color: var(--muted); max-width: 620px; margin-left: auto; margin-right: auto; }
+
+    .divider { text-align: center; padding: 40px 0; color: var(--border); letter-spacing: 1em; font-size: 0.9rem; }
+
+    .chapter { padding: var(--section-py) 0; }
+    .chapter-year { font-family: 'Lora', serif; font-style: italic; color: var(--muted); font-size: 1rem; letter-spacing: 0.04em; margin-bottom: 10px; }
+    .chapter h2 { font-family: 'Lora', serif; font-weight: 600; font-size: 2.1rem; line-height: 1.2; color: var(--heading); margin-bottom: 28px; letter-spacing: -0.005em; }
+
+    /* Carousel */
+    .carousel { position: relative; width: 100%; aspect-ratio: 4 / 3; background: var(--bg2); border-radius: 14px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(26, 43, 40, 0.08); }
+    .carousel .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 600ms ease; display: flex; align-items: center; justify-content: center; }
+    .carousel .slide.active { opacity: 1; z-index: 1; }
+    .carousel .slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .carousel .arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 5; width: 44px; height: 44px; border-radius: 999px; background: rgba(26, 43, 40, 0.55); color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, transform 0.2s; font-size: 1.2rem; line-height: 1; backdrop-filter: blur(4px); }
+    .carousel .arrow:hover { background: rgba(26, 43, 40, 0.8); transform: translateY(-50%) scale(1.05); }
+    .carousel .arrow.prev { left: 14px; }
+    .carousel .arrow.next { right: 14px; }
+    .carousel .dots { position: absolute; bottom: 14px; left: 0; right: 0; z-index: 5; display: flex; justify-content: center; gap: 8px; }
+    .carousel .dots button { width: 8px; height: 8px; border-radius: 999px; border: none; background: rgba(255,255,255,0.5); cursor: pointer; padding: 0; transition: background 0.2s, transform 0.2s; }
+    .carousel .dots button.active { background: #fff; transform: scale(1.3); }
+    .carousel .counter { position: absolute; top: 14px; right: 14px; z-index: 5; background: rgba(26, 43, 40, 0.55); color: #fff; padding: 4px 12px; border-radius: 999px; font-size: 0.78rem; font-weight: 500; backdrop-filter: blur(4px); }
+
+    .chapter-body { margin-top: 32px; }
+    .chapter-body p { color: var(--text); font-size: 1.05rem; margin-bottom: 16px; }
+    .placeholder-note { color: var(--muted); font-style: italic; font-size: 0.95rem; padding: 14px 18px; background: var(--bg2); border-left: 3px solid var(--highlight); border-radius: 6px; margin-bottom: 18px; }
+
+    footer { padding: 60px 32px 40px; text-align: center; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); margin-top: 60px; }
+    footer a { color: var(--muted); text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      h1 { font-size: 2.2rem; }
+      .chapter h2 { font-size: 1.6rem; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .carousel .arrow { width: 38px; height: 38px; }
+      :root { --section-py: 56px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">Jan Trautwein</a>
+    <div class="nav-links">
+      <a href="../story.html">My Story</a>
+      <a href="../client-voices.html">Client Voices</a>
+      <a href="../worldview.html">Worldview</a>
+      <a href="https://contact.jantrautwein.com" target="_blank" class="nav-cta">Connect</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <header class="page-header">
+    <div class="eyebrow">My Story</div>
+    <h1>A life in chapters</h1>
+    <p class="lede">The moments, places, and turning points that shaped the work I do today. Use the arrows to walk through each chapter.</p>
+  </header>
+
+  <div class="divider">• • •</div>
+
+  <!-- 1991 -->
+  <section class="chapter" id="stuttgart">
+    <div class="chapter-year">1991</div>
+    <h2>Growing Up in Stuttgart</h2>
+    <div class="carousel" data-chapter="1991-stuttgart"></div>
+    <div class="chapter-body">
+      <div class="placeholder-note">Placeholder, Jan to fill in.</div>
+      <p>A short paragraph here about early childhood in Stuttgart, family, school, the early curiosities that became lifelong threads.</p>
+      <p>A second paragraph painting the feeling of these years, what shaped the lens through which I would later see the world.</p>
+    </div>
+  </section>
+
+  <div class="divider">• • •</div>
+
+  <!-- 2010 -->
+  <section class="chapter" id="physics">
+    <div class="chapter-year">2010</div>
+    <h2>Physics, and the First Startup</h2>
+    <div class="carousel" data-chapter="2010-physics"></div>
+    <div class="chapter-body">
+      <div class="placeholder-note">Placeholder, Jan to fill in.</div>
+      <p>University years, the pull of physics, and the first attempt at building something of my own.</p>
+      <p>What the first startup taught me, and what it could not.</p>
+    </div>
+  </section>
+
+  <div class="divider">• • •</div>
+
+  <!-- 2017 -->
+  <section class="chapter" id="shift">
+    <div class="chapter-year">2017</div>
+    <h2>The Year Everything Shifted</h2>
+    <div class="carousel" data-chapter="2017-shift"></div>
+    <div class="chapter-body">
+      <div class="placeholder-note">Placeholder, Jan to fill in.</div>
+      <p>The cracks, the campervan, the moment something underneath began to move.</p>
+      <p>A second paragraph on the inner shift, and what it cost to follow it.</p>
+    </div>
+  </section>
+
+  <div class="divider">• • •</div>
+
+  <!-- 2018 aervideo -->
+  <section class="chapter" id="aervideo">
+    <div class="chapter-year">2018</div>
+    <h2>aervideo, the Last Startup</h2>
+    <div class="carousel" data-chapter="2018-aervideo"></div>
+    <div class="chapter-body">
+      <div class="placeholder-note">Placeholder, Jan to fill in.</div>
+      <p>The last attempt to do it the old way. The team, the product, the lessons that arrived once it ended.</p>
+    </div>
+  </section>
+
+  <div class="divider">• • •</div>
+
+  <!-- 2018-2 Purpose -->
+  <section class="chapter" id="purpose">
+    <div class="chapter-year">2018</div>
+    <h2>Life-Purpose Unlocked</h2>
+    <div class="carousel" data-chapter="2018-purpose"></div>
+    <div class="chapter-body">
+      <div class="placeholder-note">Placeholder, Jan to fill in.</div>
+      <p>The moment the thread became visible. What changed in how I see work, people, and what I am here to do.</p>
+    </div>
+  </section>
+
+  <div class="divider">• • •</div>
+
+  <!-- 2019 -->
+  <section class="chapter" id="deeper">
+    <div class="chapter-year">2019</div>
+    <h2>Going Deeper</h2>
+    <div class="carousel" data-chapter="2019-deeper"></div>
+    <div class="chapter-body">
+      <div class="placeholder-note">Placeholder, Jan to fill in.</div>
+      <p>Practice, silence, forest. The years of going under the surface of what I thought I knew.</p>
+    </div>
+  </section>
+
+  <div class="divider">• • •</div>
+
+  <!-- 2023 Portugal -->
+  <section class="chapter" id="portugal">
+    <div class="chapter-year">2023</div>
+    <h2>New Home in Portugal</h2>
+    <div class="carousel" data-chapter="2023-portugal"></div>
+    <div class="chapter-body">
+      <div class="placeholder-note">Placeholder, Jan to fill in.</div>
+      <p>The move, the land, the life with Diara. Why here, and what this chapter is making space for.</p>
+    </div>
+  </section>
+
+  <div class="divider">• • •</div>
+
+</main>
+
+<footer>
+  <p>&copy; 2026 Jan Trautwein &middot; <a href="../index.html">Home</a> &middot; <a href="https://www.linkedin.com/in/jantrautwein/" target="_blank">LinkedIn</a></p>
+</footer>
+
+<script>
+  // Image manifest per chapter (relative paths into /../images/timeline/<slug>/)
+  const CHAPTERS = {
+    "1991-stuttgart": ["01.png","02.jpg","03.png","04.png","05.jpg","06.png","07.png","08.jpg"],
+    "2010-physics":   ["01.jpg","02.jpg","03.jpg"],
+    "2017-shift":     ["01.jpg","02.jpg","03.jpg","04.jpg"],
+    "2018-aervideo":  ["01.jpg","02.jpg","03.png"],
+    "2018-purpose":   ["01.png","02.png","03.jpg","04.png","05.jpg"],
+    "2019-deeper":    ["01.jpg","02.jpg","03.jpg"],
+    "2023-portugal":  ["01.jpg","02.jpg","03.jpg","04.png","05.jpg","06.jpg"]
+  };
+
+  document.querySelectorAll('.carousel').forEach(carousel => {
+    const slug = carousel.dataset.chapter;
+    const files = CHAPTERS[slug] || [];
+    if (!files.length) return;
+
+    files.forEach((f, i) => {
+      const slide = document.createElement('div');
+      slide.className = 'slide' + (i === 0 ? ' active' : '');
+      const img = document.createElement('img');
+      img.loading = 'lazy';
+      img.alt = slug + ' image ' + (i + 1);
+      img.src = '../images/timeline/' + slug + '/' + f;
+      slide.appendChild(img);
+      carousel.appendChild(slide);
+    });
+
+    const counter = document.createElement('div');
+    counter.className = 'counter';
+    counter.textContent = '1 / ' + files.length;
+    carousel.appendChild(counter);
+
+    const prev = document.createElement('button');
+    prev.className = 'arrow prev'; prev.setAttribute('aria-label','Previous image'); prev.innerHTML = '&#10094;';
+    const next = document.createElement('button');
+    next.className = 'arrow next'; next.setAttribute('aria-label','Next image'); next.innerHTML = '&#10095;';
+    carousel.appendChild(prev); carousel.appendChild(next);
+
+    const dotsWrap = document.createElement('div');
+    dotsWrap.className = 'dots';
+    files.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.setAttribute('aria-label', 'Go to image ' + (i + 1));
+      if (i === 0) d.classList.add('active');
+      d.addEventListener('click', () => go(i));
+      dotsWrap.appendChild(d);
+    });
+    carousel.appendChild(dotsWrap);
+
+    let idx = 0;
+    const slides = carousel.querySelectorAll('.slide');
+    const dots = dotsWrap.querySelectorAll('button');
+
+    function go(i) {
+      slides[idx].classList.remove('active');
+      dots[idx].classList.remove('active');
+      idx = (i + files.length) % files.length;
+      slides[idx].classList.add('active');
+      dots[idx].classList.add('active');
+      counter.textContent = (idx + 1) + ' / ' + files.length;
+    }
+
+    prev.addEventListener('click', () => go(idx - 1));
+    next.addEventListener('click', () => go(idx + 1));
+
+    // keyboard support when carousel is hovered/focused
+    carousel.tabIndex = 0;
+    carousel.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); go(idx - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); go(idx + 1); }
+    });
+  });
+</script>
+
+</body>
+</html>

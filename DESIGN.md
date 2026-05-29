@@ -40,7 +40,7 @@ margin-bottom: 1.2rem;
 - Consistent pattern: `max-width: Xpx; margin: 0 auto; padding: 0 32px;`
 
 ## Buttons / CTAs
-- Background: `var(--gold)`, hover: `var(--gold-hover)`
+- **ALL CTA buttons across every page use the gold color, no exceptions.** Background: `var(--gold)` (#FAB700), hover: `var(--gold-hover)` (#E5A800). This applies to primary CTAs, nav mini-CTAs, and any "Let's Talk" / booking button on every page.
 - Text color: `var(--text)` (dark, not white)
 - Font: Inter, `font-weight: 600`, `font-size: 1rem`
 - Padding: `14px 36px`, border-radius: `8px`

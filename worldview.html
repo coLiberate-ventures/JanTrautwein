@@ -137,7 +137,7 @@
       <a href="story.html">My Story</a>
       <a href="client-voices.html">Client Voices</a>
       <a href="worldview.html">Worldview</a>
-      <a href="https://call.coliberate.ventures/15-min" target="_blank" class="nav-cta">Let's Talk</a>
+      <a href="contact.html" class="nav-cta">Let's Talk</a>
     </div>
     <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -150,7 +150,7 @@
   <a href="story.html">My Story</a>
   <a href="client-voices.html">Client Voices</a>
   <a href="worldview.html">Worldview</a>
-  <a href="https://call.coliberate.ventures/15-min" target="_blank">Let's Talk</a>
+  <a href="contact.html">Let's Talk</a>
 </div>
 
 <div class="page-header">
@@ -290,7 +290,7 @@
 
 <div class="cta-section">
   <h2>Curious to go deeper?</h2>
-  <a href="https://call.coliberate.ventures/15-min" target="_blank" class="cta-button">Let's Talk</a>
+  <a href="contact.html" class="cta-button">Let's Talk</a>
 </div>
 
 <footer>
@@ -315,7 +315,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       if (typeof posthog === 'undefined') return;
-      document.querySelectorAll('a[href*="contact.jantrautwein.com"]').forEach(function (el) {
+      document.querySelectorAll('a[href*="contact.html"], a[href*="call.coliberate.ventures"]').forEach(function (el) {
         el.addEventListener('click', function () {
           posthog.capture('connect_click', {
             link_text: (el.textContent || '').trim(),

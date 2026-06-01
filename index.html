@@ -478,7 +478,7 @@
       <a href="story.html">My Story</a>
       <a href="client-voices.html">Client Voices</a>
       <a href="worldview.html">Worldview</a>
-      <a href="https://contact.jantrautwein.com" target="_blank" class="nav-cta">Connect</a>
+      <a href="contact.html" class="nav-cta">Connect</a>
     </div>
     <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -491,7 +491,7 @@
   <a href="story.html">My Story</a>
   <a href="client-voices.html">Client Voices</a>
   <a href="worldview.html">Worldview</a>
-  <a href="https://contact.jantrautwein.com" target="_blank">Connect</a>
+  <a href="contact.html">Connect</a>
 </div>
 
 <section id="hero">
@@ -833,7 +833,7 @@
     <div class="next-text">
       <div class="section-label">The Next Step</div>
       <h2>If any of what you've read here resonates, let's talk.</h2>
-      <a href="https://contact.jantrautwein.com" target="_blank" class="cta-button">Connect</a>
+      <a href="contact.html" class="cta-button">Connect</a>
     </div>
     <div class="next-image"><img src="images/next-image.png" alt="An open door leading to a green path"></div>
   </div>
@@ -913,7 +913,7 @@ document.querySelectorAll('.client-photo-img[data-toggle]').forEach(function(img
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       if (typeof posthog === 'undefined') return;
-      document.querySelectorAll('a[href*="contact.jantrautwein.com"]').forEach(function (el) {
+      document.querySelectorAll('a[href*="contact.html"], a[href*="call.coliberate.ventures"]').forEach(function (el) {
         el.addEventListener('click', function () {
           posthog.capture('connect_click', {
             link_text: (el.textContent || '').trim(),

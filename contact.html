@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Jan Trautwein</title>
+  <meta name="description" content="Book an intro call, message Jan on Telegram, or send a note. Coaching for impact-driven, heart-led founders.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #DAE7DE; --bg2: #E8F0EA; --text: #1A2B28; --muted: #5A7872;
+      --gold: #FAB700; --gold-hover: #E5A800; --border: #B8CEC9;
+      --max-w: 780px;
+    }
+    html { scroll-behavior: smooth; line-height: 1.7; font-size: 17px; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', sans-serif; color: var(--muted); background-color: var(--bg); position: relative; }
+    body::before {
+      content: ''; position: fixed; inset: 0; opacity: 0.2; pointer-events: none; z-index: 0;
+      background-image: url('images/paper-bg.jpg'); background-repeat: repeat; background-size: 600px;
+    }
+    body > * { position: relative; z-index: 1; }
+    h1, h2, h3 { font-family: 'Lora', serif; color: var(--text); line-height: 1.3; font-weight: 500; }
+    h1 { font-size: 2.6rem; margin-bottom: 1rem; font-weight: 600; }
+    p { margin-bottom: 1.2rem; }
+    a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
+    a:hover { color: var(--gold-hover); }
+    .section-label { font-size: 0.85rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
+
+    /* NAV */
+    nav { position: relative; top: 0; left: 0; right: 0; z-index: 100; background: rgba(218,231,222,0.95); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); transition: box-shadow 0.3s; }
+    nav.scrolled { box-shadow: 0 2px 20px rgba(26,31,23,0.06); }
+    .nav-inner { padding: 0 6%; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .nav-logo { font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); text-decoration: none; }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a { font-size: 13px; font-weight: 400; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links .nav-cta { font-size: 0.85rem; font-weight: 600; background: var(--gold); color: var(--text); padding: 8px 20px; border-radius: 6px; }
+    .nav-links .nav-cta:hover { background: var(--gold-hover); color: var(--text); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; z-index: 200; background: none; border: none; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
+    .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { position: fixed; top: 0; right: -280px; width: 280px; height: 100vh; background: var(--bg); border-left: 1px solid var(--border); z-index: 150; transition: right 0.3s ease; padding: 80px 32px 32px; box-shadow: -4px 0 20px rgba(26,31,23,0.08); }
+    .mobile-menu.open { right: 0; }
+    .mobile-menu a { display: block; font-family: 'Lora', serif; font-size: 1.15rem; color: var(--text); text-decoration: none; padding: 14px 0; border-bottom: 1px solid var(--border); transition: color 0.2s; }
+    .mobile-menu a:hover { color: var(--gold); }
+    .menu-overlay { position: fixed; inset: 0; background: rgba(26,31,23,0.3); z-index: 140; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+    .menu-overlay.active { opacity: 1; pointer-events: auto; }
+
+    /* CONTACT */
+    .contact-section { padding: 80px 0 90px; }
+    .contact-inner { max-width: 640px; }
+    .lead { font-family: 'Lora', serif; font-size: 1.15rem; color: var(--muted); margin-bottom: 2.4rem; }
+    .contact-options { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 2.6rem; }
+    .option-card { display: flex; flex-direction: column; gap: 4px; padding: 22px 24px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; }
+    .option-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,31,23,0.08); border-color: var(--gold); }
+    .option-title { font-family: 'Lora', serif; font-size: 1.15rem; color: var(--text); font-weight: 600; }
+    .option-title .arrow { color: var(--gold); transition: transform 0.2s; display: inline-block; }
+    .option-card:hover .option-title .arrow { transform: translateX(4px); }
+    .option-sub { font-size: 0.9rem; color: var(--muted); }
+    .form-divider { display: flex; align-items: center; text-align: center; color: var(--muted); font-size: 0.85rem; letter-spacing: 0.05em; margin-bottom: 2rem; }
+    .form-divider::before, .form-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .form-divider span { padding: 0 16px; }
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+    .contact-form label { font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 6px; display: block; }
+    .field { display: flex; flex-direction: column; }
+    .contact-form input, .contact-form textarea {
+      font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--text);
+      background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 13px 15px; width: 100%; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(250,183,0,0.15); }
+    .contact-form textarea { resize: vertical; min-height: 140px; line-height: 1.6; }
+    .contact-form button { align-self: flex-start; background: var(--gold); color: var(--text); font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; padding: 14px 36px; border: none; border-radius: 8px; cursor: pointer; transition: background 0.2s, transform 0.2s; margin-top: 4px; }
+    .contact-form button:hover { background: var(--gold-hover); transform: translateY(-1px); }
+    .contact-form button:disabled { opacity: 0.6; cursor: default; transform: none; }
+    .hp { position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; }
+    .form-status { margin-top: 18px; padding: 14px 18px; border-radius: 8px; font-size: 0.95rem; }
+    .form-status.success { background: rgba(122,156,122,0.18); color: var(--text); border: 1px solid var(--border); }
+    .form-status.error { background: rgba(200,90,70,0.12); color: #8a3b2c; border: 1px solid rgba(200,90,70,0.3); }
+    .signoff { font-family: 'Lora', serif; font-size: 1.1rem; color: var(--muted); margin-top: 2.6rem; }
+
+    footer { background: var(--text); color: rgba(218,231,222,0.45); padding: 48px 24px; text-align: center; font-size: 0.85rem; }
+    footer a { color: rgba(218,231,222,0.65); }
+    footer a.muted-link { color: rgba(218,231,222,0.45); }
+    footer a:hover { color: var(--gold); }
+
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      .contact-options { grid-template-columns: 1fr; }
+      .contact-section { padding: 56px 0 70px; }
+    }
+  </style>
+  <!-- PostHog analytics -->
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_C8dTjYdsh3ks4qtx7FjQsFXkdXXDwsHyNwCGyDHRsXKT', {
+      api_host: 'https://eu.i.posthog.com',
+      ui_host: 'https://eu.posthog.com',
+      person_profiles: 'identified_only',
+      respect_dnt: true,
+      defaults: '2025-05-24'
+    })
+  </script>
+</head>
+<body>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Jan Trautwein</a>
+    <div class="nav-links">
+      <a href="story.html">My Story</a>
+      <a href="client-voices.html">Client Voices</a>
+      <a href="worldview.html">Worldview</a>
+      <a href="contact.html" class="nav-cta">Connect</a>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="story.html">My Story</a>
+  <a href="client-voices.html">Client Voices</a>
+  <a href="worldview.html">Worldview</a>
+  <a href="contact.html">Connect</a>
+</div>
+
+<section class="contact-section">
+  <div class="container contact-inner">
+    <div class="section-label">Contact</div>
+    <h1>Let's connect</h1>
+    <p class="lead">You can book an intro call directly, message me on Telegram, or send a note below. Whatever feels right.</p>
+
+    <div class="contact-options">
+      <a class="option-card" href="https://call.coliberate.ventures/intro-call-with-jan" target="_blank" rel="noopener" data-track="book_intro_call">
+        <span class="option-title">Book an Intro Call <span class="arrow">&rarr;</span></span>
+        <span class="option-sub">A relaxed conversation, around 30 minutes</span>
+      </a>
+      <a class="option-card" href="https://t.me/jantrautwein" target="_blank" rel="noopener" data-track="telegram">
+        <span class="option-title">Message on Telegram <span class="arrow">&rarr;</span></span>
+        <span class="option-sub">Quick and direct</span>
+      </a>
+    </div>
+
+    <div class="form-divider"><span>or send a message</span></div>
+
+    <form id="contactForm" class="contact-form">
+      <input type="hidden" name="access_key" value="a077514e-a332-4b1d-aa27-c6aaafed462a">
+      <input type="hidden" name="subject" value="New message from jantrautwein.com">
+      <input type="hidden" name="from_name" value="jantrautwein.com contact form">
+      <div class="field">
+        <label for="cf-name">Name</label>
+        <input id="cf-name" type="text" name="name" placeholder="Your name" required>
+      </div>
+      <div class="field">
+        <label for="cf-email">Email</label>
+        <input id="cf-email" type="email" name="email" placeholder="you@example.com" required>
+      </div>
+      <div class="field">
+        <label for="cf-message">Message</label>
+        <textarea id="cf-message" name="message" placeholder="What's on your mind?" required></textarea>
+      </div>
+      <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+      <button type="submit">Send message</button>
+    </form>
+    <div id="formStatus" class="form-status" hidden></div>
+
+    <p class="signoff">I'm looking forward to connecting with you.<br><em>Jan</em></p>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Jan Trautwein &middot; <a href="https://www.linkedin.com/in/jantrautwein/" target="_blank">LinkedIn</a> &middot; <a href="https://www.instagram.com/jan_trautwein/" target="_blank">Instagram</a> &middot; <a href="https://privacy.coliberate.ventures/" target="_blank" class="muted-link">Privacy</a></p>
+</footer>
+
+<script>
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 10); });
+  const hamburger = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const menuOverlay = document.getElementById('menuOverlay');
+  function toggleMenu() { hamburger.classList.toggle('active'); mobileMenu.classList.toggle('open'); menuOverlay.classList.toggle('active'); }
+  hamburger.addEventListener('click', toggleMenu);
+  menuOverlay.addEventListener('click', toggleMenu);
+
+  // Track booking / telegram clicks
+  document.querySelectorAll('[data-track]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      if (typeof posthog !== 'undefined') posthog.capture(el.getAttribute('data-track') + '_click', { page: location.pathname });
+    });
+  });
+
+  // Web3Forms submit via fetch (stay on page, inline success)
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('formStatus');
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const btn = form.querySelector('button[type=submit]');
+    const original = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Sending...';
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' }
+      });
+      const json = await res.json();
+      if (json.success) {
+        form.reset();
+        status.hidden = false; status.className = 'form-status success';
+        status.textContent = "Thank you, your message has been sent. I'll be in touch soon.";
+        if (typeof posthog !== 'undefined') posthog.capture('contact_form_submit', { page: location.pathname });
+      } else { throw new Error(json.message || 'submit failed'); }
+    } catch (err) {
+      status.hidden = false; status.className = 'form-status error';
+      status.innerHTML = 'Something went wrong. Please email <a href="mailto:hello@jantrautwein.com">hello@jantrautwein.com</a> directly.';
+    } finally { btn.disabled = false; btn.textContent = original; }
+  });
+</script>
+</body>
+</html>

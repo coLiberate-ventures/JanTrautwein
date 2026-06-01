@@ -909,5 +909,20 @@ document.querySelectorAll('.client-photo-img[data-toggle]').forEach(function(img
   img.addEventListener('click', function() { this.classList.toggle('colored'); });
 });
 </script>
+  <!-- PostHog: track Connect / book-a-call clicks -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (typeof posthog === 'undefined') return;
+      document.querySelectorAll('a[href*="contact.jantrautwein.com"]').forEach(function (el) {
+        el.addEventListener('click', function () {
+          posthog.capture('connect_click', {
+            link_text: (el.textContent || '').trim(),
+            link_location: el.className || 'unknown',
+            page: location.pathname
+          });
+        });
+      });
+    });
+  </script>
 </body>
 </html>

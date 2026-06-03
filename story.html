@@ -603,7 +603,7 @@
       var w = sw.offsetWidth;
       var ratio = img.naturalHeight / img.naturalWidth;
       // Cap tall portrait images to ~half height; they letterbox with black side bars
-      var MAX_RATIO = 0.9;
+      var MAX_RATIO = 1.08;
       if (ratio > MAX_RATIO) ratio = MAX_RATIO;
       var h = Math.round(w * ratio);
       sw.style.height = h + 'px';

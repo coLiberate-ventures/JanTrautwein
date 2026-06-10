@@ -456,7 +456,65 @@
     .faq-answer-inner p:last-child { margin-bottom: 0; }
     .faq-answer-inner a { color: #4a6741; text-decoration: underline; }
     .faq-answer-inner strong { font-weight: 700; }
-</style>
+
+    /* ===== Companies / social-proof logo wall ===== */
+    #companies { padding: 76px 0 88px; overflow: hidden; }
+    .cw-head {
+      font-family: 'Lora', serif; color: var(--text); font-weight: 600;
+      font-size: clamp(1.45rem, 2.4vw, 2rem); line-height: 1.3; text-align: center;
+      margin: 0 auto 2.6rem; padding: 0 24px; max-width: 1000px;
+    }
+    .cw-head .cw-accent { color: var(--gold); font-style: italic; font-weight: 600; }
+    @media (min-width: 900px) { .cw-head { white-space: nowrap; } }
+
+    .cw-marquee {
+      position: relative; width: 100%; overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 11%, #000 89%, transparent);
+              mask-image: linear-gradient(90deg, transparent, #000 11%, #000 89%, transparent);
+    }
+    .cw-track {
+      display: flex; align-items: center; gap: 64px; width: max-content;
+      padding: 10px 32px; animation: cw-scroll 46s linear infinite; will-change: transform;
+    }
+    @keyframes cw-scroll { to { transform: translateX(-50%); } }
+    .cw-marquee:hover .cw-track { animation-play-state: paused; }
+
+    .cw-logo {
+      position: relative; flex: 0 0 auto; width: var(--w); height: var(--h);
+      opacity: .9; cursor: pointer; transition: opacity .35s ease, transform .35s ease;
+    }
+    .cw-logo .cw-ink {
+      position: absolute; inset: 0; background: var(--text);
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+      -webkit-mask-position: center; mask-position: center;
+      -webkit-mask-size: contain; mask-size: contain;
+      opacity: .6; transition: opacity .35s ease;
+    }
+    .cw-logo .cw-clr {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+      opacity: 0; transition: opacity .35s ease; pointer-events: none;
+    }
+    .cw-logo:hover { opacity: 1; transform: translateY(-2px); }
+    .cw-logo:hover .cw-ink { opacity: 1; }
+    .cw-logo[data-color="1"]:hover .cw-ink { opacity: 0; }
+    .cw-logo[data-color="1"]:hover .cw-clr { opacity: 1; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cw-track { animation: none; flex-wrap: wrap; justify-content: center; width: auto; }
+      .cw-marquee { -webkit-mask-image: none; mask-image: none; }
+    }
+    @media (max-width: 600px) {
+      #companies { padding: 56px 0 64px; }
+      .cw-track { gap: 44px; }
+    }
+  
+    /* ===== copy-review additions ===== */
+    .gold-underline { text-decoration: underline; text-decoration-color: var(--gold); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+    .about-text h2 { font-family: 'Lora', serif; font-size: 1.6rem; font-weight: 500; color: var(--text); line-height: 1.3; margin: 0.1rem 0 1.2rem; }
+    .li-link { display: inline-flex; align-items: center; color: var(--muted); margin-left: 6px; vertical-align: middle; transition: color 0.2s; }
+    .li-link:hover { color: #0A66C2; }
+    .li-icon { display: block; }
+  </style>
   <!-- PostHog analytics -->
   <script>
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
@@ -511,13 +569,129 @@
     </div>
   </div>
 </section>
+
+
+<!-- ===== Companies / social-proof logo wall ===== -->
+<section id="companies" aria-label="Companies I have coached founders and leaders of">
+  <h2 class="cw-head">I've coached <span class="cw-accent">founders + leaders</span> of the following companies.</h2>
+  <div class="cw-marquee">
+    <div class="cw-track">
+      <div class="cw-logo" style="--w:130px;--h:45px" title="Apple" data-color="1">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/apple.svg');mask-image:url('images/logos/apple.svg')"></span>
+        <img class="cw-clr" src="images/logos/apple.svg" alt="Apple" loading="lazy" width="130" height="45">
+      </div>
+      <div class="cw-logo" style="--w:150px;--h:39px" title="Climate Farmers" data-color="1">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/climate-farmers.png');mask-image:url('images/logos/climate-farmers.png')"></span>
+        <img class="cw-clr" src="images/logos/climate-farmers.png" alt="Climate Farmers" loading="lazy" width="150" height="39">
+      </div>
+      <div class="cw-logo" style="--w:176px;--h:33px" title="Liminal">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/liminal.png');mask-image:url('images/logos/liminal.png')"></span>
+        <img class="cw-clr" src="images/logos/liminal.png" alt="Liminal" loading="lazy" width="176" height="33">
+      </div>
+      <div class="cw-logo" style="--w:136px;--h:43px" title="Amazon" data-color="1">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/amazon.svg');mask-image:url('images/logos/amazon.svg')"></span>
+        <img class="cw-clr" src="images/logos/amazon.svg" alt="Amazon" loading="lazy" width="136" height="43">
+      </div>
+      <div class="cw-logo" style="--w:170px;--h:34px" title="Kológica" data-color="1">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/kologica.png');mask-image:url('images/logos/kologica.png')"></span>
+        <img class="cw-clr" src="images/logos/kologica.png" alt="Kológica" loading="lazy" width="170" height="34">
+      </div>
+      <div class="cw-logo" style="--w:233px;--h:25px" title="Natural Symbiosis">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/natural-symbiosis.png');mask-image:url('images/logos/natural-symbiosis.png')"></span>
+        <img class="cw-clr" src="images/logos/natural-symbiosis.png" alt="Natural Symbiosis" loading="lazy" width="233" height="25">
+      </div>
+      <div class="cw-logo" style="--w:92px;--h:46px" title="Superoperator" data-color="1">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/superoperator.svg');mask-image:url('images/logos/superoperator.svg')"></span>
+        <img class="cw-clr" src="images/logos/superoperator.svg" alt="Superoperator" loading="lazy" width="92" height="46">
+      </div>
+      <div class="cw-logo" style="--w:185px;--h:31px" title="Motorworld" data-color="1">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/motorworld.png');mask-image:url('images/logos/motorworld.png')"></span>
+        <img class="cw-clr" src="images/logos/motorworld.png" alt="Motorworld" loading="lazy" width="185" height="31">
+      </div>
+      <div class="cw-logo" style="--w:46px;--h:46px" title="Wildlife Conservation Society" data-color="1">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/wildlife-conservation-society.png');mask-image:url('images/logos/wildlife-conservation-society.png')"></span>
+        <img class="cw-clr" src="images/logos/wildlife-conservation-society.png" alt="Wildlife Conservation Society" loading="lazy" width="46" height="46">
+      </div>
+      <div class="cw-logo" style="--w:235px;--h:24px" title="Catalyst Studio">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/catalyst-studio.png');mask-image:url('images/logos/catalyst-studio.png')"></span>
+        <img class="cw-clr" src="images/logos/catalyst-studio.png" alt="Catalyst Studio" loading="lazy" width="235" height="24">
+      </div>
+      <div class="cw-logo" style="--w:203px;--h:29px" title="Evergreen Labs" data-color="1">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/evergreen-labs.png');mask-image:url('images/logos/evergreen-labs.png')"></span>
+        <img class="cw-clr" src="images/logos/evergreen-labs.png" alt="Evergreen Labs" loading="lazy" width="203" height="29">
+      </div>
+      <div class="cw-logo" style="--w:190px;--h:30px" title="Parlance" data-color="1">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/parlance.png');mask-image:url('images/logos/parlance.png')"></span>
+        <img class="cw-clr" src="images/logos/parlance.png" alt="Parlance" loading="lazy" width="190" height="30">
+      </div>
+      <div class="cw-logo" style="--w:109px;--h:46px" title="Adventures in Connection">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/adventures-in-connection.png');mask-image:url('images/logos/adventures-in-connection.png')"></span>
+        <img class="cw-clr" src="images/logos/adventures-in-connection.png" alt="Adventures in Connection" loading="lazy" width="109" height="46">
+      </div>
+      <div class="cw-logo" style="--w:130px;--h:45px" title="Apple" data-color="1" aria-hidden="true">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/apple.svg');mask-image:url('images/logos/apple.svg')"></span>
+        <img class="cw-clr" src="images/logos/apple.svg" alt="Apple" loading="lazy" width="130" height="45">
+      </div>
+      <div class="cw-logo" style="--w:150px;--h:39px" title="Climate Farmers" data-color="1" aria-hidden="true">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/climate-farmers.png');mask-image:url('images/logos/climate-farmers.png')"></span>
+        <img class="cw-clr" src="images/logos/climate-farmers.png" alt="Climate Farmers" loading="lazy" width="150" height="39">
+      </div>
+      <div class="cw-logo" style="--w:176px;--h:33px" title="Liminal" aria-hidden="true">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/liminal.png');mask-image:url('images/logos/liminal.png')"></span>
+        <img class="cw-clr" src="images/logos/liminal.png" alt="Liminal" loading="lazy" width="176" height="33">
+      </div>
+      <div class="cw-logo" style="--w:136px;--h:43px" title="Amazon" data-color="1" aria-hidden="true">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/amazon.svg');mask-image:url('images/logos/amazon.svg')"></span>
+        <img class="cw-clr" src="images/logos/amazon.svg" alt="Amazon" loading="lazy" width="136" height="43">
+      </div>
+      <div class="cw-logo" style="--w:170px;--h:34px" title="Kológica" data-color="1" aria-hidden="true">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/kologica.png');mask-image:url('images/logos/kologica.png')"></span>
+        <img class="cw-clr" src="images/logos/kologica.png" alt="Kológica" loading="lazy" width="170" height="34">
+      </div>
+      <div class="cw-logo" style="--w:233px;--h:25px" title="Natural Symbiosis" aria-hidden="true">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/natural-symbiosis.png');mask-image:url('images/logos/natural-symbiosis.png')"></span>
+        <img class="cw-clr" src="images/logos/natural-symbiosis.png" alt="Natural Symbiosis" loading="lazy" width="233" height="25">
+      </div>
+      <div class="cw-logo" style="--w:92px;--h:46px" title="Superoperator" data-color="1" aria-hidden="true">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/superoperator.svg');mask-image:url('images/logos/superoperator.svg')"></span>
+        <img class="cw-clr" src="images/logos/superoperator.svg" alt="Superoperator" loading="lazy" width="92" height="46">
+      </div>
+      <div class="cw-logo" style="--w:185px;--h:31px" title="Motorworld" data-color="1" aria-hidden="true">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/motorworld.png');mask-image:url('images/logos/motorworld.png')"></span>
+        <img class="cw-clr" src="images/logos/motorworld.png" alt="Motorworld" loading="lazy" width="185" height="31">
+      </div>
+      <div class="cw-logo" style="--w:46px;--h:46px" title="Wildlife Conservation Society" data-color="1" aria-hidden="true">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/wildlife-conservation-society.png');mask-image:url('images/logos/wildlife-conservation-society.png')"></span>
+        <img class="cw-clr" src="images/logos/wildlife-conservation-society.png" alt="Wildlife Conservation Society" loading="lazy" width="46" height="46">
+      </div>
+      <div class="cw-logo" style="--w:235px;--h:24px" title="Catalyst Studio" aria-hidden="true">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/catalyst-studio.png');mask-image:url('images/logos/catalyst-studio.png')"></span>
+        <img class="cw-clr" src="images/logos/catalyst-studio.png" alt="Catalyst Studio" loading="lazy" width="235" height="24">
+      </div>
+      <div class="cw-logo" style="--w:203px;--h:29px" title="Evergreen Labs" data-color="1" aria-hidden="true">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/evergreen-labs.png');mask-image:url('images/logos/evergreen-labs.png')"></span>
+        <img class="cw-clr" src="images/logos/evergreen-labs.png" alt="Evergreen Labs" loading="lazy" width="203" height="29">
+      </div>
+      <div class="cw-logo" style="--w:190px;--h:30px" title="Parlance" data-color="1" aria-hidden="true">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/parlance.png');mask-image:url('images/logos/parlance.png')"></span>
+        <img class="cw-clr" src="images/logos/parlance.png" alt="Parlance" loading="lazy" width="190" height="30">
+      </div>
+      <div class="cw-logo" style="--w:109px;--h:46px" title="Adventures in Connection" aria-hidden="true">
+        <span class="cw-ink" style="-webkit-mask-image:url('images/logos/adventures-in-connection.png');mask-image:url('images/logos/adventures-in-connection.png')"></span>
+        <img class="cw-clr" src="images/logos/adventures-in-connection.png" alt="Adventures in Connection" loading="lazy" width="109" height="46">
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <section id="hi-jan">
   <div class="hi-jan-grid">
     <div class="hi-jan-text">
       <div class="section-label">Hi, I'm Jan</div>
-      <p>I'm a business and life coach for founders and creators building in the AI space.</p>
-      <p>I help ambitious people grow with more clarity, direction, and purpose — without burning out or losing themselves in the process.</p>
-      <p>Based in Lisbon. Working with clients worldwide.</p>
+      <p>I'm a holistic business coach, growth partner and performance advisor for founders and creators building in the AI space.</p>
+      <p>I help ambitious people grow their impact and income without burning out or losing themselves in the process.</p>
+      <p>I'm based in Lisbon. Working with clients worldwide.</p>
     </div>
     <div class="hi-jan-image">
       <img src="images/jan-profile.png" alt="Jan Trautwein">
@@ -543,13 +717,13 @@
   <div class="reality-text">
     <div class="section-label">The Situation</div>
     <h2>The AI space is one of the most exciting places to be building right now.</h2>
-    <p>It's also one of the most demanding.</p>
-    <p>New models, new tools, new competitors, new use cases - every week. The culture here rewards speed and celebrates the ones who move fastest.</p>
-    <p>Most people just keep up. Or try to.</p>
+    <p>It's also one of the most <span class="gold-underline">demanding</span>.</p>
+    <p>New models, new tools, new competitors, new use cases every week. The online culture rewards speed and celebrates those who move fastest.</p>
+    <p>That can be a lot to handle…</p>
     <p class="stat-line">83% of founders experience high stress. In the AI space, this number is probably even higher.<sup><a class="footnote-ref" href="https://sifted.eu/articles/founders-mental-health-2025" target="_blank" rel="noopener">1</a></sup></p>
-    <p>There's no natural pause point, no milestone that feels stable enough to stop and ask how you're doing. With so much demand and opportunity it's easy to fall into a reactive pattern.</p>
+    <p>There's no natural pause point, no milestone that feels stable enough to stop and ask how you're doing. With so much demand and opportunity, it's easy to fall into a reactive pattern.</p>
     <p>Some try to do too much at once. Others get so overwhelmed they can't move at all.</p>
-    <p>The people who thrive long-term aren't the ones who moved fastest. They're the ones who knew what they were actually building, and why, and could hold that steady when everything around them kept shifting.</p>
+    <p>The people who thrive long-term aren't the ones who move fastest. They're the ones who know what they are building, and why, and can hold their focus while everything around them keeps shifting. They know what to ignore and when to adjust their plan.</p>
   </div>
 </section>
 
@@ -559,18 +733,22 @@
     <div class="about-image"><img src="images/about-photo.png" alt="Jan Trautwein"></div>
     <div class="about-text">
       <div class="section-label">Who I Am</div>
-      <p>I value contribution, freedom and autonomy.</p>
+      <h2>Outside the mainstream.</h2>
       <p>I've never had a traditional job.</p>
+      <p>The “normal” path never felt enticing to me.</p>
+      <p>I'd rather create my own way than follow a path just because everyone else is on it. I'm a bit of a free rebel in that way.</p>
+      <p>I value contribution, freedom and autonomy.</p>
       <p>After I finished my physics degree, I co-founded a social startup. It was exciting and fun… until it wasn't.</p>
-      <p>The biggest realization I had after I left: Happiness has to be the fuel, not a reward.</p>
-      <p>In 2018 I found my passion in coaching and dedicated myself fully to it.</p>
-      <p>Since then I've worked with over 100 clients across the world. These days most of them are building in the AI space.</p>
-      <p>I continuously invest in my own development, learning from the best coaches in the world.</p>
+      <p>The biggest realization I had after I left: Happiness has to be the fuel, not the reward.</p>
+      <p>In 2018 I found my passion in supporting others through deep 1:1 work and dedicated myself fully to it.</p>
+      <p>Since then I've worked with over 100 clients across the world. These days most of them are building projects in the AI space.</p>
       <p>Since ChatGPT launched I've been deeply exploring the AI space, staying on top of every major shift, vibe-coding tools for myself, and working closely with the people educating and building with AI.</p>
-      <p>I've done 2 Vipassana retreats, multiple plant medicine ceremonies, an 8-day darkness retreat and many other retreats and experiences that helped me heal past trauma and become more free.</p>
-      <p>I grew up in Stuttgart, Germany in a middle class family. I have 2 younger brothers. I play lots of different sports, I love adventures and nature. I read a lot, for fun and for personal development.</p>
-      <p>I'm based in Lisbon since 2023. Today I work primarily with AI founders, educators, and creators - people who have moved fast and are genuinely excited about what this technology makes possible, and who want to build something meaningful without burning out or losing themselves in the process.</p>
-      <p>I live here with my wife, Diara and our 2 cats Luno and Koda.</p>
+      <p>On a more personal note: I've done 2 Vipassana retreats, multiple plant medicine ceremonies, an 8-day darkness retreat and many other retreats and experiences that helped me heal past trauma and become freer.</p>
+      <p>I continuously invest in my own development, and besides programs in marketing and business development, that includes working with the best coaches in the world.</p>
+      <p>I grew up in Stuttgart, Germany in a middle-class family. I have 2 younger brothers. I play lots of different sports, I love adventures and nature. I read a lot, for fun and for personal growth.</p>
+      <p>I'm based in Lisbon since 2023 with my wife, Diara and our 2 cats Luno and Koda.</p>
+      <p>I have been offering 1:1 support full-time now for almost a decade. Today I work primarily with AI founders, educators, and creators - people who have moved fast and are genuinely excited about what this technology makes possible, and who want to build something meaningful without burning out or losing themselves in the process.</p>
+      <p style="margin-top:1.4rem;"><a href="story.html" style="font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;">More about my story here &rarr;</a></p>
     </div>
   </div>
 </section>
@@ -581,10 +759,10 @@
     <div class="how-text">
       <div class="section-label">How I Work</div>
       <h2>Deep, focused, 1:1.</h2>
-      <p>I only work 1:1, no group programs. I support only a small number of clients at any given time. We go deep and far together, over several months, with bi-weekly sessions and support in between.</p>
-      <p>The work is holistic by design. We look at the whole picture — your business, your mindset, your energy, your patterns, your vision. Strategy without inner work only goes so far and inner work without practical direction stays theoretical.</p>
-      <p>Sessions happen over video call or over audio while we're both outside walking in nature. The best conversations don't always happen sitting down.</p>
-      <p>I'm selective about who I work with. When I work with someone, I'm all in to support them and their mission and their life, so I choose my clients as carefully as they choose me.</p>
+      <p>I only work 1:1, no group programs. I support only a small number of clients at any given time. We go deep and far together, over several months, usually 2-3 sessions / month and support in between.</p>
+      <p>The work is holistic by design. We look at the whole picture, your business, your mindset, your energy, your patterns, your vision. Strategy without inner work only goes so far and inner work without practical direction stays theoretical.</p>
+      <p>Sessions happen over video call or over audio while we're both outside walking in nature. (The best conversations don't always happen sitting down and a bit more movement and less screentime is something we'd all benefit from.)</p>
+      <p>I'm selective about who I work with. When I work with someone, I'm all in to support them, their mission and their life, so I choose my clients as carefully as they choose me.</p>
     </div>
     <div class="how-image"><img src="images/how-image.png" alt="Looking up through the trees"></div>
   </div>
@@ -599,17 +777,17 @@
   <div class="clients-grid">
     <div class="client-card">
       <img class="client-photo client-photo-img" data-toggle src="images/client-1.jpg" alt="Rui Vas">
-      <div class="client-name">Rui Vas</div>
+      <div class="client-name">Rui Vas <a class="li-link" href="https://www.linkedin.com/in/rui-vas/" target="_blank" rel="noopener" aria-label="Rui Vas on LinkedIn"><svg class="li-icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a></div>
       <div class="client-role"><span class="client-role-title">AI Educator &amp; Founder</span><br>Teaches at <span class="org">Mindvalley</span>, runs his own AI program &amp; community</div>
     </div>
     <div class="client-card">
       <img class="client-photo client-photo-img" data-toggle src="images/client-2.jpg" alt="Philippe Birker">
-      <div class="client-name">Philippe Birker</div>
+      <div class="client-name">Philippe Birker <a class="li-link" href="https://www.linkedin.com/in/philippe-birker-94960014/" target="_blank" rel="noopener" aria-label="Philippe Birker on LinkedIn"><svg class="li-icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a></div>
       <div class="client-role"><span class="client-role-title">Founder &amp; Community Builder</span><br>Behind <span class="org">ClimateFarmers</span> &amp; <span class="org">Love Foundation</span>, regenerating land &amp; people</div>
     </div>
     <div class="client-card">
       <img class="client-photo client-photo-img" data-toggle src="images/client-3.jpg" alt="Kyle Findley-Meier">
-      <div class="client-name">Kyle Findley-Meier</div>
+      <div class="client-name">Kyle Findley-Meier <a class="li-link" href="https://www.linkedin.com/in/kyle-findley-meier-aa138920b/" target="_blank" rel="noopener" aria-label="Kyle Findley-Meier on LinkedIn"><svg class="li-icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a></div>
       <div class="client-role"><span class="client-role-title">Co-Founder &amp; Builder</span><br>Currently shaping a <span class="org">secret AI startup</span> for the next wave of tools</div>
     </div>
   </div>
@@ -620,34 +798,35 @@
   <div class="holistic-intro">
     <div class="section-label">A Holistic Approach to Growth</div>
     <h2>It's both and.</h2>
-    <p>Building in the AI space means your attention is naturally pulled outward - new tools, new opportunities, new decisions every week. That matters, and you'll have my full support there. But lasting progress requires looking at the full picture - your business, your mindset, your patterns, your vision.</p>
+    <p>Building in the AI space means your attention is naturally pulled outward: New tools, new opportunities, new decisions every week. That matters, and you'll have my full support there. But lasting progress requires looking at the full picture: Your business, your mindset, your patterns, your vision.</p>
   </div>
-  <div class="holistic-image-wrap"><img src="images/holistic-image.png" alt="A holistic approach — sky, water, earth"></div>
+  <div class="holistic-image-wrap"><img src="images/holistic-image.png" alt="A holistic approach to growth"></div>
   <div class="holistic-areas">
-    <p>We move between the following areas as needed. Some weeks it's strategy and priorities. Others it's the deeper internal work.</p>
+    <p>We move between the following areas as needed. Some weeks it's strategy and priorities. Others it's the inner work to create more clarity, leadership or confidence.</p>
     <div class="holistic-area">
       <h3>Vision</h3>
       <p>Most founders are so deep in the day-to-day that they've lost sight of what they're actually building and why. We start by getting radically clear on your vision. Not just the business goals, but the life you want to be living while you build it. Clarity at this level is the foundation.</p>
     </div>
     <div class="holistic-area">
       <h3>Strategy</h3>
-      <p>We turn your vision into a focused, realistic strategy that works <em>with</em> your energy and strengths, not against them. You'll always know what to focus on next, and you'll make consistent progress one step after another.</p>
+      <p>We turn your vision into a focused, realistic strategy that works <em>with</em> your preferences and strengths, not against them. You'll always know what to focus on next, and you'll make consistent progress one step after another.</p>
     </div>
     <div class="holistic-area">
       <h3>Overcome Resistance</h3>
-      <p>This is where most growth actually happens. Every founder has patterns — avoidance, procrastination, self-doubt — that quietly slow everything down. We work on these in real time, week after week, so they stop disrupting your momentum and keeping you from the progress you're capable of.</p>
-      <p>This includes accountability — checking in week after week so you stay on track, don't get distracted, and the things that really matter actually get done.</p>
+      <p>This is where most growth actually happens. Every founder has patterns, avoidance, procrastination, and self-doubt that quietly slow everything down. We work on these in real time, week after week, so they stop disrupting your momentum and keeping you from the progress you're capable of.</p>
+      <p>This includes accountability, checking in week after week so you stay on track and don't get distracted, so that the things that really matter actually get done.</p>
     </div>
     <div class="holistic-area">
       <h3>Meaning Making</h3>
-      <p>The stories we tell ourselves shape the experience we have. The meaning we attach to what happens in our business — with cofounders, investors, employees — drives how we feel and how we respond. This work is about becoming aware of those stories and learning to relate to them differently.</p>
+      <p>The stories we tell ourselves shape the experience we have. The meaning we attach to what happens with co-founders, investors, employees determines how we feel and how we respond. This work is about becoming aware of those stories and realizing that we can rewrite them to our advantage.</p>
     </div>
     <div class="holistic-area">
       <h3>Identity</h3>
-      <p>When we want to get to a new level in our business, that usually comes with a shift in identity. Maybe it's learning to delegate, stepping back from micromanaging, or letting others step into leadership. When our identity shifts, our behavior and actions naturally follow — rather than trying to force different results while staying the same person.</p>
+      <p>When we want to get to a new level in our business, that usually comes with a shift in identity. When our identity shifts, our behavior and actions naturally follow rather than trying to force different results while staying the same person.</p>
     </div>
   </div>
 </section>
+
 
 
 <section id="voices">

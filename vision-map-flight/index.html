@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Vision Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#DAE7DE;
+  --text:#1A2B28;
+  --muted:#5A7872;
+  --gold:#FAB700;
+  --glow: 250,183,0;
+  --panel: rgba(20,30,28,0.78);
+  --serif:'Lora',Georgia,serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:#0c1411;font-family:var(--sans);color:var(--text)}
+
+/* ---- Stage: image covers viewport, orbs anchored to image coords ---- */
+.canvas{
+  position:fixed; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:max(100vw, calc(100vh * 752 / 560));
+  height:max(100vh, calc(100vw * 560 / 752));
+}
+.canvas .bg{width:100%;height:100%;display:block;object-fit:fill;user-select:none;-webkit-user-drag:none}
+.vignette{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(8,14,11,0.35) 100%)}
+
+/* ---- Orbs ---- */
+.orb{
+  position:absolute; transform:translate(-50%,-50%);
+  width:26px;height:26px;cursor:pointer;z-index:5;
+  border:0;background:transparent;padding:0;
+  animation:float 6s ease-in-out infinite;
+}
+.orb .core{
+  position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 50% 45%, #fff 0%, rgba(var(--glow),0.95) 35%, rgba(var(--glow),0.25) 70%, transparent 72%);
+  box-shadow:0 0 14px 4px rgba(var(--glow),0.55), 0 0 34px 10px rgba(var(--glow),0.30);
+}
+.orb .pulse{
+  position:absolute;inset:0;border-radius:50%;
+  border:1.5px solid rgba(var(--glow),0.7);
+  animation:pulse 2.8s ease-out infinite;
+}
+.orb .pulse.b{animation-delay:1.4s}
+.orb:hover .core{transform:scale(1.18)}
+.orb.done .core{
+  background:radial-gradient(circle at 50% 45%, #fff 0%, #bfe6cf 38%, rgba(120,200,160,0.3) 70%, transparent 72%);
+  box-shadow:0 0 16px 5px rgba(120,210,160,0.6), 0 0 38px 12px rgba(120,210,160,0.30);
+}
+.orb.done .pulse{border-color:rgba(120,210,160,0.7)}
+
+@keyframes pulse{
+  0%{transform:scale(1);opacity:.8}
+  100%{transform:scale(3.4);opacity:0}
+}
+@keyframes float{
+  0%,100%{margin-top:0}
+  50%{margin-top:-7px}
+}
+
+/* ---- Hover label ---- */
+.orb .label{
+  position:absolute;left:50%;bottom:calc(100% + 14px);transform:translateX(-50%) translateY(6px);
+  background:var(--panel);color:#f4f7f2;backdrop-filter:blur(8px);
+  padding:7px 15px;border-radius:999px;white-space:nowrap;
+  font-family:var(--serif);font-size:15px;letter-spacing:.3px;
+  border:1px solid rgba(var(--glow),0.35);
+  opacity:0;pointer-events:none;transition:opacity .25s ease, transform .25s ease;
+  box-shadow:0 6px 22px rgba(0,0,0,.3);
+}
+.orb .label::after{
+  content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:6px solid transparent;border-top-color:var(--panel);
+}
+.orb .label .sub{display:block;font-family:var(--sans);font-size:11px;
+  color:rgba(var(--glow),0.95);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1px}
+.orb:hover .label{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---- Intro hint ---- */
+.hint{
+  position:fixed;left:50%;bottom:30px;transform:translateX(-50%);
+  z-index:20;color:#eef3ec;font-size:13.5px;letter-spacing:.4px;
+  background:var(--panel);backdrop-filter:blur(8px);
+  padding:11px 22px;border-radius:999px;border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 8px 30px rgba(0,0,0,.35);
+  transition:opacity .6s ease;display:flex;align-items:center;gap:10px;
+}
+.hint b{font-weight:500;color:var(--gold)}
+.hint.hide{opacity:0;pointer-events:none}
+
+/* ---- Top brand ---- */
+.brand{
+  position:fixed;top:26px;left:50%;transform:translateX(-50%);z-index:20;
+  text-align:center;color:#fff;mix-blend-mode:normal;
+  text-shadow:0 2px 18px rgba(0,0,0,.5);
+}
+.brand h1{font-family:var(--serif);font-weight:500;font-size:22px;letter-spacing:1px}
+.brand p{font-size:11.5px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.8);margin-top:3px}
+
+/* ---- Progress dots (top right) ---- */
+.progress{position:fixed;top:30px;right:28px;z-index:20;display:flex;gap:9px;align-items:center}
+.progress .dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.35);
+  border:1px solid rgba(255,255,255,.5);transition:all .3s}
+.progress .dot.on{background:var(--gold);border-color:var(--gold);box-shadow:0 0 10px rgba(var(--glow),.8)}
+.progress button{background:rgba(20,30,28,.7);backdrop-filter:blur(6px);color:#fff;border:1px solid rgba(255,255,255,.18);
+  font-family:var(--sans);font-size:12px;padding:7px 14px;border-radius:999px;cursor:pointer;margin-left:6px;letter-spacing:.3px}
+.progress button:hover{border-color:var(--gold);color:var(--gold)}
+.progress button#soundBtn.on{border-color:var(--gold);color:var(--gold);background:rgba(250,183,0,.15)}
+
+/* ---- Modal ---- */
+.backdrop{
+  position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;
+  background:rgba(8,14,11,0.55);backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;transition:opacity .35s ease;padding:24px;
+}
+.backdrop.open{opacity:1;pointer-events:auto}
+.modal{
+  width:min(560px,100%);max-height:88vh;overflow-y:auto;
+  background:var(--bg);border-radius:20px;
+  border:1px solid rgba(20,30,28,.1);
+  box-shadow:0 30px 90px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.4) inset;
+  transform:translateY(24px) scale(.94);opacity:0;
+  transition:transform .42s cubic-bezier(.2,.9,.25,1.1), opacity .42s ease;
+  position:relative;
+}
+.backdrop.open .modal{transform:translateY(0) scale(1);opacity:1}
+.modal .accent{height:5px;border-radius:20px 20px 0 0;background:linear-gradient(90deg,var(--gold),#ffd766)}
+.modal .body{padding:30px 34px 30px}
+.modal .eyebrow{display:flex;align-items:center;gap:10px;font-size:11px;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--muted);font-weight:600}
+.modal .eyebrow .num{width:22px;height:22px;border-radius:50%;background:var(--gold);color:#1A2B28;
+  display:grid;place-items:center;font-size:11px;font-weight:600;letter-spacing:0}
+.modal h2{font-family:var(--serif);font-weight:500;font-size:30px;margin:14px 0 6px;line-height:1.15;color:var(--text)}
+.modal .lead{font-size:15px;line-height:1.55;color:var(--muted);margin-bottom:18px}
+.modal .qs{list-style:none;margin:0 0 18px;padding:16px 18px;background:rgba(90,120,114,.10);
+  border-radius:12px;border-left:3px solid var(--gold)}
+.modal .qs li{font-size:13.5px;line-height:1.5;color:var(--text);padding:4px 0 4px 18px;position:relative}
+.modal .qs li::before{content:"";position:absolute;left:2px;top:11px;width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.modal textarea{
+  width:100%;min-height:140px;resize:vertical;border-radius:12px;
+  border:1px solid rgba(20,30,28,.18);background:#fff;
+  padding:14px 15px;font-family:var(--sans);font-size:15px;line-height:1.55;color:var(--text);
+  outline:none;transition:border-color .2s, box-shadow .2s;
+}
+.modal textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(var(--glow),.18)}
+.modal textarea::placeholder{color:#9aaaa3}
+.modal .row{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:12px}
+.modal .saved-msg{font-size:13px;color:var(--muted);opacity:0;transition:opacity .3s}
+.modal .saved-msg.show{opacity:1}
+.btn{font-family:var(--sans);font-size:14px;font-weight:500;letter-spacing:.3px;cursor:pointer;
+  border:none;padding:12px 26px;border-radius:999px;transition:all .2s}
+.btn.primary{background:var(--text);color:#fff}
+.btn.primary:hover{background:#0f1c19;transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--muted)}
+.btn.ghost:hover{color:var(--text)}
+.modal .close{position:absolute;top:16px;right:18px;width:34px;height:34px;border-radius:50%;
+  border:1px solid rgba(20,30,28,.15);background:rgba(255,255,255,.5);color:var(--text);cursor:pointer;
+  font-size:18px;line-height:1;display:grid;place-items:center;transition:all .2s}
+.modal .close:hover{background:#fff;transform:rotate(90deg)}
+
+/* nav between orbs inside modal */
+.modal .nav{display:flex;gap:8px;align-items:center}
+.modal .nav span{font-size:12px;color:var(--muted)}
+
+/* ---- Summary view ---- */
+.summary .body{padding:30px 34px}
+.summary h2{font-family:var(--serif);font-size:28px;font-weight:500;margin-bottom:4px}
+.summary .sub{font-size:13.5px;color:var(--muted);margin-bottom:22px}
+.summary .block{margin-bottom:18px;padding:16px 18px;background:#fff;border-radius:12px;border:1px solid rgba(20,30,28,.08)}
+.summary .block h3{font-family:var(--serif);font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.summary .block h3 .tag{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;background:var(--gold);
+  color:#1A2B28;padding:2px 7px;border-radius:5px;font-family:var(--sans);font-weight:600}
+.summary .block p{font-size:14px;line-height:1.55;color:var(--text);white-space:pre-wrap}
+.summary .block p.empty{color:#9aaaa3;font-style:italic}
+
+
+/* ---- Fly-to-mountain experiment ---- */
+#flyStage{position:fixed;inset:0;z-index:60;background:#0c1411;opacity:0;visibility:hidden;
+  transition:opacity .18s ease;pointer-events:none}
+#flyStage.show{opacity:1;visibility:visible;pointer-events:auto}
+#flyStage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+#flyStage video.active{display:block}
+#flyOverlay{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .6s ease;
+  background:linear-gradient(to top, rgba(8,14,11,.72) 0%, rgba(8,14,11,.28) 38%, transparent 70%)}
+#flyOverlay.show{opacity:1;pointer-events:auto}
+.flycard{width:min(620px,92%);margin-bottom:8vh;text-align:center;color:#fff;
+  transform:translateY(20px);transition:transform .6s cubic-bezier(.2,.9,.25,1.1)}
+#flyOverlay.show .flycard{transform:translateY(0)}
+.flycard .eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);
+  font-weight:600;margin-bottom:10px;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.flycard h2{font-family:var(--serif);font-weight:500;font-size:38px;line-height:1.1;margin-bottom:18px;
+  text-shadow:0 3px 24px rgba(0,0,0,.6)}
+.flycard textarea{width:100%;min-height:120px;resize:vertical;border-radius:14px;
+  border:1px solid rgba(255,255,255,.25);background:rgba(12,20,16,.55);backdrop-filter:blur(10px);
+  padding:15px 16px;font-family:var(--sans);font-size:16px;line-height:1.55;color:#fff;outline:none;
+  transition:border-color .2s, box-shadow .2s}
+.flycard textarea::placeholder{color:rgba(255,255,255,.5)}
+.flycard textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(var(--glow),.25)}
+.flycard .frow{display:flex;justify-content:center;align-items:center;gap:14px;margin-top:16px}
+.flycard .fsaved{font-size:13px;color:rgba(255,255,255,.7);opacity:0;transition:opacity .3s}
+.flycard .fsaved.show{opacity:1}
+.flyback{position:absolute;top:24px;left:24px;z-index:2;display:flex;align-items:center;gap:8px;
+  background:rgba(12,20,16,.55);backdrop-filter:blur(10px);color:#fff;border:1px solid rgba(255,255,255,.22);
+  font-family:var(--sans);font-size:14px;padding:10px 18px;border-radius:999px;cursor:pointer;
+  opacity:0;pointer-events:none;transition:opacity .5s ease, border-color .2s, transform .2s}
+.flyback.show{opacity:1;pointer-events:auto}
+.flyback:hover{border-color:var(--gold);color:var(--gold);transform:translateX(-2px)}
+.btn.gold{background:var(--gold);color:#1A2B28}
+.btn.gold:hover{background:#ffc835;transform:translateY(-1px)}
+.flying .orb, .flying .brand, .flying .hint, .flying .progress, .flying .credit{
+  opacity:0 !important;pointer-events:none !important;transition:opacity .25s ease}
+@media (max-aspect-ratio: 1/1){
+  .flycard h2{font-size:28px}
+  .flycard{margin-bottom:6vh}
+}
+
+/* ---- Mobile / portrait: contain the whole scene so no orb is cropped ---- */
+@media (max-aspect-ratio: 1/1){
+  body{
+    background:radial-gradient(120% 80% at 50% 30%, #15211c 0%, #0a120f 70%, #070d0b 100%);
+  }
+  .canvas{
+    width:100vw;
+    height:calc(100vw * 560 / 752);
+    box-shadow:0 24px 70px rgba(0,0,0,.55);
+  }
+  .canvas .bg{border-radius:2px}
+  .orb{width:34px;height:34px}            /* bigger tap target */
+  .orb .label{opacity:0 !important}        /* no hover labels on touch */
+  .brand{top:max(18px, env(safe-area-inset-top))}
+  .hint{bottom:max(22px, env(safe-area-inset-bottom))}
+  .progress{top:max(20px, env(safe-area-inset-top));right:16px}
+  .progress .dot{width:8px;height:8px}
+}
+.credit{position:fixed;bottom:8px;right:12px;z-index:18;font-size:10px;color:rgba(255,255,255,.45);
+  letter-spacing:.3px;text-shadow:0 1px 4px rgba(0,0,0,.6);font-family:var(--sans)}
+.credit a{color:inherit;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,.25)}
+.credit a:hover{color:var(--gold)}
+@media (max-aspect-ratio: 1/1){.credit{bottom:6px;right:10px;font-size:9px}}
+@media (max-width:520px){
+  .modal .body{padding:24px 22px}
+  .modal h2{font-size:25px}
+  .brand h1{font-size:18px}
+  .hint{font-size:12px;padding:10px 16px;width:calc(100% - 36px);justify-content:center;text-align:center}
+}
+</style>
+  <!-- PostHog analytics -->
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_C8dTjYdsh3ks4qtx7FjQsFXkdXXDwsHyNwCGyDHRsXKT', {
+      api_host: 'https://eu.i.posthog.com',
+      ui_host: 'https://eu.posthog.com',
+      person_profiles: 'identified_only',
+      respect_dnt: true,
+      defaults: '2025-05-24'
+    })
+  </script>
+</head>
+<body>
+
+<div class="canvas">
+  <video class="bg" autoplay muted loop playsinline preload="auto" poster="video/poster.jpg">
+    <source src="video/vision-map-loop.mp4" type="video/mp4">
+  </video>
+  <div class="vignette"></div>
+
+  <!-- Orbs: positions are % of the image -->
+  <button class="orb" data-key="self"     style="left:27.5%;top:54%"></button>
+  <button class="orb" data-key="obstacle" style="left:52%;top:48%"></button>
+  <button class="orb" data-key="plan"     style="left:55%;top:80%"></button>
+  <button class="orb" data-key="vision"   style="left:61%;top:13%"></button>
+</div>
+
+<div class="brand">
+  <h1>Your Vision Map</h1>
+  <p>Self · Plan · Obstacle · Vision</p>
+</div>
+
+<div class="progress">
+  <span class="dot" data-d="self"></span>
+  <span class="dot" data-d="plan"></span>
+  <span class="dot" data-d="obstacle"></span>
+  <span class="dot" data-d="vision"></span>
+  <button id="soundBtn" title="Sound on/off" aria-label="Toggle sound">♪ Sound</button>
+  <button id="summaryBtn">Summary</button>
+</div>
+
+<div class="hint" id="hint">
+  <span>✦</span><span>Hover the glowing points of light, then click one to begin. Start with <b>Self</b>.</span>
+</div>
+
+<!-- Modal -->
+<div class="backdrop" id="backdrop">
+  <div class="modal" id="modal">
+    <div class="accent"></div>
+    <button class="close" id="closeBtn" aria-label="Close">×</button>
+    <div class="body" id="modalBody"><!-- filled by JS --></div>
+  </div>
+</div>
+
+  <!-- Fly-to-mountain experiment -->
+  <div id="flyStage">
+    <video id="flyFwd" muted playsinline preload="auto">
+      <source src="video/fly-forward.mp4" type="video/mp4">
+    </video>
+    <video id="flyRev" muted playsinline preload="auto">
+      <source src="video/fly-reverse.mp4" type="video/mp4">
+    </video>
+    <button id="flyBack" class="flyback" aria-label="Go back">&#8592; Back</button>
+    <div id="flyOverlay">
+      <div class="flycard">
+        <div class="eyebrow">Vision &mdash; the summit</div>
+        <h2>What is the vision?</h2>
+        <textarea id="flyAnswer" placeholder="The vision is&hellip;"></textarea>
+        <div class="frow">
+          <span class="fsaved" id="flySaved">Saved &#10003;</span>
+          <button class="btn gold" id="flySave">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const CONTENT = {
+  self: {
+    n:1, label:"Self", sub:"The one who stands here",
+    h:"Who are you, right now?",
+    lead:"Before the path, before the summit, there is you, the one standing at the trailhead. Name where you truly are today, honestly and without polish.",
+    qs:[
+      "What are your real strengths and the gifts you bring?",
+      "What is your current situation, your starting point in plain terms?",
+      "What do you most deeply care about right now?"
+    ],
+    ph:"I am…"
+  },
+  vision: {
+    n:4, label:"Vision", sub:"The summit on the horizon",
+    h:"What is the vision?",
+    lead:"The mountain is the future you are drawn toward. Describe it as if it were already real, vivid enough that you would recognise it the moment you arrived.",
+    qs:[
+      "If everything went right, what does success look and feel like?",
+      "Why does this matter? Who does it serve?",
+      "How will you know you have reached the summit?"
+    ],
+    ph:"The vision is…"
+  },
+  obstacle: {
+    n:3, label:"Obstacle", sub:"What lies across the path",
+    h:"What stands in the way?",
+    lead:"Halfway up the trail lie the ruins, the obstacles between here and there. Naming them clearly is the first step to moving through them.",
+    qs:[
+      "What is the single biggest thing blocking the way?",
+      "Which obstacles are outer (resources, skills) and which are inner (fear, doubt)?",
+      "What has stopped you before, and might again?"
+    ],
+    ph:"What stands in the way is…"
+  },
+  plan: {
+    n:2, label:"Plan", sub:"The path beneath your feet",
+    h:"What is the plan?",
+    lead:"The trail is the route from where you stand to the summit. You do not need every step, just the next few that are real and within reach.",
+    qs:[
+      "What are the first 3 concrete steps from here?",
+      "What is the very next action you could take this week?",
+      "Who or what could help you along the way?"
+    ],
+    ph:"The plan is…"
+  }
+};
+const ORDER = ["self","plan","obstacle","vision"];
+const STORE = "visionMap.v1";
+let data = JSON.parse(localStorage.getItem(STORE) || "{}");
+let current = null;
+
+const $ = s => document.querySelector(s);
+const backdrop = $("#backdrop"), modalBody = $("#modalBody");
+
+function refreshOrbState(){
+  document.querySelectorAll(".orb").forEach(o=>{
+    const k=o.dataset.key;
+    o.classList.toggle("done", !!(data[k] && data[k].trim()));
+    o.innerHTML = `<span class="core"></span><span class="pulse"></span><span class="pulse b"></span>
+      <span class="label"><span class="sub">${CONTENT[k].label}</span>${CONTENT[k].h}</span>`;
+  });
+  document.querySelectorAll(".progress .dot").forEach(d=>{
+    const k=d.dataset.d;
+    d.classList.toggle("on", !!(data[k] && data[k].trim()));
+  });
+}
+
+function openModal(key){
+  current = key;
+  const c = CONTENT[key];
+  modalBody.innerHTML = `
+    <div class="eyebrow"><span class="num">${c.n}</span> ${c.label} &mdash; ${c.sub}</div>
+    <h2>${c.h}</h2>
+    <p class="lead">${c.lead}</p>
+    <ul class="qs">${c.qs.map(q=>`<li>${q}</li>`).join("")}</ul>
+    <textarea id="answer" placeholder="${c.ph}">${data[key] ? escapeHtml(data[key]) : ""}</textarea>
+    <div class="row">
+      <div class="nav">
+        <button class="btn ghost" id="prevBtn">‹ Prev</button>
+        <button class="btn ghost" id="nextBtn">Next ›</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <span class="saved-msg" id="savedMsg">Saved ✓</span>
+        <button class="btn primary" id="saveBtn">Save</button>
+      </div>
+    </div>`;
+  backdrop.classList.add("open");
+  const ta = $("#answer"); setTimeout(()=>ta.focus(),420);
+  ta.addEventListener("input", autosave);
+  $("#saveBtn").addEventListener("click", ()=>{ save(); flashSaved(); });
+  $("#prevBtn").addEventListener("click", ()=>step(-1));
+  $("#nextBtn").addEventListener("click", ()=>step(1));
+}
+let saveTimer;
+function autosave(){ clearTimeout(saveTimer); saveTimer=setTimeout(save,500); }
+function save(){
+  const ta=$("#answer"); if(!ta) return;
+  data[current]=ta.value;
+  localStorage.setItem(STORE, JSON.stringify(data));
+  
+/* ---- Background music (loops, user-controlled) ---- */
+const bgm = document.getElementById('bgm');
+const soundBtn = document.getElementById('soundBtn');
+let soundOn = false;
+function setSound(on){
+  soundOn = on;
+  if(on){ bgm.volume = 0.0; bgm.play().then(()=>fadeTo(0.55)).catch(()=>{}); soundBtn.classList.add('on'); soundBtn.innerHTML='♪ Sound on'; }
+  else { fadeTo(0, ()=>bgm.pause()); soundBtn.classList.remove('on'); soundBtn.innerHTML='♪ Sound'; }
+}
+let fadeTimer;
+function fadeTo(target, done){
+  clearInterval(fadeTimer);
+  fadeTimer=setInterval(()=>{
+    const d=target-bgm.volume;
+    if(Math.abs(d)<0.04){ bgm.volume=target; clearInterval(fadeTimer); done&&done(); }
+    else bgm.volume=Math.min(1,Math.max(0,bgm.volume+(d>0?0.04:-0.04)));
+  },40);
+}
+soundBtn.addEventListener('click', ()=>setSound(!soundOn));
+
+refreshOrbState();
+}
+function flashSaved(){ const m=$("#savedMsg"); if(!m)return; m.classList.add("show"); setTimeout(()=>m.classList.remove("show"),1600); }
+function step(dir){
+  save();
+  const i = ORDER.indexOf(current);
+  const next = ORDER[(i+dir+ORDER.length)%ORDER.length];
+  openModal(next);
+}
+function closeModal(){ save(); backdrop.classList.remove("open"); current=null; }
+
+/* Summary */
+function openSummary(){
+  current="__summary__";
+  modalBody.parentElement.classList.add("summary");
+  modalBody.innerHTML = `
+    <div class="eyebrow"><span class="num">✦</span> The whole picture</div>
+    <h2 style="margin-bottom:4px">Your Vision Map</h2>
+    <p class="sub">Everything you have named so far, in one view.</p>
+    ${ORDER.map(k=>{
+      const v=(data[k]||"").trim();
+      return `<div class="block">
+        <h3><span class="tag">${CONTENT[k].label}</span> ${CONTENT[k].h}</h3>
+        <p class="${v?"":"empty"}">${v?escapeHtml(v):"Not yet written. Click the "+CONTENT[k].label+" orb to add it."}</p>
+      </div>`;
+    }).join("")}
+    <div class="row" style="justify-content:flex-end">
+      <button class="btn ghost" id="copyBtn">Copy as text</button>
+      <button class="btn primary" id="doneBtn">Close</button>
+    </div>`;
+  backdrop.classList.add("open");
+  $("#doneBtn").addEventListener("click", closeSummary);
+  $("#copyBtn").addEventListener("click", copyAll);
+}
+function closeSummary(){ backdrop.classList.remove("open"); modalBody.parentElement.classList.remove("summary"); current=null; }
+function copyAll(){
+  const txt = ORDER.map(k=>`## ${CONTENT[k].label} — ${CONTENT[k].h}\n${(data[k]||"(blank)").trim()}`).join("\n\n");
+  navigator.clipboard.writeText(txt).then(()=>{ const b=$("#copyBtn"); b.textContent="Copied ✓"; setTimeout(()=>b.textContent="Copy as text",1600); });
+}
+
+function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+
+/* Wire up */
+document.querySelectorAll(".orb").forEach(o=>{
+  o.addEventListener("click",()=>{ $("#hint").classList.add("hide"); if(o.dataset.key==="vision"){ startFlight(); } else { openModal(o.dataset.key); } });
+});
+$("#closeBtn").addEventListener("click", ()=> current==="__summary__"?closeSummary():closeModal());
+$("#summaryBtn").addEventListener("click", openSummary);
+backdrop.addEventListener("click",e=>{ if(e.target===backdrop){ current==="__summary__"?closeSummary():closeModal(); }});
+document.addEventListener("keydown",e=>{ if(e.key==="Escape" && backdrop.classList.contains("open")){ current==="__summary__"?closeSummary():closeModal(); }});
+
+// touch devices: reword the hint (no hover)
+if (window.matchMedia('(pointer: coarse)').matches){
+  document.querySelector('#hint').lastElementChild.innerHTML =
+    'Tap the glowing points of light to begin. Start with <b>Self</b>.';
+}
+// auto-hide hint after a while
+setTimeout(()=>$("#hint").classList.add("hide"), 9000);
+refreshOrbState();
+
+/* ---- Fly-to-mountain sequence ---- */
+const flyStage = document.getElementById('flyStage');
+const flyFwd = document.getElementById('flyFwd');
+const flyRev = document.getElementById('flyRev');
+const flyOverlay = document.getElementById('flyOverlay');
+const flyBack = document.getElementById('flyBack');
+const flyAnswer = document.getElementById('flyAnswer');
+let flyActive = false;
+function showVid(el){ flyFwd.classList.remove('active'); flyRev.classList.remove('active'); el.classList.add('active'); }
+function startFlight(){
+  if(flyActive) return; flyActive = true;
+  flyAnswer.value = data.vision ? data.vision : '';
+  document.body.classList.add('flying');
+  flyOverlay.classList.remove('show'); flyBack.classList.remove('show');
+  showVid(flyFwd);
+  try{ flyFwd.currentTime = 0; }catch(e){}
+  flyStage.classList.add('show');
+  flyFwd.play().catch(()=>{});
+}
+flyFwd.addEventListener('ended', ()=>{
+  try{ flyFwd.currentTime = flyFwd.duration; }catch(e){}
+  flyOverlay.classList.add('show'); flyBack.classList.add('show');
+  setTimeout(()=>flyAnswer.focus(), 300);
+});
+function endFlight(){
+  data.vision = flyAnswer.value; localStorage.setItem(STORE, JSON.stringify(data)); refreshOrbState();
+  flyOverlay.classList.remove('show'); flyBack.classList.remove('show');
+  showVid(flyRev);
+  try{ flyRev.currentTime = 0; }catch(e){}
+  flyRev.play().catch(()=>{});
+}
+flyRev.addEventListener('ended', ()=>{
+  flyStage.classList.remove('show');
+  document.body.classList.remove('flying');
+  setTimeout(()=>{ showVid(flyFwd); flyActive = false; }, 220);
+});
+flyBack.addEventListener('click', endFlight);
+flyAnswer.addEventListener('input', ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(()=>{ data.vision=flyAnswer.value; localStorage.setItem(STORE, JSON.stringify(data)); refreshOrbState(); },500); });
+document.getElementById('flySave').addEventListener('click', ()=>{ data.vision=flyAnswer.value; localStorage.setItem(STORE, JSON.stringify(data)); refreshOrbState(); const m=document.getElementById('flySaved'); m.classList.add('show'); setTimeout(()=>m.classList.remove('show'),1600); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && flyActive && flyOverlay.classList.contains('show')) endFlight(); });
+
+</script>
+  <audio id="bgm" loop preload="auto">
+    <source src="audio/ambient-loop.mp3" type="audio/mpeg">
+  </audio>
+  <div class="credit">Music: "Heroic Age" by <a href="https://incompetech.com" target="_blank" rel="noopener">Kevin MacLeod</a> · <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener">CC BY 3.0</a></div>
+</body>
+</html>

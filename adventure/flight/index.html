@@ -261,6 +261,7 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
 .node.active .nm{color:#dfe7e0}
 .node.partial .ring{border-color:rgba(var(--glow),.9);color:#ffe6a0;cursor:pointer}
 .node.locked{opacity:.5}
+.node.removable .ring{cursor:pointer}
 @keyframes nodepulse{0%{box-shadow:0 0 0 0 rgba(var(--glow),.45)}100%{box-shadow:0 0 0 12px rgba(var(--glow),0)}}
 .connector{width:2px;height:16px;margin:3px 0;background:linear-gradient(to top, rgba(255,255,255,.12), rgba(var(--glow),.4));position:relative}
 .connector.on{background:linear-gradient(to top, rgba(var(--glow),.5), rgba(var(--glow),.85))}
@@ -695,10 +696,10 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sceneActive&&sceneB
 /* ====== Plan path overlay (milestones + obstacle) ====== */
 const planOverlay=document.getElementById('planOverlay');
 const PINS=[
-  {k:'m0',n:'1',t:'First milestone',  ph:'The first real step from where you stand\u2026', c:'#7faa86'},
-  {k:'m1',n:'2',t:'Building momentum',ph:'What comes once you are moving\u2026',          c:'#7f9fb8'},
-  {k:'m2',n:'3',t:'Nearing the summit',ph:'The step that brings the vision within reach\u2026', c:'#d6b25a'},
-  {k:'ob',n:'!',t:'The obstacle',     ph:'What stands in the way on the trail\u2026',     c:'#c08585'}
+  {k:'m0',n:'1',t:'First milestone',  ph:'The first real step from where you stand\u2026', c:'#889e8d'},
+  {k:'m1',n:'2',t:'Building momentum',ph:'What comes once you are moving\u2026',          c:'#8a9bac'},
+  {k:'m2',n:'3',t:'Nearing the summit',ph:'The step that brings the vision within reach\u2026', c:'#bdab80'},
+  {k:'ob',n:'!',t:'The obstacle',     ph:'What stands in the way on the trail\u2026',     c:'#b3908f'}
 ];
 function pinVal(k){ if(k==='ob') return data.obstacle||''; return planStepsArr()[+k[1]]||''; }
 function pinSet(k,val){
@@ -706,7 +707,7 @@ function pinSet(k,val){
   else { const a=planStepsArr(); a[+k[1]]=val; data.plan=a; }
   localStorage.setItem(STORE,JSON.stringify(data)); refreshOrbState();
 }
-const PORB={ m0:{x:39,y:84,g:'127,170,134'}, m1:{x:52,y:63,g:'127,159,184'}, ob:{x:54,y:46,g:'192,133,133'}, m2:{x:63,y:28,g:'214,178,90'} };
+const PORB={ m0:{x:43,y:84,g:'136,158,141'}, m1:{x:46,y:63,g:'138,155,172'}, ob:{x:57,y:45,g:'179,144,143'}, m2:{x:68,y:27,g:'189,171,128'} };
 const PORB_ORDER=['m0','m1','ob','m2'];
 function renderPlanOrbs(){
   const wrap=document.getElementById('planOrbs'); if(!wrap)return;
@@ -751,7 +752,7 @@ function renderPlan(){
 }
 
 /* ====== Interactive skill tree ====== */
-const RANKS=1, START_POINTS=12, SKILL_STORE='skillTree.v1';
+const RANKS=1, START_POINTS=10, SKILL_STORE='skillTree.v1';
 const ICONS={
   people:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9" r="2.2"/><path d="M15 19a4.5 4.5 0 0 1 6.5-3.7"/></svg>',
   search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><path d="M16 16l4 4"/></svg>',
@@ -785,10 +786,12 @@ function loadSkill(){
 }
 let skill=loadSkill();
 function saveSkill(){localStorage.setItem(SKILL_STORE,JSON.stringify(skill));}
-function toggleNode(track,idx){
-  const a=skill[track];
-  if(a[idx]>0){ a[idx]=0; skill.points++; }
-  else { if(skill.points<=0) return; a[idx]=1; skill.points--; }
+function frontier(track){const a=skill[track];for(let i=0;i<5;i++){if(!a[i])return i;}return 5;}
+function clickNode(track,idx){
+  const fr=frontier(track);
+  if(idx===fr){ if(skill.points<=0) return; skill[track][idx]=1; skill.points--; }   // add the next (its predecessor is already selected)
+  else if(idx===fr-1){ skill[track][idx]=0; skill.points++; }                         // remove the topmost selected
+  else return;                                                                         // locked or buried: not selectable
   saveSkill(); renderSkill();
 }
 function resetSkill(){TRACKS.forEach(t=>skill[t.key]=[0,0,0,0,0]);skill.points=START_POINTS;saveSkill();renderSkill();}
@@ -796,11 +799,12 @@ function renderSkill(){
   const p=document.getElementById('skillPanel');
   let cols='';
   TRACKS.forEach(t=>{
+    const fr=frontier(t.key);
     let nodesHtml='';
     for(let i=4;i>=0;i--){
-      const on=skill[t.key][i]>0;
-      let cls='node '+(on?'filled':'active');
-      nodesHtml+=`<div class="${cls}" data-track="${t.key}" data-idx="${i}" data-add="1">
+      const filled=skill[t.key][i]>0;
+      let cls='node '+(filled?('filled'+(i===fr-1?' removable':'')):(i===fr?'active':'locked'));
+      nodesHtml+=`<div class="${cls}" data-track="${t.key}" data-idx="${i}">
         <div class="ring">${ICONS[t.nodes[i].ic]||''}</div>
         <div class="nm">${t.nodes[i].nm}</div></div>`;
       if(i>0){ const on2=skill[t.key][i-1]>0; nodesHtml+=`<div class="connector ${on2?'on':''}"></div>`; }
@@ -808,10 +812,10 @@ function renderSkill(){
     cols+=`<div class="skill-col" data-col="${t.key}" style="--gold:${t.gold};--glow:${t.glow}"><h4>${t.name}</h4>${nodesHtml}</div>`;
   });
   p.innerHTML=`<div class="skill-title">Skill Tree</div>
-    <div class="skill-sub"><span class="dash"></span><span><b>${skill.points}</b> skill points available</span><span class="dash r"></span></div>
+    <div class="skill-sub"><span class="dash"></span><span><b>${skill.points}</b> hours available</span><span class="dash r"></span></div>
     <div class="skill-cols">${cols}</div>
-    <div class="skill-foot"><button class="reset" id="skillReset">Reset</button><span class="skill-hint">Click a skill to add it &middot; click again to remove</span></div>`;
-  p.querySelectorAll('[data-add]').forEach(n=>n.addEventListener('click',()=>toggleNode(n.dataset.track,+n.dataset.idx)));
+    <div class="skill-foot"><button class="reset" id="skillReset">Reset</button><span class="skill-hint">Each skill unlocks the next &middot; click the top one to refund</span></div>`;
+  p.querySelectorAll('.node').forEach(n=>n.addEventListener('click',()=>clickNode(n.dataset.track,+n.dataset.idx)));
   document.getElementById('skillReset').addEventListener('click',resetSkill);
   fitSkill();
 }

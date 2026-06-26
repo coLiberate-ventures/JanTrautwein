@@ -237,3 +237,9 @@ CSS/HTML/JS). Lessons:
 - Skill tree: real skill names/icons per track; earned-points logic tied to coaching milestones.
 - Possibly regenerate the base as a 3:2 looping video that exactly matches the fly-in first frame
   for a living background that's still seamless.
+
+## Skill tree — selection rules (adventure/flight, locked 2026-06-26)
+- **Bottom-up unlock:** a skill node is only selectable once the node directly below it is selected. Implemented via `frontier(track)` = index of the first unselected node; `clickNode(track,idx)` only acts when `idx===frontier` (add) or `idx===frontier-1` (remove the topmost selected). Locked/buried nodes are no-ops. Keep this rule — do not make all nodes freely clickable.
+- **Single click per node** (`RANKS=1`): one click selects, click the topmost selected to refund.
+- **Budget:** `START_POINTS=10` for 15 nodes (intentional scarcity — can't fill all). Label reads "<n> hours available" (not "skill points").
+- `loadSkill()` normalizes any legacy multi-rank data to 0/1 and recomputes points from filled count.

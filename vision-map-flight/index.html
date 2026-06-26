@@ -565,6 +565,7 @@ function startScene(key){
   visionOverlay.classList.remove('show');skillOverlay.classList.remove('show');sceneBack.classList.remove('show');
   const f=document.getElementById(sc.fwd);
   sceneStage.classList.add('show');
+  sceneBack.classList.add('show');   // Back is available immediately, never wait for the video
   // Arrival reveal (vision): runs exactly once, whether the video ends cleanly,
   // stalls, or never loads. Without this the full-screen stage would trap every click.
   let arrived=false;

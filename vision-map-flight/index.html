@@ -565,28 +565,40 @@ function startScene(key){
   visionOverlay.classList.remove('show');skillOverlay.classList.remove('show');sceneBack.classList.remove('show');
   const f=document.getElementById(sc.fwd);
   sceneStage.classList.add('show');
+  // Arrival reveal (vision): runs exactly once, whether the video ends cleanly,
+  // stalls, or never loads. Without this the full-screen stage would trap every click.
+  let arrived=false;
+  function revealArrival(){
+    if(arrived||sc.overlayTiming==='start')return; arrived=true;
+    sceneBack.classList.add('show');
+    if(key==='vision'){ visionOverlay.classList.add('show'); setTimeout(()=>flyAnswer.focus(),300); }
+  }
   playScene(f, function(){
     showVid(sc.fwd);
     if(sc.overlayTiming==='start'){              // slide the panel in WHILE the character turns
       setTimeout(function(){ sceneBack.classList.add('show'); document.getElementById(sc.overlay).classList.add('show'); }, 250);
     }
   });
-  f.onended=()=>{
-    try{f.pause();}catch(e){}
-    if(sc.overlayTiming!=='start'){              // arrival overlays (vision) appear after the flight
-      sceneBack.classList.add('show');
-      if(key==='vision'){visionOverlay.classList.add('show');setTimeout(()=>flyAnswer.focus(),300);}
-    }
-  };
+  f.onended=()=>{ try{f.pause();}catch(e){} revealArrival(); };
+  // Safety net: if the video can't play to its end, still reveal so the user is never stuck.
+  if(sc.overlayTiming!=='start') setTimeout(revealArrival, 3500);
 }
 function endScene(){
   if(!curScene)return;const sc=SCENES[curScene];
   if(curScene==='vision'){data.vision=flyAnswer.value;localStorage.setItem(STORE,JSON.stringify(data));refreshOrbState();}
   visionOverlay.classList.remove('show');skillOverlay.classList.remove('show');sceneBack.classList.remove('show');
   const r=document.getElementById(sc.rev);
+  // Tear down the stage exactly once, even if the reverse video stalls or never loads.
+  let exited=false;
+  function finishExit(){
+    if(exited)return; exited=true;
+    sceneStage.classList.remove('show');document.body.classList.remove('flying');
+    setTimeout(()=>{sceneActive=false;curScene=null;},220);
+  }
   // keep the held forward frame visible; only swap to reverse once its first frame is decoded
   setTimeout(()=>{ playScene(r, function(){ showVid(sc.rev); }); }, curScene==='self'?320:160);
-  r.onended=()=>{sceneStage.classList.remove('show');document.body.classList.remove('flying');setTimeout(()=>{sceneActive=false;curScene=null;},220);};
+  r.onended=finishExit;
+  setTimeout(finishExit, 4000); // safety net if the reverse video can't finish
 }
 sceneBack.addEventListener('click',endScene);
 flyAnswer.addEventListener('input',()=>{clearTimeout(saveTimer);saveTimer=setTimeout(()=>{data.vision=flyAnswer.value;localStorage.setItem(STORE,JSON.stringify(data));refreshOrbState();},500);});

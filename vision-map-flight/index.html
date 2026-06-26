@@ -582,8 +582,11 @@ function startScene(key){
     }
   });
   f.onended=()=>{ try{f.pause();}catch(e){} revealArrival(); };
-  // Safety net: if the video can't play to its end, still reveal so the user is never stuck.
-  if(sc.overlayTiming!=='start') setTimeout(revealArrival, 3500);
+  if(sc.overlayTiming!=='start'){
+    // If the flight video isn't actually playing (e.g. won't load), reveal promptly — don't make the user wait.
+    setTimeout(()=>{ if(!f.duration || f.readyState<3 || f.paused) revealArrival(); }, 900);
+    setTimeout(revealArrival, 3500); // final safety net
+  }
 }
 function endScene(){
   if(!curScene)return;const sc=SCENES[curScene];
@@ -600,7 +603,9 @@ function endScene(){
   // keep the held forward frame visible; only swap to reverse once its first frame is decoded
   setTimeout(()=>{ playScene(r, function(){ showVid(sc.rev); }); }, curScene==='self'?320:160);
   r.onended=finishExit;
-  setTimeout(finishExit, 4000); // safety net if the reverse video can't finish
+  // If the reverse video can't play, exit promptly so the next orb works right away.
+  setTimeout(()=>{ if(!r.duration || r.readyState<3 || r.paused) finishExit(); }, 700);
+  setTimeout(finishExit, 4000); // final safety net
 }
 sceneBack.addEventListener('click',endScene);
 flyAnswer.addEventListener('input',()=>{clearTimeout(saveTimer);saveTimer=setTimeout(()=>{data.vision=flyAnswer.value;localStorage.setItem(STORE,JSON.stringify(data));refreshOrbState();},500);});

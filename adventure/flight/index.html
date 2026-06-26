@@ -204,7 +204,7 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
   opacity:0 !important;pointer-events:none !important}
 .flying .canvas, .flying .bg-layer{pointer-events:none !important}  /* stop the orb layer from eating scene clicks */
 /* vision card (floats from bottom) */
-#visionOverlay{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;
+#visionOverlay{position:absolute;inset:0;z-index:4;display:flex;align-items:flex-end;justify-content:center;
   opacity:0;pointer-events:none;transition:none;
   background:linear-gradient(to top, rgba(8,14,11,.72) 0%, rgba(8,14,11,.28) 38%, transparent 70%)}
 #visionOverlay.show{opacity:1;pointer-events:auto}
@@ -223,11 +223,11 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
 .flycard .fsaved.show{opacity:1}
 
 /* ---- Skill tree panel (floats from right) ---- */
-#skillOverlay{position:absolute;top:0;right:0;bottom:0;width:min(700px,66vw);
+#skillOverlay{position:absolute;top:0;right:0;bottom:0;z-index:4;width:min(700px,66vw);
   display:flex;align-items:center;justify-content:center;padding:26px 26px 26px 0;
   transform:translateX(108%);transition:none;pointer-events:none}
 #skillOverlay.show{transform:translateX(0);pointer-events:auto}
-.skillpanel{position:relative;width:100%;max-height:90vh;overflow:auto;
+.skillpanel{position:relative;width:100%;max-height:none;overflow:visible;transform-origin:center center;
   background:linear-gradient(180deg, rgba(14,20,17,.62), rgba(9,13,11,.68));backdrop-filter:blur(16px);
   border:1px solid rgba(var(--glow),.34);border-radius:18px;
   box-shadow:0 30px 90px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.05), inset 0 0 60px rgba(0,0,0,.4);
@@ -251,7 +251,7 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
 .node .ring svg{width:24px;height:24px}
 .node .lvl{font-family:var(--sans);font-size:11px;font-weight:600;color:#8a9890;letter-spacing:.5px}
 .node .nm{font-size:10.5px;color:#9aa8a0;text-align:center;line-height:1.15;max-width:78px;letter-spacing:.2px}
-.node.filled .ring{background:radial-gradient(circle at 50% 35%, #ffe9a8, var(--gold) 70%);border-color:#ffdd77;color:#3a2c00;
+.node.filled .ring{background:radial-gradient(circle at 50% 35%, #ffe9a8, var(--gold) 70%);border-color:var(--gold);color:#3a2c00;
   box-shadow:0 0 16px 2px rgba(var(--glow),.55)}
 .node.filled .lvl{color:var(--gold)}
 .node.filled .nm{color:#e7eee8}
@@ -278,6 +278,58 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
   .node .ring{width:46px;height:46px}
   .node .nm{font-size:9.5px;max-width:64px}
   .flycard h2{font-size:28px}.flycard{margin-bottom:6vh}
+}
+
+/* ---- Plan path scene (bird's-eye) ---- */
+#planStill{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s ease;z-index:0}
+#planStill.show{opacity:1}
+#sceneStage .scenevid{z-index:1}
+#planOrbs{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:max(100vw, calc(100vh * 1536 / 1024));height:max(100vh, calc(100vw * 1024 / 1536));
+  z-index:3;opacity:0;pointer-events:none;transition:opacity .6s ease}
+#planOrbs.show{opacity:1}
+#planOrbs.show .orb{opacity:1 !important;pointer-events:auto !important}
+.pin.glow{animation:pinglow 1.3s ease}
+@keyframes pinglow{0%{box-shadow:0 0 0 0 rgba(255,255,255,0)}18%{box-shadow:0 0 0 3px rgba(255,255,255,.5), 0 0 26px 4px var(--pc,#fab700)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+#planOverlay{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:space-between;
+  gap:24px;padding:0 clamp(20px,5vw,70px);opacity:0;pointer-events:none;transition:opacity .6s ease;
+  background:linear-gradient(to right, rgba(8,14,11,.55) 0%, rgba(8,14,11,.12) 30%, transparent 55%, rgba(8,14,11,.25) 100%)}
+#planOverlay.show{opacity:1}
+.plan-left{flex:0 1 250px;max-width:250px;color:#fff;text-shadow:0 2px 16px rgba(0,0,0,.6);
+  transform:translateX(-14px);transition:transform .7s cubic-bezier(.2,.9,.25,1.1)}
+#planOverlay.show .plan-left{transform:translateX(0)}
+.plan-left .eyebrow{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:10px}
+.plan-left h2{font-family:var(--serif);font-weight:500;font-size:32px;line-height:1.12;margin-bottom:14px}
+.plan-left p{font-size:14px;line-height:1.6;color:rgba(255,255,255,.82)}
+.plan-right{width:min(380px,42vw);max-height:90vh;overflow:auto;pointer-events:auto;display:flex;flex-direction:column;gap:10px;
+  transform:translateX(16px);transition:transform .7s cubic-bezier(.2,.9,.25,1.1)}
+#planOverlay.show .plan-right{transform:translateX(0)}
+.plan-right::-webkit-scrollbar{width:7px}.plan-right::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:8px}
+.pin{background:rgba(12,20,16,.6);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.16);
+  border-left:3px solid var(--pc,#7faa86);border-radius:14px;overflow:hidden;transition:background .2s,border-color .2s}
+.pin:hover{background:rgba(16,26,21,.72)}
+.pin-head{width:100%;display:flex;align-items:center;gap:12px;background:transparent;border:0;cursor:pointer;
+  padding:15px 16px;color:#fff;font-family:var(--sans);text-align:left}
+.pin-dot{flex:0 0 28px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
+  background:var(--pc,#7faa86);color:#0c140f;font-size:13px;font-weight:600}
+.pin-ttl{flex:1;font-size:15px;font-weight:500;letter-spacing:.2px}
+.pin-check{font-size:13px;color:#9fd6b0;opacity:0;transition:opacity .2s}
+.pin.done .pin-check{opacity:1}
+.pin-chev{font-size:18px;color:rgba(255,255,255,.6);transition:transform .3s}
+.pin.open .pin-chev{transform:rotate(90deg)}
+.pin-body{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s ease, opacity .3s ease}
+.pin.open .pin-body{max-height:280px;opacity:1}
+.pin-body textarea{width:100%;min-height:108px;resize:vertical;border:0;border-top:1px solid rgba(255,255,255,.12);
+  background:rgba(0,0,0,.22);padding:13px 16px;font-family:var(--sans);font-size:14.5px;line-height:1.55;color:#fff;outline:none}
+.pin-body textarea::placeholder{color:rgba(255,255,255,.45)}
+@media (max-aspect-ratio: 1/1){
+  #planOverlay{flex-direction:column;align-items:stretch;justify-content:space-between;gap:10px;padding:58px 12px 12px;overflow:hidden;
+    background:linear-gradient(to bottom, rgba(8,14,11,.52) 0%, rgba(8,14,11,.04) 26%, rgba(8,14,11,.04) 50%, rgba(8,14,11,.62) 76%)}
+  .plan-left{flex:none;max-width:none}
+  .plan-left h2{font-size:21px;margin-bottom:6px}
+  .plan-left p{font-size:12.5px}
+  .plan-right{width:100%;max-height:46vh;flex:none}
+  #planOrbs .orb{width:15px;height:15px}
 }
 
 /* ---- Mobile / portrait: contain the whole scene so no orb is cropped ---- */
@@ -332,7 +384,6 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
 
   <!-- Orbs: positions are % of the image -->
   <button class="orb" data-key="self"     style="left:27.5%;top:54%"></button>
-  <button class="orb" data-key="obstacle" style="left:52%;top:48%"></button>
   <button class="orb" data-key="plan"     style="left:55%;top:80%"></button>
   <button class="orb" data-key="vision"   style="left:61%;top:13%"></button>
 </div>
@@ -366,10 +417,13 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
 
   <!-- Cinematic scene stage -->
   <div id="sceneStage">
+    <img id="planStill" src="images/top down view.png" alt="">
     <video id="vFwd" class="scenevid" muted playsinline preload="auto"><source src="video/fly-forward.mp4" type="video/mp4"></video>
     <video id="vRev" class="scenevid" muted playsinline preload="auto"><source src="video/fly-reverse.mp4" type="video/mp4"></video>
     <video id="sFwd" class="scenevid" muted playsinline preload="auto"><source src="video/skill-forward.mp4" type="video/mp4"></video>
     <video id="sRev" class="scenevid" muted playsinline preload="auto"><source src="video/skill-reverse.mp4" type="video/mp4"></video>
+    <video id="pFwd" class="scenevid" muted playsinline preload="auto"><source src="video/plan-forward.mp4" type="video/mp4"></video>
+    <video id="pRev" class="scenevid" muted playsinline preload="auto"><source src="video/plan-reverse.mp4" type="video/mp4"></video>
     <button id="sceneBack" class="flyback" aria-label="Go back">&#8592; Back</button>
     <div id="visionOverlay">
       <div class="flycard">
@@ -380,6 +434,15 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
       </div>
     </div>
     <div id="skillOverlay"><div class="skillpanel" id="skillPanel"></div></div>
+    <div id="planOrbs"></div>
+    <div id="planOverlay">
+      <div class="plan-left">
+        <div class="eyebrow">Plan &mdash; the path</div>
+        <h2>The path to your vision</h2>
+        <p>From where you stand to the summit. Name the milestones along the way, and the obstacle you will meet on the trail.</p>
+      </div>
+      <div class="plan-right" id="planPins"></div>
+    </div>
   </div>
 
 <script>
@@ -437,16 +500,19 @@ let current = null;
 const $ = s => document.querySelector(s);
 const backdrop = $("#backdrop"), modalBody = $("#modalBody");
 
+function planStepsArr(){ let a=Array.isArray(data.plan)?data.plan.slice():(data.plan?[String(data.plan)]:[]); while(a.length<3)a.push(""); return a.slice(0,3); }
+function planText(){ return planStepsArr().map((s,i)=>s&&s.trim()?`${i+1}. ${s.trim()}`:null).filter(Boolean).join("\n"); }
+function isFilled(k){ return k==="plan" ? !!planText() : !!(data[k] && (""+data[k]).trim()); }
 function refreshOrbState(){
   document.querySelectorAll(".orb").forEach(o=>{
     const k=o.dataset.key;
-    o.classList.toggle("done", !!(data[k] && data[k].trim()));
+    o.classList.toggle("done", isFilled(k));
     o.innerHTML = `<span class="core"></span><span class="pulse"></span><span class="pulse b"></span>
       <span class="label"><span class="sub">${CONTENT[k].label}</span>${CONTENT[k].h}</span>`;
   });
   document.querySelectorAll(".progress .dot").forEach(d=>{
     const k=d.dataset.d;
-    d.classList.toggle("on", !!(data[k] && data[k].trim()));
+    d.classList.toggle("on", isFilled(k));
   });
 }
 
@@ -504,10 +570,10 @@ function openSummary(){
     <h2 style="margin-bottom:4px">Your Vision Map</h2>
     <p class="sub">Everything you have named so far, in one view.</p>
     ${ORDER.map(k=>{
-      const v=(data[k]||"").trim();
+      const v=k==="plan"?planText():(data[k]||"").trim();
       return `<div class="block">
         <h3><span class="tag">${CONTENT[k].label}</span> ${CONTENT[k].h}</h3>
-        <p class="${v?"":"empty"}">${v?escapeHtml(v):"Not yet written. Click the "+CONTENT[k].label+" orb to add it."}</p>
+        <p class="${v?"":"empty"}">${v?escapeHtml(v):"Not yet written."}</p>
       </div>`;
     }).join("")}
     <div class="row" style="justify-content:flex-end">
@@ -520,7 +586,7 @@ function openSummary(){
 }
 function closeSummary(){ backdrop.classList.remove("open"); modalBody.parentElement.classList.remove("summary"); current=null; }
 function copyAll(){
-  const txt = ORDER.map(k=>`## ${CONTENT[k].label} — ${CONTENT[k].h}\n${(data[k]||"(blank)").trim()}`).join("\n\n");
+  const txt = ORDER.map(k=>`## ${CONTENT[k].label} — ${CONTENT[k].h}\n${(k==="plan"?planText():(data[k]||"").trim())||"(blank)"}`).join("\n\n");
   navigator.clipboard.writeText(txt).then(()=>{ const b=$("#copyBtn"); b.textContent="Copied ✓"; setTimeout(()=>b.textContent="Copy as text",1600); });
 }
 
@@ -528,7 +594,7 @@ function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','
 
 /* Wire up */
 document.querySelectorAll(".orb").forEach(o=>{
-  o.addEventListener("click",()=>{ $("#hint").classList.add("hide"); if(o.dataset.key==="vision"){ startScene("vision"); } else if(o.dataset.key==="self"){ startScene("self"); } else { openModal(o.dataset.key); } });
+  o.addEventListener("click",()=>{ $("#hint").classList.add("hide"); const k=o.dataset.key; if(k==="vision"||k==="self"||k==="plan"){ startScene(k); } else { openModal(k); } });
 });
 $("#closeBtn").addEventListener("click", ()=> current==="__summary__"?closeSummary():closeModal());
 $("#summaryBtn").addEventListener("click", openSummary);
@@ -552,7 +618,8 @@ const skillOverlay=document.getElementById('skillOverlay');
 const flyAnswer=document.getElementById('flyAnswer');
 const SCENES={
   vision:{fwd:'vFwd',rev:'vRev',overlay:'visionOverlay',overlayTiming:'end'},
-  self:  {fwd:'sFwd',rev:'sRev',overlay:'skillOverlay',overlayTiming:'start'}
+  self:  {fwd:'sFwd',rev:'sRev',overlay:'skillOverlay',overlayTiming:'start'},
+  plan:  {fwd:'pFwd',rev:'pRev',overlay:'planOverlay',overlayTiming:'end',still:'planStill'}
 };
 let sceneActive=false,curScene=null;
 function showVid(id){document.querySelectorAll('#sceneStage .scenevid').forEach(v=>v.classList.remove('active'));var v=document.getElementById(id);if(v.readyState>=2)v.classList.add('active');}
@@ -562,8 +629,9 @@ function startScene(key){
   const sc=SCENES[key];
   if(key==='vision')flyAnswer.value=data.vision?data.vision:'';
   if(key==='self')renderSkill();                 // pre-render so the panel is ready to slide in
+  if(key==='plan'){renderPlan();renderPlanOrbs();}   // pre-render milestone pins + path orbs
   document.body.classList.add('flying');
-  visionOverlay.classList.remove('show');skillOverlay.classList.remove('show');sceneBack.classList.remove('show');
+  visionOverlay.classList.remove('show');skillOverlay.classList.remove('show');planOverlay.classList.remove('show');document.getElementById('planStill').classList.remove('show');document.getElementById('planOrbs').classList.remove('show');sceneBack.classList.remove('show');
   const f=document.getElementById(sc.fwd);
   sceneStage.classList.add('show');
   sceneBack.classList.add('show');   // Back is available immediately, never wait for the video
@@ -574,7 +642,10 @@ function startScene(key){
   function revealArrival(){
     if(arrived||sc.overlayTiming==='start')return; arrived=true;
     sceneBack.classList.add('show');
-    if(key==='vision'){ visionOverlay.classList.add('show'); setTimeout(()=>flyAnswer.focus(),300); }
+    if(sc.still) document.getElementById(sc.still).classList.add('show');
+    document.getElementById(sc.overlay).classList.add('show');
+    if(key==='plan'){ const po=document.getElementById('planOrbs'); if(po) po.classList.add('show'); }
+    if(key==='vision') setTimeout(()=>flyAnswer.focus(),300);
   }
   playScene(f, function(){
     showVid(sc.fwd);
@@ -592,7 +663,7 @@ function startScene(key){
 function endScene(){
   if(!curScene)return;const sc=SCENES[curScene];
   if(curScene==='vision'){data.vision=flyAnswer.value;localStorage.setItem(STORE,JSON.stringify(data));refreshOrbState();}
-  visionOverlay.classList.remove('show');skillOverlay.classList.remove('show');sceneBack.classList.remove('show');
+  visionOverlay.classList.remove('show');skillOverlay.classList.remove('show');planOverlay.classList.remove('show');document.getElementById('planStill').classList.remove('show');document.getElementById('planOrbs').classList.remove('show');sceneBack.classList.remove('show');
   const r=document.getElementById(sc.rev);
   // Tear down the stage exactly once, even if the reverse video stalls or never loads.
   let exited=false;
@@ -613,6 +684,64 @@ flyAnswer.addEventListener('input',()=>{clearTimeout(saveTimer);saveTimer=setTim
 document.getElementById('flySave').addEventListener('click',()=>{data.vision=flyAnswer.value;localStorage.setItem(STORE,JSON.stringify(data));refreshOrbState();const m=document.getElementById('flySaved');m.classList.add('show');setTimeout(()=>m.classList.remove('show'),1600);});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&sceneActive&&sceneBack.classList.contains('show'))endScene();});
 
+/* ====== Plan path overlay (milestones + obstacle) ====== */
+const planOverlay=document.getElementById('planOverlay');
+const PINS=[
+  {k:'m0',n:'1',t:'First milestone',  ph:'The first real step from where you stand\u2026', c:'#7faa86'},
+  {k:'m1',n:'2',t:'Building momentum',ph:'What comes once you are moving\u2026',          c:'#7f9fb8'},
+  {k:'m2',n:'3',t:'Nearing the summit',ph:'The step that brings the vision within reach\u2026', c:'#d6b25a'},
+  {k:'ob',n:'!',t:'The obstacle',     ph:'What stands in the way on the trail\u2026',     c:'#c08585'}
+];
+function pinVal(k){ if(k==='ob') return data.obstacle||''; return planStepsArr()[+k[1]]||''; }
+function pinSet(k,val){
+  if(k==='ob'){ data.obstacle=val; }
+  else { const a=planStepsArr(); a[+k[1]]=val; data.plan=a; }
+  localStorage.setItem(STORE,JSON.stringify(data)); refreshOrbState();
+}
+const PORB={ m0:{x:39,y:84,g:'127,170,134'}, m1:{x:52,y:63,g:'127,159,184'}, ob:{x:54,y:46,g:'192,133,133'}, m2:{x:63,y:28,g:'214,178,90'} };
+const PORB_ORDER=['m0','m1','ob','m2'];
+function renderPlanOrbs(){
+  const wrap=document.getElementById('planOrbs'); if(!wrap)return;
+  wrap.innerHTML=PORB_ORDER.map(k=>{ const c=PORB[k];
+    return `<button class="orb porb" data-k="${k}" style="left:${c.x}%;top:${c.y}%;--glow:${c.g}"><span class="core"></span><span class="pulse"></span><span class="pulse b"></span></button>`;
+  }).join('');
+  wrap.querySelectorAll('.porb').forEach(o=>o.addEventListener('click',()=>focusPin(o.dataset.k)));
+}
+function focusPin(k){
+  const wrap=document.getElementById('planPins'); if(!wrap)return;
+  const pin=wrap.querySelector('.pin[data-k="'+k+'"]'); if(!pin)return;
+  if(pin.classList.contains('open')){
+    pin.classList.remove('glow'); void pin.offsetWidth; pin.classList.add('glow');
+    setTimeout(()=>pin.classList.remove('glow'),1300);
+  } else {
+    wrap.querySelectorAll('.pin.open').forEach(o=>o.classList.remove('open'));
+    pin.classList.add('open'); pin.scrollIntoView({block:'nearest'});
+    setTimeout(()=>{ const ta=pin.querySelector('textarea'); if(ta) ta.focus(); },300);
+  }
+}
+function renderPlan(){
+  const wrap=document.getElementById('planPins'); if(!wrap)return;
+  wrap.innerHTML=PINS.map(p=>{
+    const v=pinVal(p.k), done=!!(v&&v.trim());
+    return `<div class="pin${done?' done':''}" data-k="${p.k}" style="--pc:${p.c}">
+      <button class="pin-head" type="button">
+        <span class="pin-dot">${p.n}</span><span class="pin-ttl">${p.t}</span>
+        <span class="pin-check">&#10003;</span><span class="pin-chev">&#8250;</span>
+      </button>
+      <div class="pin-body"><textarea placeholder="${p.ph}">${escapeHtml(v)}</textarea></div>
+    </div>`;
+  }).join('');
+  wrap.querySelectorAll('.pin').forEach(pin=>{
+    const head=pin.querySelector('.pin-head'), ta=pin.querySelector('textarea');
+    head.addEventListener('click',()=>{
+      const wasOpen=pin.classList.contains('open');
+      wrap.querySelectorAll('.pin.open').forEach(o=>o.classList.remove('open'));
+      if(!wasOpen){ pin.classList.add('open'); setTimeout(()=>ta.focus(),260); }
+    });
+    let t; ta.addEventListener('input',()=>{ clearTimeout(t); t=setTimeout(()=>{ pinSet(pin.dataset.k,ta.value); pin.classList.toggle('done',!!ta.value.trim()); },400); });
+  });
+}
+
 /* ====== Interactive skill tree ====== */
 const RANKS=3, START_POINTS=12, SKILL_STORE='skillTree.v1';
 const ICONS={
@@ -632,11 +761,11 @@ const ICONS={
   crown:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 18h16M4 18l-1.5-9 5 4 4.5-7 4.5 7 5-4L20 18"/></svg>'
 };
 const TRACKS=[
-  {key:'sales',name:'Sales',nodes:[
+  {key:'sales',name:'Sales',gold:'#b56b6b',glow:'181,107,107',nodes:[
     {nm:'Prospecting',ic:'people'},{nm:'Discovery',ic:'search'},{nm:'Pitching',ic:'board'},{nm:'Negotiation',ic:'handshake'},{nm:'Closing',ic:'trophy'}]},
-  {key:'speaking',name:'Public Speaking',nodes:[
+  {key:'speaking',name:'Public Speaking',gold:'#6f9c7f',glow:'111,156,127',nodes:[
     {nm:'Voice',ic:'wave'},{nm:'Storytelling',ic:'book'},{nm:'Stage Presence',ic:'spotlight'},{nm:'Q & A',ic:'chat'},{nm:'Keynote',ic:'mic'}]},
-  {key:'leadership',name:'Leadership',nodes:[
+  {key:'leadership',name:'Leadership',gold:'#6f8aa8',glow:'111,138,168',nodes:[
     {nm:'Self-Mastery',ic:'compass'},{nm:'Communication',ic:'chat'},{nm:'Team Building',ic:'team'},{nm:'Vision',ic:'eye'},{nm:'Legacy',ic:'crown'}]}
 ];
 function loadSkill(){
@@ -676,7 +805,7 @@ function renderSkill(){
         <div class="nm">${t.nodes[i].nm}</div></div>`;
       if(i>0){ const on=(skill[t.key][i-1]>=RANKS); nodesHtml+=`<div class="connector ${on?'on':''}"></div>`; }
     }
-    cols+=`<div class="skill-col" data-col="${t.key}"><h4>${t.name}</h4>${nodesHtml}</div>`;
+    cols+=`<div class="skill-col" data-col="${t.key}" style="--gold:${t.gold};--glow:${t.glow}"><h4>${t.name}</h4>${nodesHtml}</div>`;
   });
   p.innerHTML=`<div class="skill-title">Skill Tree</div>
     <div class="skill-sub"><span class="dash"></span><span><b>${skill.points}</b> skill points available</span><span class="dash r"></span></div>
@@ -685,7 +814,15 @@ function renderSkill(){
   p.querySelectorAll('[data-add]').forEach(n=>n.addEventListener('click',()=>addPoint(n.dataset.track,+n.dataset.idx)));
   p.querySelectorAll('.skill-col').forEach(c=>c.addEventListener('contextmenu',e=>{e.preventDefault();removeLast(c.dataset.col);}));
   document.getElementById('skillReset').addEventListener('click',resetSkill);
+  fitSkill();
 }
+function fitSkill(){
+  const p=document.getElementById('skillPanel'); if(!p)return;
+  p.style.transform='scale(1)';
+  const avail=window.innerHeight*0.94, h=p.scrollHeight||1;
+  p.style.transform='scale('+Math.min(1, avail/h).toFixed(4)+')';
+}
+window.addEventListener('resize',()=>{ if(document.body.classList.contains('flying') && curScene==='self') fitSkill(); });
 
 
 /* ---- Background music (loops, user-controlled, top-level) ---- */

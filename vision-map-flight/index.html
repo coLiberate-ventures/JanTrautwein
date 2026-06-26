@@ -186,7 +186,7 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
 
 
 /* ---- Cinematic scene system ---- */
-#sceneStage{position:fixed;inset:0;z-index:60;background:transparent;opacity:0;visibility:hidden;
+#sceneStage{position:fixed;inset:0;z-index:80;background:transparent;opacity:0;visibility:hidden;
   transition:opacity .12s ease, visibility .12s;pointer-events:none}
 #sceneStage.show{opacity:1;visibility:visible;pointer-events:auto}
 #sceneStage .scenevid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
@@ -202,6 +202,7 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
 .orb, .brand, .hint, .progress, .credit{transition:opacity .9s ease}
 .flying .orb, .flying .brand, .flying .hint, .flying .progress, .flying .credit{
   opacity:0 !important;pointer-events:none !important}
+.flying .canvas, .flying .bg-layer{pointer-events:none !important}  /* stop the orb layer from eating scene clicks */
 /* vision card (floats from bottom) */
 #visionOverlay{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;
   opacity:0;pointer-events:none;transition:opacity 1s ease;

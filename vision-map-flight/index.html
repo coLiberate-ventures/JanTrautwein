@@ -567,6 +567,7 @@ function startScene(key){
   const f=document.getElementById(sc.fwd);
   sceneStage.classList.add('show');
   sceneBack.classList.add('show');   // Back is available immediately, never wait for the video
+  if(sc.overlayTiming==='start') document.getElementById(sc.overlay).classList.add('show');  // side panels (skill tree) interactive at once
   // Arrival reveal (vision): runs exactly once, whether the video ends cleanly,
   // stalls, or never loads. Without this the full-screen stage would trap every click.
   let arrived=false;

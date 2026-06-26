@@ -343,7 +343,7 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
   }
   .bg-layer{box-shadow:0 24px 70px rgba(0,0,0,.55)}
   .bg-layer .bg{border-radius:2px}
-  .orb{width:34px;height:34px}            /* bigger tap target */
+  .orb{width:16px;height:16px}            /* max half size on mobile */
   .orb .label{opacity:0 !important}        /* no hover labels on touch */
   .brand{top:max(18px, env(safe-area-inset-top))}
   .hint{bottom:max(22px, env(safe-area-inset-bottom))}
@@ -624,6 +624,15 @@ const SCENES={
 let sceneActive=false,curScene=null;
 function showVid(id){document.querySelectorAll('#sceneStage .scenevid').forEach(v=>v.classList.remove('active'));var v=document.getElementById(id);if(v.readyState>=2)v.classList.add('active');}
 function playScene(v,reveal){var fired=false;var onready=function(){if(fired)return;fired=true;reveal&&reveal();v.play().catch(function(){});};v.addEventListener('loadeddata',onready,{once:true});v.addEventListener('canplay',onready,{once:true});try{v.pause();v.load();}catch(e){onready();}setTimeout(onready,1200);}
+function slideIn(el, from, to, dur){
+  if(!el) return;
+  el.style.setProperty('transform','translateX('+from+'%)','important');
+  var start=performance.now(), ease=function(t){return 1-Math.pow(1-t,3);};
+  function frame(now){ var p=Math.min(1,(now-start)/dur);
+    el.style.setProperty('transform','translateX('+(from+(to-from)*ease(p))+'%)','important');
+    if(p<1) requestAnimationFrame(frame); }
+  requestAnimationFrame(frame);
+}
 function startScene(key){
   if(sceneActive||!SCENES[key])return;sceneActive=true;curScene=key;
   const sc=SCENES[key];
@@ -631,11 +640,10 @@ function startScene(key){
   if(key==='self')renderSkill();                 // pre-render so the panel is ready to slide in
   if(key==='plan'){renderPlan();renderPlanOrbs();}   // pre-render milestone pins + path orbs
   document.body.classList.add('flying');
-  visionOverlay.classList.remove('show');skillOverlay.classList.remove('show');planOverlay.classList.remove('show');document.getElementById('planStill').classList.remove('show');document.getElementById('planOrbs').classList.remove('show');sceneBack.classList.remove('show');
+  visionOverlay.classList.remove('show');skillOverlay.classList.remove('show');skillOverlay.style.removeProperty('transform');planOverlay.classList.remove('show');document.getElementById('planStill').classList.remove('show');document.getElementById('planOrbs').classList.remove('show');sceneBack.classList.remove('show');
   const f=document.getElementById(sc.fwd);
   sceneStage.classList.add('show');
   sceneBack.classList.add('show');   // Back is available immediately, never wait for the video
-  if(sc.overlayTiming==='start') document.getElementById(sc.overlay).classList.add('show');  // side panels (skill tree) interactive at once
   // Arrival reveal (vision): runs exactly once, whether the video ends cleanly,
   // stalls, or never loads. Without this the full-screen stage would trap every click.
   let arrived=false;
@@ -645,12 +653,12 @@ function startScene(key){
     if(sc.still) document.getElementById(sc.still).classList.add('show');
     document.getElementById(sc.overlay).classList.add('show');
     if(key==='plan'){ const po=document.getElementById('planOrbs'); if(po) po.classList.add('show'); }
-    if(key==='vision') setTimeout(()=>flyAnswer.focus(),300);
+    if(key==='vision' && !window.matchMedia('(pointer:coarse)').matches) setTimeout(()=>flyAnswer.focus(),300);
   }
   playScene(f, function(){
     showVid(sc.fwd);
     if(sc.overlayTiming==='start'){              // slide the panel in WHILE the character turns
-      setTimeout(function(){ sceneBack.classList.add('show'); document.getElementById(sc.overlay).classList.add('show'); }, 250);
+      setTimeout(function(){ sceneBack.classList.add('show'); var so=document.getElementById(sc.overlay); so.classList.add('show'); slideIn(so,108,0,1100); }, 250);
     }
   });
   f.onended=()=>{ try{f.pause();}catch(e){} revealArrival(); };
@@ -663,7 +671,7 @@ function startScene(key){
 function endScene(){
   if(!curScene)return;const sc=SCENES[curScene];
   if(curScene==='vision'){data.vision=flyAnswer.value;localStorage.setItem(STORE,JSON.stringify(data));refreshOrbState();}
-  visionOverlay.classList.remove('show');skillOverlay.classList.remove('show');planOverlay.classList.remove('show');document.getElementById('planStill').classList.remove('show');document.getElementById('planOrbs').classList.remove('show');sceneBack.classList.remove('show');
+  visionOverlay.classList.remove('show');skillOverlay.classList.remove('show');skillOverlay.style.removeProperty('transform');planOverlay.classList.remove('show');document.getElementById('planStill').classList.remove('show');document.getElementById('planOrbs').classList.remove('show');sceneBack.classList.remove('show');
   const r=document.getElementById(sc.rev);
   // Tear down the stage exactly once, even if the reverse video stalls or never loads.
   let exited=false;
@@ -743,7 +751,7 @@ function renderPlan(){
 }
 
 /* ====== Interactive skill tree ====== */
-const RANKS=3, START_POINTS=12, SKILL_STORE='skillTree.v1';
+const RANKS=1, START_POINTS=12, SKILL_STORE='skillTree.v1';
 const ICONS={
   people:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9" r="2.2"/><path d="M15 19a4.5 4.5 0 0 1 6.5-3.7"/></svg>',
   search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><path d="M16 16l4 4"/></svg>',
@@ -770,49 +778,40 @@ const TRACKS=[
 ];
 function loadSkill(){
   let d={};try{d=JSON.parse(localStorage.getItem(SKILL_STORE)||'{}');}catch(e){}
-  if(typeof d.points!=='number')d.points=START_POINTS;
-  TRACKS.forEach(t=>{ if(!Array.isArray(d[t.key])||d[t.key].length!==5)d[t.key]=[0,0,0,0,0]; });
+  TRACKS.forEach(t=>{ if(!Array.isArray(d[t.key])||d[t.key].length!==5)d[t.key]=[0,0,0,0,0]; d[t.key]=d[t.key].map(v=>v>0?1:0); });
+  const spent=TRACKS.reduce((sum,t)=>sum+d[t.key].reduce((a,b)=>a+b,0),0);
+  d.points=Math.max(0, START_POINTS - spent);
   return d;
 }
 let skill=loadSkill();
 function saveSkill(){localStorage.setItem(SKILL_STORE,JSON.stringify(skill));}
-function frontier(track){const a=skill[track];for(let i=0;i<5;i++){if(a[i]<RANKS)return i;}return 5;}
-function addPoint(track,idx){
-  if(idx!==frontier(track))return; if(skill.points<=0)return;
-  skill[track][idx]++; skill.points--; saveSkill(); renderSkill();
-}
-function removeLast(track){
-  const a=skill[track];for(let i=4;i>=0;i--){if(a[i]>0){a[i]--;skill.points++;saveSkill();renderSkill();return;}}
+function toggleNode(track,idx){
+  const a=skill[track];
+  if(a[idx]>0){ a[idx]=0; skill.points++; }
+  else { if(skill.points<=0) return; a[idx]=1; skill.points--; }
+  saveSkill(); renderSkill();
 }
 function resetSkill(){TRACKS.forEach(t=>skill[t.key]=[0,0,0,0,0]);skill.points=START_POINTS;saveSkill();renderSkill();}
 function renderSkill(){
   const p=document.getElementById('skillPanel');
   let cols='';
   TRACKS.forEach(t=>{
-    const fr=frontier(t.key);
     let nodesHtml='';
     for(let i=4;i>=0;i--){
-      const rank=skill[t.key][i];
-      let cls='node';
-      if(rank>=RANKS)cls+=' filled';
-      else if(i===fr)cls+=(rank>0?' partial':' active');
-      else if(i>fr)cls+=' locked';
-      else cls+=' filled';
-      const clickable=(i===fr);
-      nodesHtml+=`<div class="${cls}" data-track="${t.key}" data-idx="${i}" ${clickable?'data-add="1"':''}>
+      const on=skill[t.key][i]>0;
+      let cls='node '+(on?'filled':'active');
+      nodesHtml+=`<div class="${cls}" data-track="${t.key}" data-idx="${i}" data-add="1">
         <div class="ring">${ICONS[t.nodes[i].ic]||''}</div>
-        <div class="lvl">${rank}/${RANKS}</div>
         <div class="nm">${t.nodes[i].nm}</div></div>`;
-      if(i>0){ const on=(skill[t.key][i-1]>=RANKS); nodesHtml+=`<div class="connector ${on?'on':''}"></div>`; }
+      if(i>0){ const on2=skill[t.key][i-1]>0; nodesHtml+=`<div class="connector ${on2?'on':''}"></div>`; }
     }
     cols+=`<div class="skill-col" data-col="${t.key}" style="--gold:${t.gold};--glow:${t.glow}"><h4>${t.name}</h4>${nodesHtml}</div>`;
   });
   p.innerHTML=`<div class="skill-title">Skill Tree</div>
     <div class="skill-sub"><span class="dash"></span><span><b>${skill.points}</b> skill points available</span><span class="dash r"></span></div>
     <div class="skill-cols">${cols}</div>
-    <div class="skill-foot"><button class="reset" id="skillReset">Reset</button><span class="skill-hint">Click a glowing skill to spend a point &middot; right-click a track to refund</span></div>`;
-  p.querySelectorAll('[data-add]').forEach(n=>n.addEventListener('click',()=>addPoint(n.dataset.track,+n.dataset.idx)));
-  p.querySelectorAll('.skill-col').forEach(c=>c.addEventListener('contextmenu',e=>{e.preventDefault();removeLast(c.dataset.col);}));
+    <div class="skill-foot"><button class="reset" id="skillReset">Reset</button><span class="skill-hint">Click a skill to add it &middot; click again to remove</span></div>`;
+  p.querySelectorAll('[data-add]').forEach(n=>n.addEventListener('click',()=>toggleNode(n.dataset.track,+n.dataset.idx)));
   document.getElementById('skillReset').addEventListener('click',resetSkill);
   fitSkill();
 }

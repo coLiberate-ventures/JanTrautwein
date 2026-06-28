@@ -386,6 +386,7 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
   <!-- Orbs: positions are % of the image -->
   <button class="orb" data-key="self"     style="left:27.5%;top:54%"></button>
   <button class="orb" data-key="plan"     style="left:55%;top:80%"></button>
+  <button class="orb" data-key="obstacle" style="left:52%;top:48%"></button>
   <button class="orb" data-key="vision"   style="left:61%;top:13%"></button>
 </div>
 
@@ -707,7 +708,7 @@ function pinSet(k,val){
   else { const a=planStepsArr(); a[+k[1]]=val; data.plan=a; }
   localStorage.setItem(STORE,JSON.stringify(data)); refreshOrbState();
 }
-const PORB={ m0:{x:43,y:84,g:'136,158,141'}, m1:{x:46,y:63,g:'138,155,172'}, ob:{x:57,y:45,g:'179,144,143'}, m2:{x:68,y:27,g:'189,171,128'} };
+const PORB={ m0:{x:37,y:84,g:'136,158,141'}, m1:{x:46,y:63,g:'138,155,172'}, ob:{x:57,y:45,g:'179,144,143'}, m2:{x:68,y:27,g:'189,171,128'} };
 const PORB_ORDER=['m0','m1','ob','m2'];
 function renderPlanOrbs(){
   const wrap=document.getElementById('planOrbs'); if(!wrap)return;

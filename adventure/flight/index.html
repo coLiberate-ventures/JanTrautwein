@@ -829,10 +829,14 @@ function fitSkill(){
 window.addEventListener('resize',()=>{ if(document.body.classList.contains('flying') && curScene==='self') fitSkill(); });
 
 
-/* ---- Background music (loops, user-controlled, top-level) ---- */
-var soundOn=false, fadeTimer;
-function fadeTo(target, done){
-  var bgm=document.getElementById('bgm'); if(!bgm)return;
+/* ---- Background music (loops, user-controlled, 3-state cycle) ---- */
+var soundOn=0, fadeTimer;  /* 0=off, 1=Beauty Flow, 2=Wholesome */
+const TRACKS_MUSIC={
+  1:{id:'bgm', name:'Beauty Flow', credit:'Music: "Beauty Flow" by <a href="https://incompetech.com" target="_blank" rel="noopener">Kevin MacLeod</a> · <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener">CC BY 3.0</a>'},
+  2:{id:'bgm2',name:'Wholesome',  credit:'Music: "Wholesome" by <a href="https://incompetech.com" target="_blank" rel="noopener">Kevin MacLeod</a> · <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener">CC BY 3.0</a>'}
+};
+function fadeTo(bgm, target, done){
+  if(!bgm)return;
   clearInterval(fadeTimer);
   fadeTimer=setInterval(function(){
     var d=target-bgm.volume;
@@ -840,17 +844,49 @@ function fadeTo(target, done){
     else bgm.volume=Math.min(1,Math.max(0,bgm.volume+(d>0?0.04:-0.04)));
   },40);
 }
-function setSound(on){
-  var bgm=document.getElementById('bgm'), sb=document.getElementById('soundBtn'); if(!bgm||!sb)return;
-  soundOn=on;
-  if(on){ bgm.volume=0; var pr=bgm.play(); if(pr&&pr.catch)pr.then(function(){fadeTo(0.55);}).catch(function(e){console.log('audio blocked',e);}); sb.classList.add('on'); sb.innerHTML='♪ Sound on'; }
-  else { fadeTo(0,function(){bgm.pause();}); sb.classList.remove('on'); sb.innerHTML='♪ Sound'; }
+function setSound(state){
+  var sb=document.getElementById('soundBtn'), cr=document.getElementById('credit');
+  if(!sb)return;
+  if(state===0){
+    /* fade out whatever is playing */
+    if(soundOn){
+      var prev=TRACKS_MUSIC[soundOn], prevEl=document.getElementById(prev.id);
+      if(prevEl) fadeTo(prevEl, 0, function(){ prevEl.pause(); });
+    }
+    soundOn=0; sb.classList.remove('on'); sb.innerHTML='♪ Sound';
+    if(cr) cr.innerHTML='Music off';
+    return;
+  }
+  /* start / switch to a track */
+  var t=TRACKS_MUSIC[state], bgm=document.getElementById(t.id);
+  if(!bgm)return;
+  soundOn=state; sb.classList.add('on'); sb.innerHTML='♪ '+t.name;
+  if(cr) cr.innerHTML=t.credit;
+  /* start new */
+  bgm.volume=0;
+  var pr=bgm.play();
+  if(pr&&pr.catch)pr.then(function(){fadeTo(bgm,0.55);}).catch(function(e){console.log('audio blocked',e);});
+  /* if there was a previous different track, fade it out */
+  for(var k in TRACKS_MUSIC){
+    if(+k===state) continue;
+    var other=document.getElementById(TRACKS_MUSIC[k].id);
+    if(other && !other.paused) fadeTo(other, 0, function(){ other.pause(); });
+  }
 }
-(function(){var sb=document.getElementById('soundBtn'); if(sb) sb.addEventListener('click',function(){setSound(!soundOn);});})();
+(function(){
+  var sb=document.getElementById('soundBtn');
+  if(sb) sb.addEventListener('click',function(){
+    var next=soundOn+1; if(next>2) next=0;
+    setSound(next);
+  });
+})();
 </script>
   <audio id="bgm" loop preload="auto">
     <source src="audio/ambient-loop.mp3" type="audio/mpeg">
   </audio>
-  <div class="credit">Music: "Beauty Flow" by <a href="https://incompetech.com" target="_blank" rel="noopener">Kevin MacLeod</a> · <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener">CC BY 3.0</a></div>
+  <audio id="bgm2" loop preload="auto">
+    <source src="audio/wholesome-loop.mp3" type="audio/mpeg">
+  </audio>
+  <div id="credit" class="credit">Music off</div>
 </body>
 </html>

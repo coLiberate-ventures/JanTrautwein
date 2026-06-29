@@ -830,17 +830,17 @@ window.addEventListener('resize',()=>{ if(document.body.classList.contains('flyi
 
 
 /* ---- Background music (loops, user-controlled, 3-state cycle) ---- */
-var soundOn=0, fadeTimer;  /* 0=off, 1=Beauty Flow, 2=Wholesome */
+var soundOn=0, fadeTimers={};  /* 0=off, 1=Beauty Flow, 2=Wholesome */
 const TRACKS_MUSIC={
   1:{id:'bgm', name:'Beauty Flow', credit:'Music: "Beauty Flow" by <a href="https://incompetech.com" target="_blank" rel="noopener">Kevin MacLeod</a> · <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener">CC BY 3.0</a>'},
   2:{id:'bgm2',name:'Wholesome',  credit:'Music: "Wholesome" by <a href="https://incompetech.com" target="_blank" rel="noopener">Kevin MacLeod</a> · <a href="https://creativecommons.org/licenses/by/3.0/" target="_blank" rel="noopener">CC BY 3.0</a>'}
 };
 function fadeTo(bgm, target, done){
   if(!bgm)return;
-  clearInterval(fadeTimer);
-  fadeTimer=setInterval(function(){
+  clearInterval(fadeTimers[bgm.id]);
+  fadeTimers[bgm.id]=setInterval(function(){
     var d=target-bgm.volume;
-    if(Math.abs(d)<0.04){ bgm.volume=target; clearInterval(fadeTimer); done&&done(); }
+    if(Math.abs(d)<0.04){ bgm.volume=target; clearInterval(fadeTimers[bgm.id]); done&&done(); }
     else bgm.volume=Math.min(1,Math.max(0,bgm.volume+(d>0?0.04:-0.04)));
   },40);
 }

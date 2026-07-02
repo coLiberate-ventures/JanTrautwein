@@ -65,8 +65,8 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
   100%{transform:scale(3.4);opacity:0}
 }
 @keyframes float{
-  0%,100%{margin-top:0}
-  50%{margin-top:-7px}
+  0%,100%{transform:translate(-50%,-50%) translateY(0)}
+  50%{transform:translate(-50%,-50%) translateY(-7px)}
 }
 
 /* ---- Hover label ---- */
@@ -155,7 +155,7 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
 }
 .modal textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(var(--glow),.18)}
 .modal textarea::placeholder{color:#9aaaa3}
-.modal .row{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:12px}
+.modal .row{display:flex;justify-content:flex-end;align-items:center;margin-top:18px;gap:14px}
 .modal .saved-msg{font-size:13px;color:var(--muted);opacity:0;transition:opacity .3s}
 .modal .saved-msg.show{opacity:1}
 .btn{font-family:var(--sans);font-size:14px;font-weight:500;letter-spacing:.3px;cursor:pointer;
@@ -168,10 +168,6 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
   border:1px solid rgba(20,30,28,.15);background:rgba(255,255,255,.5);color:var(--text);cursor:pointer;
   font-size:18px;line-height:1;display:grid;place-items:center;transition:all .2s}
 .modal .close:hover{background:#fff;transform:rotate(90deg)}
-
-/* nav between orbs inside modal */
-.modal .nav{display:flex;gap:8px;align-items:center}
-.modal .nav span{font-size:12px;color:var(--muted)}
 
 /* ---- Summary view ---- */
 .summary .body{padding:30px 34px}
@@ -259,7 +255,6 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
   box-shadow:0 0 0 0 rgba(var(--glow),.5);animation:nodepulse 2s ease-out infinite}
 .node.active:hover .ring{transform:scale(1.08);background:radial-gradient(circle at 50% 38%, rgba(90,80,40,.95), rgba(40,40,28,.95))}
 .node.active .nm{color:#dfe7e0}
-.node.partial .ring{border-color:rgba(var(--glow),.9);color:#ffe6a0;cursor:pointer}
 .node.locked{opacity:.5}
 .node.removable .ring{cursor:pointer}
 @keyframes nodepulse{0%{box-shadow:0 0 0 0 rgba(var(--glow),.45)}100%{box-shadow:0 0 0 12px rgba(var(--glow),0)}}
@@ -401,7 +396,7 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
 <body>
 
 <div class="bg-layer">
-  <img class="bg" src="images/life-adventure.png" alt="A traveller on a path looking toward a distant mountain">
+  <img class="bg" src="images/life-adventure.jpg" alt="A traveller on a path looking toward a distant mountain" fetchpriority="high">
   <div class="vignette"></div>
 </div>
 <div class="canvas">
@@ -442,7 +437,7 @@ body.flying .canvas{z-index:70}   /* orbs render OVER the playing video and fade
 
   <!-- Cinematic scene stage -->
   <div id="sceneStage">
-    <img id="planStill" src="images/top down view.png" alt="">
+    <img id="planStill" src="images/top down view.jpg" alt="">
     <video id="vFwd" class="scenevid" muted playsinline preload="auto"><source src="video/fly-forward.mp4" type="video/mp4"></video>
     <video id="vRev" class="scenevid" muted playsinline preload="auto"><source src="video/fly-reverse.mp4" type="video/mp4"></video>
     <video id="sFwd" class="scenevid" muted playsinline preload="auto"><source src="video/skill-forward.mp4" type="video/mp4"></video>
@@ -528,17 +523,19 @@ const backdrop = $("#backdrop"), modalBody = $("#modalBody");
 function planStepsArr(){ let a=Array.isArray(data.plan)?data.plan.slice():(data.plan?[String(data.plan)]:[]); while(a.length<3)a.push(""); return a.slice(0,3); }
 function planText(){ return planStepsArr().map((s,i)=>s&&s.trim()?`${i+1}. ${s.trim()}`:null).filter(Boolean).join("\n"); }
 function isFilled(k){ return k==="plan" ? !!planText() : !!(data[k] && (""+data[k]).trim()); }
+/* Main-map orbs only (the plan scene adds its own .orb.porb buttons that have
+   no data-key — selecting those here crashed every save after visiting the plan
+   scene, which left the obstacle modal impossible to close). Labels are built
+   once; refresh only toggles classes so the pulse animation never restarts. */
+const mainOrbs=[...document.querySelectorAll(".canvas .orb")];
+mainOrbs.forEach(o=>{ const k=o.dataset.key;
+  o.innerHTML = `<span class="core"></span><span class="pulse"></span><span class="pulse b"></span>
+    <span class="label"><span class="sub">${CONTENT[k].label}</span>${CONTENT[k].h}</span>`;
+});
+const progressDots=[...document.querySelectorAll(".progress .dot")];
 function refreshOrbState(){
-  document.querySelectorAll(".orb").forEach(o=>{
-    const k=o.dataset.key;
-    o.classList.toggle("done", isFilled(k));
-    o.innerHTML = `<span class="core"></span><span class="pulse"></span><span class="pulse b"></span>
-      <span class="label"><span class="sub">${CONTENT[k].label}</span>${CONTENT[k].h}</span>`;
-  });
-  document.querySelectorAll(".progress .dot").forEach(d=>{
-    const k=d.dataset.d;
-    d.classList.toggle("on", isFilled(k));
-  });
+  mainOrbs.forEach(o=>o.classList.toggle("done", isFilled(o.dataset.key)));
+  progressDots.forEach(d=>d.classList.toggle("on", isFilled(d.dataset.d)));
 }
 
 function openModal(key){
@@ -549,23 +546,17 @@ function openModal(key){
     <h2>${c.h}</h2>
     <p class="lead">${c.lead}</p>
     <ul class="qs">${c.qs.map(q=>`<li>${q}</li>`).join("")}</ul>
-    <textarea id="answer" placeholder="${c.ph}">${data[key] ? escapeHtml(data[key]) : ""}</textarea>
+    <textarea id="answer" placeholder="${c.ph}">${data[key] ? escapeHtml(String(data[key])) : ""}</textarea>
     <div class="row">
-      <div class="nav">
-        <button class="btn ghost" id="prevBtn">‹ Prev</button>
-        <button class="btn ghost" id="nextBtn">Next ›</button>
-      </div>
-      <div style="display:flex;align-items:center;gap:14px">
-        <span class="saved-msg" id="savedMsg">Saved ✓</span>
-        <button class="btn primary" id="saveBtn">Save</button>
-      </div>
+      <span class="saved-msg" id="savedMsg">Saved ✓</span>
+      <button class="btn primary" id="saveBtn">Save</button>
     </div>`;
   backdrop.classList.add("open");
-  const ta = $("#answer"); setTimeout(()=>ta.focus(),420);
+  const ta = $("#answer");
+  // no autofocus on touch: the keyboard would pop instantly and shove the close button around
+  if(!window.matchMedia('(pointer:coarse)').matches) setTimeout(()=>ta.focus(),420);
   ta.addEventListener("input", autosave);
   $("#saveBtn").addEventListener("click", ()=>{ save(); flashSaved(); });
-  $("#prevBtn").addEventListener("click", ()=>step(-1));
-  $("#nextBtn").addEventListener("click", ()=>step(1));
 }
 let saveTimer;
 function autosave(){ clearTimeout(saveTimer); saveTimer=setTimeout(save,500); }
@@ -573,17 +564,9 @@ function save(){
   const ta=$("#answer"); if(!ta) return;
   data[current]=ta.value;
   localStorage.setItem(STORE, JSON.stringify(data));
-  
-
-refreshOrbState();
+  refreshOrbState();
 }
 function flashSaved(){ const m=$("#savedMsg"); if(!m)return; m.classList.add("show"); setTimeout(()=>m.classList.remove("show"),1600); }
-function step(dir){
-  save();
-  const i = ORDER.indexOf(current);
-  const next = ORDER[(i+dir+ORDER.length)%ORDER.length];
-  openModal(next);
-}
 function closeModal(){ save(); backdrop.classList.remove("open"); current=null; }
 
 /* Summary */
@@ -618,7 +601,7 @@ function copyAll(){
 function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 
 /* Wire up */
-document.querySelectorAll(".orb").forEach(o=>{
+mainOrbs.forEach(o=>{
   o.addEventListener("click",()=>{ $("#hint").classList.add("hide"); const k=o.dataset.key; if(k==="vision"||k==="self"||k==="plan"){ startScene(k); } else { openModal(k); } });
 });
 $("#closeBtn").addEventListener("click", ()=> current==="__summary__"?closeSummary():closeModal());
@@ -776,7 +759,7 @@ function renderPlan(){
 }
 
 /* ====== Interactive skill tree ====== */
-const RANKS=1, START_POINTS=10, SKILL_STORE='skillTree.v1';
+const START_POINTS=10, SKILL_STORE='skillTree.v1';
 const ICONS={
   people:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9" r="2.2"/><path d="M15 19a4.5 4.5 0 0 1 6.5-3.7"/></svg>',
   search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="6"/><path d="M16 16l4 4"/></svg>',
@@ -890,11 +873,11 @@ function setSound(state){
   var pr=bgm.play();
   if(pr&&pr.catch)pr.then(function(){fadeTo(bgm,0.55);}).catch(function(e){console.log('audio blocked',e);});
   /* if there was a previous different track, fade it out */
-  for(var k in TRACKS_MUSIC){
-    if(+k===state) continue;
-    var other=document.getElementById(TRACKS_MUSIC[k].id);
+  Object.keys(TRACKS_MUSIC).forEach(function(k){
+    if(+k===state) return;
+    const other=document.getElementById(TRACKS_MUSIC[k].id);
     if(other && !other.paused) fadeTo(other, 0, function(){ other.pause(); });
-  }
+  });
 }
 (function(){
   var sb=document.getElementById('soundBtn');
@@ -904,10 +887,10 @@ function setSound(state){
   });
 })();
 </script>
-  <audio id="bgm" loop preload="auto">
+  <audio id="bgm" loop preload="none">
     <source src="audio/ambient-loop.mp3" type="audio/mpeg">
   </audio>
-  <audio id="bgm2" loop preload="auto">
+  <audio id="bgm2" loop preload="none">
     <source src="audio/wholesome-loop.mp3" type="audio/mpeg">
   </audio>
   <div id="credit" class="credit">Music off</div>

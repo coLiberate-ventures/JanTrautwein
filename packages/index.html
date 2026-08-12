@@ -3,21 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Private coaching, a custom dashboard and a personal AI agent. Build the support package that fits the business and life you are creating.">
+  <meta name="description" content="A monthly private coaching and AI support package for entrepreneurs ready for more clarity, leadership and a business that works better in 2026.">
   <meta name="theme-color" content="#173c35">
-  <title>Build Your Package | Jan Trautwein</title>
+  <title>Private Coaching + AI Support | Jan Trautwein</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
   <style>
     :root {
       --paper: #eef1ed;
-      --paper-deep: #e2e8e3;
+      --paper-deep: #e0e8e2;
       --ink: #18302d;
       --soft: #405651;
       --forest: #173c35;
       --forest-2: #244b44;
       --sage: #b9cac4;
+      --sage-dark: #365f59;
       --sun: #f5b72d;
       --sun-hover: #e4a316;
       --line: rgba(24, 48, 45, .18);
@@ -30,23 +31,20 @@
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
+      overflow-x: hidden;
       background: var(--paper);
       color: var(--ink);
-      font-family: var(--sans);
-      font-size: 17px;
-      line-height: 1.58;
+      font: 17px/1.58 var(--sans);
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
     }
     body::before {
-      content: "";
       position: fixed;
       z-index: -1;
       inset: 0;
       opacity: .18;
       pointer-events: none;
-      background-image: url("/images/paper-bg.jpg");
-      background-size: 600px;
+      content: "";
+      background: url("/images/paper-bg.jpg") 0 0 / 600px;
     }
     a { color: inherit; }
     :focus-visible { outline: 3px solid var(--sun); outline-offset: 4px; }
@@ -56,134 +54,137 @@
       align-items: center;
       gap: 10px;
       margin: 0 0 18px;
-      color: var(--sun);
+      color: var(--sage-dark);
       font-size: .73rem;
       font-weight: 600;
       letter-spacing: .15em;
       text-transform: uppercase;
     }
     .eyebrow::before { width: 25px; height: 1px; background: currentColor; content: ""; }
+    .on-dark .eyebrow, .hero .eyebrow { color: var(--sun); }
     h1, h2, h3 { margin: 0; font-family: var(--serif); font-weight: 500; letter-spacing: -.04em; line-height: 1.05; text-wrap: balance; }
-    h1 { max-width: 850px; font-size: clamp(3.35rem, 7vw, 6.9rem); }
-    h2 { max-width: 760px; font-size: clamp(2.3rem, 4.5vw, 4.25rem); }
-    h3 { font-size: clamp(1.45rem, 2.5vw, 2rem); }
+    h1 { max-width: 920px; font-size: clamp(3.35rem, 7vw, 6.85rem); }
+    h2 { max-width: 790px; font-size: clamp(2.35rem, 4.5vw, 4.25rem); }
+    h3 { font-size: clamp(1.4rem, 2.45vw, 1.95rem); }
     p { margin: 0; text-wrap: pretty; }
-    .lead { max-width: 670px; color: rgba(252,253,251,.8); font-size: clamp(1.08rem, 1.7vw, 1.3rem); line-height: 1.55; }
     .button {
       display: inline-flex;
-      min-height: 50px;
+      min-height: 51px;
       align-items: center;
       justify-content: center;
       gap: 10px;
       border: 1px solid transparent;
       border-radius: 999px;
-      padding: 13px 24px;
+      padding: 13px 25px;
       background: var(--sun);
       color: var(--ink);
-      font: 600 .92rem var(--sans);
+      font: 600 .91rem var(--sans);
       text-decoration: none;
       transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
     }
     .button:hover { transform: translateY(-2px); background: var(--sun-hover); box-shadow: 0 8px 0 rgba(0,0,0,.12); }
-    .button.ghost { border-color: rgba(252,253,251,.42); background: transparent; color: var(--white); }
-    .button.ghost:hover { background: rgba(252,253,251,.1); box-shadow: none; }
 
-    nav { position: absolute; z-index: 3; width: 100%; padding: 26px 0; color: var(--white); }
+    nav { position: absolute; z-index: 4; width: 100%; padding: 26px 0; color: var(--white); }
     nav .wrap { display: flex; align-items: center; justify-content: space-between; }
-    .wordmark { font-family: var(--serif); font-size: 1.26rem; text-decoration: none; letter-spacing: -.02em; }
-    .back { color: rgba(252,253,251,.78); font-size: .82rem; font-weight: 600; text-decoration: none; }
+    .wordmark { font-family: var(--serif); font-size: 1.26rem; letter-spacing: -.02em; text-decoration: none; }
+    .back { color: rgba(252,253,251,.82); font-size: .82rem; font-weight: 600; text-decoration: none; }
     .back:hover { color: var(--white); }
 
-    .hero { position: relative; min-height: min(770px, 100svh); display: flex; align-items: end; padding: 150px 0 76px; overflow: hidden; background: var(--forest); color: var(--white); }
-    .hero::before { content: ""; position: absolute; inset: 0; opacity: .35; background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,.18) 1px, transparent 0); background-size: 32px 32px; }
-    .hero::after { content: ""; position: absolute; width: min(60vw, 780px); aspect-ratio: 1; right: -11vw; top: -25vw; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; box-shadow: 0 0 0 9vw rgba(255,255,255,.025), 0 0 0 18vw rgba(255,255,255,.016); }
+    .hero { position: relative; min-height: min(800px, 100svh); display: flex; align-items: end; overflow: hidden; padding: 150px 0 76px; background: var(--forest); color: var(--white); }
+    .hero::before { position: absolute; inset: 0; opacity: .34; content: ""; background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,.18) 1px, transparent 0); background-size: 32px 32px; }
+    .hero::after { position: absolute; top: -25vw; right: -11vw; width: min(60vw, 780px); aspect-ratio: 1; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; box-shadow: 0 0 0 9vw rgba(255,255,255,.025), 0 0 0 18vw rgba(255,255,255,.016); content: ""; }
     .hero .wrap { position: relative; z-index: 1; }
-    .hero h1 em { color: #f6c95f; font-style: italic; }
-    .hero-bottom { display: grid; grid-template-columns: 1.15fr .85fr; gap: 50px; align-items: end; margin-top: 42px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,.22); }
-    .hero-note { max-width: 360px; justify-self: end; color: rgba(252,253,251,.62); font-size: .86rem; }
+    .hero h1 em { color: #f6cf6b; font-style: italic; }
+    .hero-bottom { display: grid; grid-template-columns: 1.15fr .85fr; gap: 50px; align-items: end; margin-top: 42px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,.24); }
+    .lead { max-width: 690px; color: rgba(252,253,251,.84); font-size: clamp(1.08rem, 1.7vw, 1.3rem); line-height: 1.55; }
+    .hero-note { max-width: 350px; justify-self: end; color: rgba(252,253,251,.66); font-size: .87rem; }
 
     section { padding: clamp(84px, 11vw, 138px) 0; }
-    .intro-grid { display: grid; grid-template-columns: .7fr 1.3fr; gap: clamp(40px, 10vw, 140px); }
-    .intro-aside { color: var(--soft); font-size: .83rem; text-transform: uppercase; letter-spacing: .11em; }
-    .big-copy { max-width: 780px; font-family: var(--serif); font-size: clamp(1.85rem, 3.7vw, 3.55rem); line-height: 1.18; letter-spacing: -.035em; }
-    .big-copy span { color: #71847d; }
-    .small-copy { max-width: 610px; margin-top: 28px; color: var(--soft); }
+    .intro-grid { display: grid; grid-template-columns: .68fr 1.32fr; gap: clamp(40px, 10vw, 140px); }
+    .intro-aside { color: var(--soft); font-size: .8rem; font-weight: 600; letter-spacing: .11em; text-transform: uppercase; }
+    .big-copy { max-width: 800px; font-family: var(--serif); font-size: clamp(1.9rem, 3.8vw, 3.65rem); letter-spacing: -.04em; line-height: 1.17; }
+    .big-copy span { color: var(--sage-dark); }
+    .small-copy { max-width: 610px; margin-top: 27px; color: var(--soft); }
 
-    .builder { margin: 0 18px; border-radius: 32px; overflow: hidden; background: var(--sage); }
-    .builder-inner { padding: clamp(72px, 9vw, 110px) 0; }
+    .whole-package { margin: 0 18px; overflow: hidden; border-radius: 32px; background: var(--forest); color: var(--white); }
+    .whole-inner { padding: clamp(74px, 9vw, 112px) 0; }
     .section-head { display: grid; grid-template-columns: 1.12fr .88fr; gap: 70px; align-items: end; }
-    .section-head .copy { color: var(--soft); }
-    .package-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 56px; }
-    .package {
-      position: relative;
-      min-height: 445px;
-      display: flex;
-      flex-direction: column;
-      padding: 29px;
-      border: 1px solid rgba(24,48,45,.2);
-      border-radius: 20px;
-      background: rgba(252,253,251,.58);
-    }
-    .package.featured { background: var(--forest); color: var(--white); border-color: var(--forest); }
-    .package-top { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
-    .tag { padding: 5px 9px; border: 1px solid currentColor; border-radius: 999px; color: var(--soft); font-size: .67rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
-    .featured .tag { color: #d9e6df; }
-    .package-number { color: #6f817a; font-size: .78rem; font-weight: 600; letter-spacing: .1em; }
-    .featured .package-number { color: #e3ba5a; }
-    .package h3 { margin-top: 42px; }
-    .package p { margin-top: 17px; color: var(--soft); }
-    .featured p { color: rgba(252,253,251,.72); }
-    .price { margin-top: auto; padding-top: 28px; font-family: var(--serif); font-size: clamp(2.45rem, 4vw, 3.6rem); letter-spacing: -.06em; line-height: .9; }
-    .price small { display: block; margin-top: 10px; color: var(--soft); font: 600 .69rem var(--sans); letter-spacing: .1em; text-transform: uppercase; }
-    .featured .price small { color: rgba(252,253,251,.62); }
-    .package ul { margin: 23px 0 0; padding: 0; list-style: none; }
-    .package li { position: relative; padding: 8px 0 0 20px; color: var(--soft); font-size: .87rem; }
-    .package li::before { position: absolute; left: 0; color: #71847d; content: "•"; }
-    .featured li { color: rgba(252,253,251,.72); }
-    .featured li::before { color: #f5c457; }
-    .total { display: flex; align-items: center; justify-content: space-between; gap: 30px; margin-top: 16px; padding: 28px 31px; border-radius: 18px; background: #d4e0d9; }
-    .total p { max-width: 620px; color: var(--soft); }
-    .total strong { flex: 0 0 auto; font: 500 clamp(2rem, 3.3vw, 3.2rem)/.9 var(--serif); letter-spacing: -.05em; }
-    .total small { display: block; margin-top: 8px; color: var(--soft); font: 600 .68rem var(--sans); letter-spacing: .1em; text-align: right; text-transform: uppercase; }
+    .section-head .copy { color: rgba(252,253,251,.72); }
+    .outcomes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin-top: 64px; border-top: 1px solid rgba(255,255,255,.2); border-bottom: 1px solid rgba(255,255,255,.2); }
+    .outcome { min-height: 188px; padding: 27px 20px 26px 0; border-right: 1px solid rgba(255,255,255,.2); }
+    .outcome + .outcome { padding-left: 20px; }
+    .outcome:last-child { border-right: 0; }
+    .outcome span { display: block; color: #f6cf6b; font-size: .72rem; font-weight: 600; letter-spacing: .11em; }
+    .outcome h3 { margin-top: 30px; font-size: clamp(1.25rem, 1.7vw, 1.6rem); }
+    .package-breakdown { display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; margin-top: 24px; }
+    .package-card { padding: 31px; border: 1px solid rgba(255,255,255,.18); border-radius: 20px; background: var(--forest-2); }
+    .package-card h3 { margin-top: 20px; }
+    .package-card p { margin-top: 14px; color: rgba(252,253,251,.72); }
+    .package-card ul { margin: 20px 0 0; padding: 0; list-style: none; }
+    .package-card li { position: relative; padding: 7px 0 0 20px; color: rgba(252,253,251,.75); font-size: .9rem; }
+    .package-card li::before { position: absolute; left: 0; color: #f6cf6b; content: "•"; }
+    .price { margin-top: 28px; font-family: var(--serif); font-size: clamp(2.3rem, 3.8vw, 3.45rem); letter-spacing: -.055em; line-height: .9; }
+    .price small { display: block; margin-top: 10px; color: rgba(252,253,251,.65); font: 600 .7rem var(--sans); letter-spacing: .1em; text-transform: uppercase; }
+    .value-list { margin-top: 14px; border-top: 1px solid rgba(255,255,255,.2); }
+    .value-row { display: flex; justify-content: space-between; gap: 20px; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.2); color: rgba(252,253,251,.76); font-size: .92rem; }
+    .value-row strong { color: var(--white); font-weight: 600; white-space: nowrap; }
+    .total { display: flex; align-items: center; justify-content: space-between; gap: 30px; margin-top: 24px; padding: 30px; border-radius: 19px; background: var(--sun); color: var(--ink); }
+    .total p { max-width: 625px; color: #35504a; }
+    .total p strong { color: var(--ink); }
+    .total-price { flex: 0 0 auto; font: 500 clamp(2.3rem, 4vw, 3.75rem)/.9 var(--serif); letter-spacing: -.055em; }
+    .total-price small { display: block; margin-top: 9px; color: #35504a; font: 600 .68rem var(--sans); letter-spacing: .1em; text-align: right; text-transform: uppercase; }
 
-    .human { background: var(--paper); }
-    .human-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(48px, 10vw, 150px); align-items: start; }
-    .human .sticky { position: sticky; top: 60px; }
-    .human .sticky p:last-child { max-width: 390px; margin-top: 24px; color: var(--soft); }
-    .support-list { border-top: 1px solid var(--line); }
-    .support-item { display: grid; grid-template-columns: 44px 1fr auto; gap: 20px; align-items: center; padding: 27px 0; border-bottom: 1px solid var(--line); }
-    .support-item > span { color: #71847d; font-size: .76rem; font-weight: 600; letter-spacing: .09em; }
-    .support-item p { margin-top: 7px; color: var(--soft); font-size: .92rem; }
-    .support-item strong { font: 500 1.45rem var(--serif); letter-spacing: -.035em; white-space: nowrap; }
-    .quiet-note { margin-top: 25px; color: var(--soft); font-size: .9rem; }
+    .ai { background: var(--paper-deep); }
+    .ai-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(46px, 9vw, 138px); align-items: start; }
+    .ai .sticky { position: sticky; top: 60px; }
+    .ai .sticky p:last-child { max-width: 385px; margin-top: 23px; color: var(--soft); }
+    .ai-list { border-top: 1px solid var(--line); }
+    .ai-item { display: grid; grid-template-columns: 44px 1fr; gap: 20px; padding: 28px 0; border-bottom: 1px solid var(--line); }
+    .ai-item > span { color: var(--sage-dark); font-size: .76rem; font-weight: 600; letter-spacing: .1em; }
+    .ai-item p { margin-top: 8px; color: var(--soft); }
+    .ai-note { margin-top: 26px; color: var(--soft); font-size: .9rem; }
+
+    .individual { background: var(--paper); }
+    .individual-head { max-width: 760px; }
+    .individual-head p:last-child { max-width: 635px; margin-top: 23px; color: var(--soft); }
+    .individual-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 56px; }
+    .individual-card { min-height: 310px; display: flex; flex-direction: column; padding: 28px; border: 1px solid var(--line); border-radius: 20px; background: rgba(252,253,251,.48); }
+    .individual-card span { color: var(--sage-dark); font-size: .72rem; font-weight: 600; letter-spacing: .1em; }
+    .individual-card h3 { margin-top: auto; }
+    .individual-card p { margin-top: 14px; color: var(--soft); }
+    .individual-card small { margin-top: 21px; color: var(--sage-dark); font-size: .78rem; font-weight: 600; }
 
     .how { background: var(--forest); color: var(--white); }
     .how .section-head .copy { color: rgba(252,253,251,.7); }
-    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 60px; border-top: 1px solid rgba(255,255,255,.2); }
-    .step { min-height: 265px; padding: 34px 30px 20px 0; border-right: 1px solid rgba(255,255,255,.2); }
-    .step + .step { padding-left: 30px; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 58px; border-top: 1px solid rgba(255,255,255,.2); }
+    .step { min-height: 257px; padding: 32px 28px 18px 0; border-right: 1px solid rgba(255,255,255,.2); }
+    .step + .step { padding-left: 28px; }
     .step:last-child { border-right: 0; }
-    .step-num { color: #f2c558; font-size: .75rem; font-weight: 600; letter-spacing: .11em; }
-    .step h3 { margin-top: 56px; }
-    .step p { max-width: 280px; margin-top: 14px; color: rgba(252,253,251,.68); }
+    .step-num { color: #f6cf6b; font-size: .75rem; font-weight: 600; letter-spacing: .11em; }
+    .step h3 { margin-top: 51px; }
+    .step p { max-width: 280px; margin-top: 14px; color: rgba(252,253,251,.7); }
 
-    .final { padding: clamp(95px, 13vw, 160px) 0; text-align: center; }
+    .final { padding: clamp(96px, 13vw, 160px) 0; text-align: center; }
     .final h2 { margin-inline: auto; }
-    .final p { max-width: 610px; margin: 24px auto 34px; color: var(--soft); }
+    .final p { max-width: 630px; margin: 24px auto 34px; color: var(--soft); }
     footer { padding: 24px 0; border-top: 1px solid var(--line); color: var(--soft); font-size: .75rem; }
     footer .wrap { display: flex; justify-content: space-between; gap: 20px; }
 
-    @media (max-width: 850px) {
-      .hero { min-height: 720px; padding-bottom: 52px; }
-      .hero-bottom, .section-head, .intro-grid, .human-grid { grid-template-columns: 1fr; }
+    @media (max-width: 900px) {
+      .hero { min-height: 720px; padding-bottom: 53px; }
+      .hero-bottom, .section-head, .intro-grid, .ai-grid, .package-breakdown { grid-template-columns: 1fr; }
       .hero-bottom { gap: 24px; }
       .hero-note { justify-self: start; }
-      .intro-aside { margin-bottom: -22px; }
-      .package-grid { grid-template-columns: 1fr; }
-      .package { min-height: 0; }
-      .package h3 { margin-top: 28px; }
-      .price { margin-top: 30px; }
-      .human .sticky { position: static; }
+      .intro-aside { margin-bottom: -20px; }
+      .outcomes { grid-template-columns: 1fr 1fr; }
+      .outcome { min-height: 0; border-bottom: 1px solid rgba(255,255,255,.2); }
+      .outcome:nth-child(2) { border-right: 0; }
+      .outcome:nth-child(3) { padding-left: 0; }
+      .outcome:nth-child(4) { border-right: 0; }
+      .outcome:last-child { border-bottom: 0; }
+      .ai .sticky { position: static; }
+      .individual-grid { grid-template-columns: 1fr; }
+      .individual-card { min-height: 245px; }
       .steps { grid-template-columns: 1fr; }
       .step, .step + .step { min-height: 0; padding: 28px 0; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.2); }
       .step:last-child { border-bottom: 0; }
@@ -195,13 +196,16 @@
       nav { padding-top: 19px; }
       .back { display: none; }
       .hero { min-height: 660px; padding-top: 130px; }
-      h1 { font-size: clamp(3.2rem, 15vw, 4.45rem); }
-      .builder { margin: 0 8px; border-radius: 24px; }
-      .total { display: block; padding: 25px; }
-      .total strong { display: block; margin-top: 22px; }
-      .total small { text-align: left; }
-      .support-item { grid-template-columns: 34px 1fr; }
-      .support-item strong { grid-column: 2; font-size: 1.35rem; }
+      h1 { font-size: clamp(3.15rem, 15vw, 4.4rem); }
+      .whole-package { margin: 0 8px; border-radius: 24px; }
+      .outcomes { grid-template-columns: 1fr; }
+      .outcome, .outcome + .outcome, .outcome:nth-child(2), .outcome:nth-child(4) { padding: 23px 0; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.2); }
+      .outcome:last-child { border-bottom: 0; }
+      .outcome h3 { margin-top: 15px; }
+      .package-card, .total { padding: 25px; }
+      .total { display: block; }
+      .total-price { display: block; margin-top: 23px; }
+      .total-price small { text-align: left; }
       footer .wrap { flex-direction: column; gap: 4px; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
@@ -218,115 +222,123 @@
   <main>
     <header class="hero">
       <div class="wrap">
-        <p class="eyebrow">Private support, built around you</p>
-        <h1>Build the package your <em>life and work</em> actually need.</h1>
+        <p class="eyebrow">Private coaching + practical AI</p>
+        <h1>Build the business you want. <em>Become the person</em> who can lead it.</h1>
         <div class="hero-bottom">
-          <p class="lead">There is no off-the-shelf programme here. We start with what you are building, what is getting in the way, and the kind of support that would make a real difference.</p>
-          <p class="hero-note">Coaching. A clear dashboard. A personal AI agent. Pick the pieces that fit, then make them yours.</p>
+          <p class="lead">A monthly private package for entrepreneurs who want more clarity, real accountability and an AI-powered way of working that helps the business move without asking more of their nervous system.</p>
+          <p class="hero-note">Weekly coaching. Unlimited support between sessions. Your own AI agent, installed to do real work with you.</p>
         </div>
       </div>
     </header>
 
     <section class="intro">
       <div class="wrap intro-grid">
-        <p class="intro-aside">A simple way to begin</p>
+        <p class="intro-aside">The whole package</p>
         <div>
-          <p class="big-copy">The goal is not to cram more into your calendar. <span>It is to create more clarity, movement, and room to live well while you build.</span></p>
-          <p class="small-copy">Some people begin with coaching. Some need a dashboard that stops important things slipping through the cracks. Some are ready for a personal AI agent. We can create the right combination together.</p>
+          <p class="big-copy">This is for the moment when you know you are capable of more. <span>Not more pressure. More clarity, courage and a smarter way to run the work.</span></p>
+          <p class="small-copy">We work on you and the business together: how you lead, where you get stuck, the moves you avoid, and the systems that can save you real time every week.</p>
         </div>
       </div>
     </section>
 
-    <section class="builder" id="packages">
-      <div class="wrap builder-inner">
+    <section class="whole-package on-dark" id="package">
+      <div class="wrap whole-inner">
         <div class="section-head">
           <div>
-            <p class="eyebrow">The agentic foundation</p>
-            <h2>Start with the support that keeps you moving.</h2>
+            <p class="eyebrow">The full monthly package</p>
+            <h2>Support to lead more boldly, work more intelligently, and keep moving.</h2>
           </div>
-          <p class="copy">Each part is useful on its own. Together, they give you human support, a clear home for your work, and practical AI that grows with you.</p>
+          <p class="copy">One joined-up container. Human support when you are up against yourself. Practical AI support when the work needs to move.</p>
         </div>
 
-        <div class="package-grid">
-          <article class="package">
-            <div class="package-top"><span class="package-number">01</span><span class="tag">Foundation</span></div>
-            <h3>Weekly coaching</h3>
-            <p>A steady, private space to think clearly, make decisions, work through what is in the way, and keep the bigger picture alive.</p>
+        <div class="outcomes" aria-label="What the monthly package helps with">
+          <article class="outcome"><span>01</span><h3>Clarity</h3></article>
+          <article class="outcome"><span>02</span><h3>Accountability</h3></article>
+          <article class="outcome"><span>03</span><h3>Mindset blocks</h3></article>
+          <article class="outcome"><span>04</span><h3>Leaving comfort zones</h3></article>
+          <article class="outcome"><span>05</span><h3>Stepping into leadership</h3></article>
+        </div>
+
+        <div class="package-breakdown">
+          <article class="package-card">
+            <p class="eyebrow">The coaching</p>
+            <h3>Weekly one-to-one sessions, with space to integrate.</h3>
+            <p>We use the sessions to get clear, face what is actually in the way, build courage around the next move, and make sure the business is serving the life you want.</p>
             <ul>
-              <li>One session each week for the first three weeks</li>
-              <li>The final week is left open for integration</li>
-              <li>Business, life, direction and the real stuff</li>
+              <li>A private coaching session each week, except the final week of each month</li>
+              <li>Unlimited Telegram chat and voice support between sessions</li>
+              <li>Honest accountability, not someone just nodding at your plans</li>
+              <li>Room for strategy, vision, emotions and the story you are living</li>
             </ul>
-            <div class="price">€900<small>per month</small></div>
+            <div class="price">€1,200<small>monthly value</small></div>
           </article>
 
-          <article class="package featured">
-            <div class="package-top"><span class="package-number">02</span><span class="tag">Your command centre</span></div>
-            <h3>Custom dashboard + AI assistant</h3>
-            <p>A calm, useful place to hold your priorities, projects, notes, commitments and next moves, with an AI assistant that keeps the thread.</p>
+          <article class="package-card">
+            <p class="eyebrow">The AI support</p>
+            <h3>Your personal AI operator.</h3>
+            <p>Your agent is installed for you and shaped around the work you actually do, so it can help create, organise, remember, prepare and move things forward.</p>
+            <div class="value-list" aria-label="AI support monthly value breakdown">
+              <div class="value-row"><span>Custom dashboard + AI assistant</span><strong>€500</strong></div>
+              <div class="value-row"><span>Personal AI agent, installation + maintenance</span><strong>€800</strong></div>
+            </div>
             <ul>
-              <li>Built around how you really work</li>
-              <li>Useful prompts, context and check-ins</li>
-              <li>Less time searching, more time moving</li>
+              <li>Built to get real work done and save real time</li>
+              <li>Coaching to help you use it with confidence</li>
+              <li>A more capable way to run your business in 2026</li>
             </ul>
-            <div class="price">€500<small>per month</small></div>
-          </article>
-
-          <article class="package">
-            <div class="package-top"><span class="package-number">03</span><span class="tag">Built with you</span></div>
-            <h3>Your personal AI agent</h3>
-            <p>Your own agent, installed and maintained for you, with hands-on coaching so it becomes part of your life instead of another tool gathering dust.</p>
-            <ul>
-              <li>Personal setup and installation</li>
-              <li>Ongoing maintenance and improvements</li>
-              <li>Coaching on how to use it well</li>
-            </ul>
-            <div class="price">€800<small>per month</small></div>
           </article>
         </div>
 
-        <div class="total" aria-label="Full agentic foundation investment">
-          <p><strong>The full foundation</strong><br>Weekly coaching, your dashboard and assistant, plus your personal AI agent.</p>
-          <div><strong>€2,200</strong><small>per month</small></div>
+        <div class="total" aria-label="Full monthly package investment">
+          <p><strong>One container. Human leadership and practical AI.</strong><br>Private coaching, unlimited Telegram support, your dashboard and AI assistant, plus a personal agent installed and maintained for you.</p>
+          <div class="total-price">€2,500<small>per month</small></div>
         </div>
       </div>
     </section>
 
-    <section class="human">
-      <div class="wrap human-grid">
+    <section class="ai">
+      <div class="wrap ai-grid">
         <div class="sticky">
-          <p class="eyebrow">Or begin with you</p>
-          <h2>One-to-one support for the whole human story.</h2>
-          <p>Sometimes the right starting point is not a system. It is getting clear on the life you want, the story you are living, and what wants honest attention before the next move.</p>
+          <p class="eyebrow">What your AI agent is for</p>
+          <h2>Not a shiny chatbot. A useful part of how the business runs.</h2>
+          <p>We do not install AI so you can say you have AI. We install it to give you back attention, time and momentum for the work that actually matters.</p>
         </div>
         <div>
-          <div class="support-list">
-            <article class="support-item">
-              <span>01</span>
-              <div><h3>Life + strategy coaching</h3><p>Visioning, telling the story of your life, seeing what is in the way, meeting emotion with care, and finding the next true step.</p></div>
-              <strong>€900–€2,000<br>/ month</strong>
-            </article>
-            <article class="support-item">
-              <span>02</span>
-              <div><h3>AI support, at your pace</h3><p>A custom dashboard and AI support shaped around how much building, maintenance and hands-on help you actually need.</p></div>
-              <strong>€500–€1,000<br>/ month</strong>
-            </article>
+          <div class="ai-list">
+            <article class="ai-item"><span>01</span><div><h3>Get real work done</h3><p>Turn ideas into drafts, plans, follow-ups and next steps without staring at a blank page or re-explaining the context every time.</p></div></article>
+            <article class="ai-item"><span>02</span><div><h3>Save time without losing your voice</h3><p>Let the system carry useful context and repetitive work, while you stay close to the decisions, relationships and creative parts only you can do.</p></div></article>
+            <article class="ai-item"><span>03</span><div><h3>Run a more capable business</h3><p>Build a calmer operating system for projects, notes, priorities and follow-through. Less chaos held in your head. More movement from intention to action.</p></div></article>
           </div>
-          <p class="quiet-note">The range reflects the level of support and the scope of the work. We agree the shape and price before we start. No surprises.</p>
+          <p class="ai-note">The agent and dashboard are built around your business, not a generic template that asks you to fit your life around it.</p>
         </div>
       </div>
     </section>
 
-    <section class="how">
+    <section class="individual">
+      <div class="wrap">
+        <div class="individual-head">
+          <p class="eyebrow">You can also start smaller</p>
+          <h2>Individual pieces are possible too.</h2>
+          <p>You may not need the whole package yet. We can talk through what would serve you best and decide whether coaching, dashboard support, an AI agent, or a combination makes the most sense.</p>
+        </div>
+        <div class="individual-grid">
+          <article class="individual-card"><span>01</span><h3>Private coaching</h3><p>Clarity, leadership, accountability, bigger moves, mindset blocks and a life that feels more like yours.</p><small>Scope agreed together</small></article>
+          <article class="individual-card"><span>02</span><h3>Dashboard + AI assistant</h3><p>A clear home for the work, with an assistant that keeps the context and helps you follow through.</p><small>Scope agreed together</small></article>
+          <article class="individual-card"><span>03</span><h3>Personal AI agent</h3><p>Installation, maintenance and practical guidance for an agent that becomes genuinely useful in daily business life.</p><small>Scope agreed together</small></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="how on-dark">
       <div class="wrap">
         <div class="section-head">
-          <div><p class="eyebrow">How we shape it</p><h2>A few simple steps. No hard sell.</h2></div>
-          <p class="copy">We start with a real conversation, not a form that pretends it knows your life better than you do.</p>
+          <div><p class="eyebrow">How it starts</p><h2>A real conversation. Then the right shape for you.</h2></div>
+          <p class="copy">No forced package. No pretending every entrepreneur needs the same thing at the same time.</p>
         </div>
         <div class="steps">
-          <article class="step"><p class="step-num">01</p><h3>Talk honestly.</h3><p>We look at what you want, what is demanding your attention, and what would make the biggest difference now.</p></article>
-          <article class="step"><p class="step-num">02</p><h3>Choose the right pieces.</h3><p>We create a package that fits your needs, capacity and season. Nothing extra for the sake of it.</p></article>
-          <article class="step"><p class="step-num">03</p><h3>Build a good rhythm.</h3><p>We begin with clear support and keep adjusting until the work feels useful, human and sustainable.</p></article>
+          <article class="step"><p class="step-num">01</p><h3>Tell me what is real.</h3><p>What are you building? Where are you stuck? What would change if you had the right kind of support behind you?</p></article>
+          <article class="step"><p class="step-num">02</p><h3>Choose the useful pieces.</h3><p>We decide together whether the whole package or one focused piece is the most honest and useful next step.</p></article>
+          <article class="step"><p class="step-num">03</p><h3>Build a rhythm that holds.</h3><p>We begin. We adjust. The aim is more capability in the business and more freedom in the person running it.</p></article>
         </div>
       </div>
     </section>
@@ -334,8 +346,8 @@
     <section class="final">
       <div class="wrap">
         <p class="eyebrow">Start here</p>
-        <h2>Let’s make your support feel like a real advantage.</h2>
-        <p>Bring the messy version. The big ambition. The thing you have not quite said out loud yet. We will work out what belongs in your package.</p>
+        <h2>You do not need to have the perfect plan before we talk.</h2>
+        <p>Bring the ambition, the mess, the thing you keep avoiding, and the version of your business you can see but have not built yet. We will work out what support would make the most difference.</p>
         <a class="button" href="https://call.coliberate.ventures/15-min">Book a conversation <span aria-hidden="true">→</span></a>
       </div>
     </section>

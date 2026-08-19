@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Woman Who Made Visibility Feel Like Freedom | Diara Trautwein</title>
+  <meta name="description" content="A portrait from 2030 of Diara Trautwein, the woman who brought visibility, strategy, ritual and a life-first business into the same room.">
+  <meta property="og:title" content="The Woman Who Made Visibility Feel Like Freedom">
+  <meta property="og:description" content="A portrait from 2030 of Diara Trautwein.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://jantrautwein.com/diara/">
+  <meta property="og:image" content="https://jantrautwein.com/diara/assets/diara-beach.webp">
+  <meta name="theme-color" content="#fafaf7">
+  <link rel="canonical" href="https://jantrautwein.com/diara/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #fafaf7;
+      --paper-warm: #f3eee4;
+      --ink: #1a1a1a;
+      --muted: #68675f;
+      --line: #dfded6;
+      --gold: #a9843f;
+      --forest: #22372e;
+      --sage: #dfe7dd;
+      --serif: "Fraunces", "Instrument Serif", Georgia, serif;
+      --sans: "Geist", Inter, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--sans);
+      font-size: 18px;
+      line-height: 1.72;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+
+    .topbar {
+      min-height: 76px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+    }
+    .topbar-inner {
+      width: min(1160px, calc(100% - 48px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      text-decoration: none;
+      font-family: var(--serif);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+    .leaf {
+      position: relative;
+      width: 19px;
+      height: 25px;
+    }
+    .leaf::before,
+    .leaf::after {
+      content: "";
+      position: absolute;
+      width: 9px;
+      height: 16px;
+      background: var(--forest);
+      border-radius: 100% 0 100% 0;
+      transform: rotate(-38deg);
+    }
+    .leaf::before { left: 1px; top: 1px; }
+    .leaf::after { right: 0; bottom: 1px; transform: rotate(142deg); opacity: .72; }
+    .edition {
+      font-size: .71rem;
+      font-weight: 600;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hero {
+      width: min(1160px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: clamp(70px, 9vw, 132px) 0 clamp(72px, 9vw, 126px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(310px, .62fr);
+      gap: clamp(50px, 8vw, 108px);
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 28px;
+      padding: 8px 14px;
+      background: var(--paper-warm);
+      color: #8b692f;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+    h1, h2, blockquote { font-family: var(--serif); }
+    h1 {
+      margin: 0;
+      max-width: 790px;
+      font-size: clamp(3.4rem, 7.2vw, 6.3rem);
+      line-height: .96;
+      font-weight: 500;
+      letter-spacing: -.055em;
+    }
+    h1 em { color: var(--gold); font-weight: 400; }
+    .deck {
+      max-width: 720px;
+      margin: 34px 0 0;
+      font-family: var(--serif);
+      font-size: clamp(1.28rem, 2vw, 1.62rem);
+      line-height: 1.45;
+      color: #40413c;
+    }
+    .byline {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-top: 36px;
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .byline::before { content: ""; width: 48px; height: 1px; background: var(--gold); }
+    .hero-image {
+      margin: 0;
+      position: relative;
+    }
+    .hero-image::before {
+      content: "";
+      position: absolute;
+      inset: 26px -24px -26px 24px;
+      background: var(--sage);
+      z-index: -1;
+    }
+    .hero-image img { width: 100%; height: auto; }
+    .hero-image figcaption,
+    figure figcaption {
+      margin-top: 13px;
+      font-size: .71rem;
+      line-height: 1.45;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .opening {
+      background: var(--forest);
+      color: #f7f4ec;
+      padding: clamp(88px, 11vw, 150px) 24px;
+    }
+    .opening-inner {
+      width: min(950px, 100%);
+      margin: 0 auto;
+    }
+    .dateline {
+      margin-bottom: 25px;
+      color: #d6bd84;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .opening p {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(1.75rem, 3.7vw, 3.15rem);
+      line-height: 1.28;
+      letter-spacing: -.025em;
+    }
+    .opening p + p { margin-top: .85em; }
+    .opening strong { color: #e0c184; font-weight: 500; }
+
+    .article {
+      width: min(760px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: clamp(90px, 10vw, 140px) 0;
+    }
+    .article p { margin: 0 0 1.5em; }
+    .article p:first-child::first-letter {
+      float: left;
+      margin: .09em .12em 0 0;
+      font-family: var(--serif);
+      font-size: 5.2rem;
+      line-height: .72;
+      color: var(--gold);
+    }
+    h2 {
+      margin: 2.35em 0 .72em;
+      font-size: clamp(2.15rem, 4.7vw, 3.65rem);
+      line-height: 1.08;
+      font-weight: 500;
+      letter-spacing: -.04em;
+    }
+    h2 em { color: var(--gold); font-weight: 400; }
+    .article strong { font-weight: 600; }
+    .article em { text-underline-offset: 4px; }
+
+    .wide-figure,
+    .portrait-pair,
+    .portrait-feature {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+    .wide-figure { padding: 0 0 clamp(78px, 9vw, 126px); }
+    .wide-figure img { width: 100%; height: auto; }
+    .wide-figure figcaption { max-width: 700px; }
+    .portrait-pair {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(24px, 4vw, 52px);
+      align-items: start;
+      padding: 0 0 clamp(90px, 11vw, 148px);
+    }
+    .portrait-pair figure,
+    .portrait-feature figure { margin: 0; }
+    .portrait-pair img { width: 100%; height: auto; }
+    .portrait-pair figure:nth-child(2) { margin-top: clamp(40px, 8vw, 110px); }
+
+    .pullquote {
+      width: min(980px, calc(100% - 48px));
+      margin: 0 auto clamp(90px, 11vw, 150px);
+      padding: clamp(62px, 8vw, 100px);
+      background: var(--paper-warm);
+    }
+    .pullquote blockquote {
+      margin: 0;
+      font-size: clamp(2rem, 4.5vw, 3.7rem);
+      line-height: 1.2;
+      letter-spacing: -.035em;
+    }
+    .pullquote blockquote em { color: var(--gold); font-weight: 400; }
+
+    .portrait-feature {
+      display: grid;
+      grid-template-columns: .72fr 1fr;
+      gap: clamp(42px, 7vw, 94px);
+      align-items: center;
+      padding-bottom: clamp(90px, 11vw, 150px);
+    }
+    .portrait-feature img { width: 100%; height: auto; }
+    .feature-copy .kicker {
+      margin: 0 0 18px;
+      color: var(--gold);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .feature-copy p {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(1.65rem, 3vw, 2.5rem);
+      line-height: 1.35;
+    }
+
+    .numbered {
+      margin: 2.3em 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+    .numbered li {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 18px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .numbered span { color: var(--gold); font-family: var(--serif); font-size: 1.35rem; }
+    .numbered p { margin: 0; }
+
+    .closing-image {
+      position: relative;
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+    .closing-image img { width: 100%; height: auto; }
+    .closing-image figcaption { margin-bottom: 0; }
+
+    .love-note {
+      width: min(850px, calc(100% - 48px));
+      margin: clamp(92px, 12vw, 170px) auto;
+      padding: clamp(58px, 8vw, 94px);
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+    .love-note .eyebrow { margin-bottom: 28px; }
+    .love-note p {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(1.7rem, 3.4vw, 2.7rem);
+      line-height: 1.38;
+    }
+    .love-note p + p { margin-top: 1em; }
+    .signature { color: var(--gold); font-style: italic; }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 36px 24px;
+      color: var(--muted);
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .footer-inner {
+      width: min(1160px, 100%);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 820px) {
+      body { font-size: 17px; }
+      .topbar-inner, .hero, .wide-figure, .portrait-pair, .portrait-feature, .pullquote, .closing-image, .love-note, .article { width: min(100% - 34px, 760px); }
+      .edition { display: none; }
+      .hero { grid-template-columns: 1fr; padding-top: 62px; }
+      .hero-image { width: min(78%, 440px); margin: 0 auto; }
+      .hero-image::before { inset: 18px -14px -18px 14px; }
+      .portrait-pair { gap: 16px; }
+      .portrait-pair figure:nth-child(2) { margin-top: 46px; }
+      .portrait-feature { grid-template-columns: 1fr; }
+      .portrait-feature figure { width: min(78%, 470px); }
+      .pullquote { padding: 46px 28px; }
+      .love-note { padding: 48px 25px; }
+    }
+
+    @media (max-width: 560px) {
+      h1 { font-size: clamp(3rem, 15vw, 4.2rem); }
+      .opening { padding-left: 18px; padding-right: 18px; }
+      .portrait-pair { grid-template-columns: 1fr; gap: 36px; }
+      .portrait-pair figure:nth-child(2) { margin-top: 0; }
+      .numbered li { grid-template-columns: 38px 1fr; gap: 10px; }
+      .byline { align-items: flex-start; }
+      .byline::before { width: 28px; margin-top: .62em; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="https://coliberate.ventures" aria-label="Visit coLiberate ventures">
+        <span class="leaf" aria-hidden="true"></span>
+        <span>coLiberate ventures</span>
+      </a>
+      <span class="edition">A future profile · 2030</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Lisbon · A portrait from 2030</span>
+        <h1>The woman who made <em>visibility</em> feel like freedom.</h1>
+        <p class="deck">Diara Trautwein was never meant to become “the LinkedIn person.” She was here to help women become visible without leaving themselves behind.</p>
+        <div class="byline">Written with love by Jan · August 2026</div>
+      </div>
+      <figure class="hero-image">
+        <img src="/diara/assets/diara-coliberate.webp" alt="Portrait of Diara Trautwein" width="832" height="1248" fetchpriority="high">
+        <figcaption>Diara Trautwein, founder of coLiberate ventures</figcaption>
+      </figure>
+    </section>
+
+    <section class="opening">
+      <div class="opening-inner">
+        <div class="dateline">Portugal · Spring 2030</div>
+        <p>Before Diara Trautwein looks at her phone, she opens the window. She checks in with her body. She makes tea from herbs she knows by name. Some mornings she sits in prayer. Some mornings she listens for the quiet voice she calls guidance.</p>
+        <p>By the time she reaches her desk, her business has already made sales. Her team is moving. A video she recorded beside the ocean is reaching women she has never met.</p>
+        <p><strong>No one calls her “the LinkedIn person” anymore.</strong></p>
+      </div>
+    </section>
+
+    <article class="article">
+      <p>They call her when they are ready to be seen.</p>
+
+      <p>That distinction turned out to be everything.</p>
+
+      <p>For years, Diara was exceptionally good at helping people create clients on LinkedIn. She understood positioning, content, conversations, offers and the systems that made visibility produce real business. But the platform was never the point. It was simply the doorway through which a deeper body of work first entered the world.</p>
+
+      <p>What Diara had always been studying was liberation: how a person becomes free enough to tell the truth, clear enough to claim what she wants and visible enough for the right people to find her.</p>
+
+      <h2>Her story started long before the <em>algorithm.</em></h2>
+
+      <p>Diara began her career inside nonprofit and public-interest work in the United States, contributing to large projects involving community engagement, policy and systems change. She cared deeply about impact. She also learned, early and painfully, what happens when meaningful work asks a person to abandon herself.</p>
+
+      <p>Burnout became a threshold.</p>
+
+      <p>While she was still employed, she found consulting and began building something of her own. The work gave her a first glimpse of a different future: one where her ideas, judgment and way of relating to people were not side notes. They were the value.</p>
+
+      <p>Consulting became remote work. Remote work became travel. Travel eventually brought her to Portugal, where the pace, sunlight and closeness to nature made it harder to pretend that life was supposed to be organized around work.</p>
+
+      <p>Then she met Jan. Together, they began building a shared life and businesses that could support it.</p>
+
+      <p>Looking back, the sequence now seems obvious. Diara was not wandering between nonprofit work, consulting, LinkedIn and women’s empowerment. She was following the same question into progressively truer rooms:</p>
+
+      <p><strong>What would it look like to build power without recreating the systems that made us abandon ourselves?</strong></p>
+    </article>
+
+    <div class="portrait-pair" aria-label="Diara's journey in photographs">
+      <figure>
+        <img src="/diara/assets/diara-market.webp" alt="Diara smiling at a colorful outdoor market" width="1012" height="1800" decoding="async">
+        <figcaption>Color, movement and a life that leaves room to be lived</figcaption>
+      </figure>
+      <figure>
+        <img src="/diara/assets/diara-jan-mountains.webp" alt="Diara and Jan together in the mountains" width="1012" height="1800" decoding="async">
+        <figcaption>Portugal, partnership and a new chapter</figcaption>
+      </figure>
+    </div>
+
+    <article class="article">
+      <h2>Visibility was never about being <em>louder.</em></h2>
+
+      <p>Diara’s work grew when she stopped treating visibility as a marketing tactic and began naming it as a form of power.</p>
+
+      <p>In a crowded world, attention is an entrance. Visibility allows people to encounter who you are, hear what you believe and decide whether they trust you. It creates the conditions for a service to be bought, a message to travel, an opportunity to arrive and an idea to change someone.</p>
+
+      <p>But many of the women Diara worked with did not need another posting schedule.</p>
+
+      <p>They knew how to open the camera. They knew where the publish button was. What stopped them lived deeper: fear of judgment, inherited ideas about being “too much,” disconnection from their bodies, uncertainty about their desires and the old reflex to become more acceptable before becoming more visible.</p>
+
+      <p>Diara understood that no content strategy could solve a woman’s habit of leaving herself.</p>
+
+      <p>So the work went inward.</p>
+    </article>
+
+    <div class="portrait-pair">
+      <figure>
+        <img src="/diara/assets/diara-ritual.webp" alt="Diara standing in warm violet and gold light" width="1012" height="1800" decoding="async">
+        <figcaption>The inner world was never separate from the work</figcaption>
+      </figure>
+      <figure>
+        <img src="/diara/assets/diara-closeup.webp" alt="A joyful close portrait of Diara wearing sunglasses and a scarf" width="1012" height="1800" decoding="async">
+        <figcaption>Visibility, in her own unmistakable way</figcaption>
+      </figure>
+    </div>
+
+    <section class="pullquote">
+      <blockquote>“A woman does not become powerful by performing confidence. She becomes powerful when she stops negotiating with the truth of who she is.”</blockquote>
+    </section>
+
+    <article class="article">
+      <h2>The inner world met the <em>strategy.</em></h2>
+
+      <p>By 2030, Diara’s method had become known for a combination few people had dared to hold together.</p>
+
+      <p>She helped women repair their relationship with their menstrual cycle and recognize that their bodies were not inconvenient machines. She led womb work, rituals and practices that helped them release old identities and rehearse a more powerful one until it felt safe to inhabit.</p>
+
+      <p>There were herbs. Candles. Prayer. Meditation. Conversations with spirit guides. Things Diara happily called witchy, without making them vague.</p>
+
+      <p>And then there were content systems, video practices, offers, funnels, team roles and clear plans for turning attention into trust and trust into a sustainable business.</p>
+
+      <p>She never asked women to choose between intuition and execution. She showed them how to let each correct the other.</p>
+
+      <ul class="numbered">
+        <li><span>01</span><p><strong>Body:</strong> understand your rhythms instead of building a business that punishes you for having them.</p></li>
+        <li><span>02</span><p><strong>Belief:</strong> notice the identities and stories that make hiding feel safer than being seen.</p></li>
+        <li><span>03</span><p><strong>Expression:</strong> speak on video and social media in a way that sounds like you, not a borrowed brand voice.</p></li>
+        <li><span>04</span><p><strong>Structure:</strong> create the systems, offers and support that turn visibility into freedom rather than another full-time performance.</p></li>
+      </ul>
+
+      <p>The result was not louder women. It was women who no longer disappeared from their own work.</p>
+    </article>
+
+    <figure class="wide-figure">
+      <img src="/diara/assets/diara-kitten.webp" alt="Diara gently holding a kitten" width="1800" height="1012" decoding="async">
+      <figcaption>Softness did not have to be traded for power</figcaption>
+    </figure>
+
+    <div class="portrait-feature">
+      <figure>
+        <img src="/diara/assets/diara-field.webp" alt="Diara standing in a green field with her arms raised" width="1350" height="1800" decoding="async">
+        <figcaption>A business built around aliveness</figcaption>
+      </figure>
+      <div class="feature-copy">
+        <p class="kicker">Life first, for real</p>
+        <p>Diara became the proof that planning around her cycle, protecting her freedom and creating real abundance were not competing ambitions.</p>
+      </div>
+    </div>
+
+    <article class="article">
+      <h2>Life-first did not mean playing <em>small.</em></h2>
+
+      <p>Diara’s own business became a living example of what she taught.</p>
+
+      <p>She planned around her energy and cycle rather than pretending every week should feel the same. She spent time in nature. She traveled. She made room for love, pleasure, grief, prayer and the occasional afternoon that produced absolutely nothing measurable.</p>
+
+      <p>She also created substantial abundance.</p>
+
+      <p>Her social following grew quickly because people could feel that her videos were not performances of expertise. They were acts of contact. She showed up consistently, spoke plainly and let people see the playful, spiritual, strategic and occasionally irreverent woman behind the work.</p>
+
+      <p>Behind her stood a talented team. Together they built an ecosystem that carried her ideas further than she could alone: content that created trust, thoughtful funnels that helped people choose their next step and lower-priced programs that sold while she slept.</p>
+
+      <p>This did not make her less personal. It allowed her to become more personal where it mattered.</p>
+
+      <p>The accessible programs helped thousands of women begin. Her intimate, higher-level spaces stayed small. There, clients received Diara’s attention, instinct and directness. Technology handled repetition. <strong>Diara gave presence.</strong></p>
+
+      <p>It was scale without distance. Growth without self-abandonment. A business that produced money, impact and room to breathe.</p>
+    </article>
+
+    <div class="portrait-pair">
+      <figure>
+        <img src="/diara/assets/diara-gelato.webp" alt="Diara enjoying gelato in the city" width="1012" height="1800" decoding="async">
+        <figcaption>Because a life-first business should include the life</figcaption>
+      </figure>
+      <figure>
+        <img src="/diara/assets/diara-playful.webp" alt="Diara laughing outside on a playful day out" width="1012" height="1800" decoding="async">
+        <figcaption>Joy was part of the model, not a reward at the end</figcaption>
+      </figure>
+    </div>
+
+    <article class="article">
+      <h2>What she was really helping women <em>remember.</em></h2>
+
+      <p>By 2030, the platforms had changed several times. Algorithms rose, collapsed and were replaced. The tactics kept moving.</p>
+
+      <p>Diara’s work endured because it had never depended on any of them.</p>
+
+      <p>She taught women that visibility begins before the camera turns on. It begins when you trust that what you see, want and know is worth expressing. It grows when you stop trying to be universally acceptable and become recognizable to the people who are waiting for precisely your way of doing things.</p>
+
+      <p>She showed them that authenticity was not simply “being real” online. It was building a business that did not require a fake version of them to keep running.</p>
+
+      <p>And she reminded them that wanting attention was not shameful when attention was in service of something true.</p>
+
+      <p>Visibility made trust possible. Trust made business possible. Business made choice possible. And choice, handled with care, became freedom.</p>
+
+      <p>Diara did not become known for teaching women how to post.</p>
+
+      <p><strong>She became known for helping them stop hiding.</strong></p>
+    </article>
+
+    <figure class="closing-image">
+      <img src="/diara/assets/diara-beach.webp" alt="Diara standing confidently on a beach beneath an open blue sky" width="1350" height="1800" decoding="async">
+      <figcaption>Diara Trautwein, somewhere between the sea and whatever comes next</figcaption>
+    </figure>
+
+    <section class="love-note">
+      <span class="eyebrow">A note from Jan</span>
+      <p>You do not need to become the woman in this article.</p>
+      <p>I wrote it because I can already see her.</p>
+      <p class="signature">I love you.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>For Diara · with love</span>
+      <span>An imagined profile from 2030</span>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,966 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A guided exercise for choosing what matters most, naming the trade-offs, and turning your priorities into action.">
+  <meta name="theme-color" content="#173c35">
+  <title>What Comes First? A Priorities Exercise | Jan Trautwein</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #eef1ed;
+      --paper-2: #f7f8f5;
+      --ink: #18302d;
+      --soft: #405651;
+      --forest: #173c35;
+      --forest-2: #244b44;
+      --sage: #b9cac4;
+      --sage-dark: #365f59;
+      --sun: #f5b72d;
+      --sun-hover: #e4a316;
+      --line: rgba(24, 48, 45, .18);
+      --white: #fcfdfb;
+      --danger: #8d3c2e;
+      --serif: "Lora", Georgia, serif;
+      --sans: "DM Sans", system-ui, sans-serif;
+      --max: 1120px;
+      --shadow: 0 18px 55px rgba(23, 60, 53, .10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--paper);
+      color: var(--ink);
+      font: 17px/1.56 var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      position: fixed;
+      z-index: -1;
+      inset: 0;
+      opacity: .16;
+      pointer-events: none;
+      content: "";
+      background: url("/images/paper-bg.jpg") 0 0 / 600px;
+    }
+    button, input, textarea, select { font: inherit; }
+    button { color: inherit; }
+    a { color: inherit; }
+    :focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; }
+    .wrap { width: min(calc(100% - 48px), var(--max)); margin-inline: auto; }
+    h1, h2, h3 { margin: 0; font-family: var(--serif); font-weight: 500; letter-spacing: -.04em; line-height: 1.08; text-wrap: balance; }
+    h1 { max-width: 850px; font-size: clamp(3.2rem, 7.5vw, 6.7rem); }
+    h2 { font-size: clamp(2.2rem, 4.8vw, 4.15rem); }
+    h3 { font-size: clamp(1.25rem, 2.4vw, 1.75rem); }
+    p { margin: 0; text-wrap: pretty; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 18px;
+      color: var(--sage-dark);
+      font-size: .74rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { width: 25px; height: 1px; background: currentColor; content: ""; }
+    .on-dark .eyebrow, .hero .eyebrow { color: var(--sun); }
+    .button {
+      min-height: 50px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 12px 24px;
+      background: var(--sun);
+      color: var(--ink);
+      font-weight: 700;
+      font-size: .91rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+    .button:hover { transform: translateY(-2px); background: var(--sun-hover); box-shadow: 0 7px 0 rgba(0,0,0,.10); }
+    .button.secondary { border-color: var(--line); background: transparent; box-shadow: none; }
+    .button.secondary:hover { background: rgba(255,255,255,.58); }
+    .button.dark { background: var(--ink); color: var(--white); }
+    .button.dark:hover { background: var(--forest-2); }
+    .button.small { min-height: 42px; padding: 9px 17px; font-size: .82rem; }
+    .button:disabled { opacity: .46; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    nav { position: absolute; z-index: 5; width: 100%; padding: 26px 0; color: var(--white); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .wordmark { font-family: var(--serif); font-size: 1.24rem; text-decoration: none; }
+    .nav-back { color: rgba(252,253,251,.78); font-size: .82rem; font-weight: 600; text-decoration: none; }
+    .nav-back:hover { color: var(--white); }
+
+    .hero { position: relative; min-height: min(760px, 92svh); display: flex; align-items: end; overflow: hidden; padding: 145px 0 74px; background: var(--forest); color: var(--white); }
+    .hero::before { position: absolute; inset: 0; opacity: .32; content: ""; background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,.18) 1px, transparent 0); background-size: 32px 32px; }
+    .hero::after { position: absolute; top: -31vw; right: -13vw; width: min(68vw, 820px); aspect-ratio: 1; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; box-shadow: 0 0 0 9vw rgba(255,255,255,.025), 0 0 0 18vw rgba(255,255,255,.016); content: ""; }
+    .hero .wrap { position: relative; z-index: 1; }
+    .hero h1 em { color: #f6cf6b; font-style: italic; }
+    .hero-bottom { display: grid; grid-template-columns: 1.15fr .85fr; gap: 55px; align-items: end; margin-top: 39px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.24); }
+    .hero .lead { max-width: 690px; color: rgba(252,253,251,.84); font-size: clamp(1.06rem, 1.65vw, 1.28rem); }
+    .hero-note { max-width: 365px; justify-self: end; color: rgba(252,253,251,.65); font-size: .84rem; }
+
+    .source-strip { background: var(--sun); }
+    .source-strip .wrap { display: flex; align-items: center; justify-content: space-between; gap: 26px; padding-block: 17px; }
+    .source-strip p { font-size: .84rem; font-weight: 600; }
+    .source-strip a { white-space: nowrap; font-size: .79rem; font-weight: 700; }
+
+    .exercise { padding: clamp(70px, 9vw, 110px) 0 120px; }
+    .exercise-head { display: grid; grid-template-columns: .76fr 1.24fr; gap: clamp(38px, 9vw, 120px); align-items: end; margin-bottom: 45px; }
+    .exercise-head .intro { max-width: 650px; color: var(--soft); }
+    .exercise-head .intro strong { color: var(--ink); }
+
+    .app-shell { overflow: hidden; border: 1px solid var(--line); border-radius: 28px; background: rgba(252,253,251,.76); box-shadow: var(--shadow); }
+    .progress { display: grid; grid-template-columns: repeat(5, 1fr); background: var(--forest); color: var(--white); }
+    .progress button { position: relative; min-height: 78px; display: flex; align-items: center; gap: 11px; border: 0; border-right: 1px solid rgba(255,255,255,.13); padding: 16px 18px; background: transparent; color: rgba(255,255,255,.56); text-align: left; cursor: pointer; }
+    .progress button:last-child { border-right: 0; }
+    .progress button:hover { background: rgba(255,255,255,.05); }
+    .progress button.active { color: var(--white); background: rgba(255,255,255,.09); }
+    .progress button.done { color: rgba(255,255,255,.84); }
+    .progress .step-no { flex: 0 0 28px; width: 28px; height: 28px; display: grid; place-items: center; border: 1px solid currentColor; border-radius: 50%; font-size: .72rem; font-weight: 700; }
+    .progress .step-label { font-size: .78rem; font-weight: 700; letter-spacing: .03em; }
+
+    .panel { display: none; padding: clamp(27px, 5vw, 58px); }
+    .panel.active { display: block; animation: rise .28s ease both; }
+    @keyframes rise { from { opacity: 0; transform: translateY(8px); } }
+    .panel-head { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: end; padding-bottom: 31px; border-bottom: 1px solid var(--line); }
+    .panel-head p:last-child { max-width: 430px; color: var(--soft); font-size: .94rem; }
+    .panel h2 { font-size: clamp(2.25rem, 4.8vw, 3.75rem); }
+    .helper { color: var(--soft); font-size: .87rem; }
+    .saved { display: inline-flex; align-items: center; gap: 7px; color: var(--sage-dark); font-size: .76rem; font-weight: 700; }
+    .saved::before { width: 7px; height: 7px; border-radius: 50%; background: #4d8b61; content: ""; }
+
+    .rank-list { display: grid; gap: 10px; margin-top: 28px; }
+    .rank-card { display: grid; grid-template-columns: 45px 42px 1fr auto; gap: 14px; align-items: center; min-height: 78px; border: 1px solid var(--line); border-radius: 16px; padding: 11px 13px; background: var(--paper-2); transition: border .18s, transform .18s, box-shadow .18s; }
+    .rank-card.dragging { opacity: .48; }
+    .rank-card.drag-over { border-color: var(--sage-dark); transform: translateY(2px); box-shadow: 0 6px 0 rgba(54,95,89,.14); }
+    .rank-number { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: var(--forest); color: var(--white); font-family: var(--serif); font-size: 1.16rem; }
+    .drag-handle { border: 0; padding: 8px; background: transparent; color: var(--sage-dark); font-size: 1.15rem; cursor: grab; touch-action: none; }
+    .rank-name { font-weight: 700; }
+    .rank-desc { margin-top: 2px; color: var(--soft); font-size: .78rem; }
+    .custom-tag { display: inline-block; margin-left: 7px; border-radius: 99px; padding: 2px 7px; background: var(--sage); color: var(--ink); font-size: .62rem; font-weight: 700; text-transform: uppercase; }
+    .rank-actions { display: flex; gap: 5px; }
+    .icon-btn { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: transparent; cursor: pointer; }
+    .icon-btn:hover { background: white; }
+    .icon-btn:disabled { opacity: .25; cursor: not-allowed; }
+    .remove-btn { color: var(--danger); }
+    .add-priority { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 17px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .field, textarea, select { width: 100%; border: 1px solid var(--line); border-radius: 12px; padding: 13px 14px; background: rgba(255,255,255,.66); color: var(--ink); }
+    textarea { min-height: 105px; resize: vertical; }
+    .field::placeholder, textarea::placeholder { color: #7a8985; }
+    .field-label { display: block; margin-bottom: 8px; color: var(--soft); font-size: .74rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+
+    .attention-list { display: grid; gap: 12px; margin-top: 28px; }
+    .attention-card { display: grid; grid-template-columns: 48px minmax(160px, .8fr) 1.2fr 48px; gap: 16px; align-items: center; border: 1px solid var(--line); border-radius: 15px; padding: 16px; background: var(--paper-2); }
+    .attention-card.muted-row { display: none; }
+    .attention-rank { color: var(--sage-dark); font-size: .74rem; font-weight: 700; letter-spacing: .08em; }
+    .attention-name { font-weight: 700; }
+    .attention-value { text-align: right; font-family: var(--serif); font-size: 1.35rem; }
+    input[type="range"] { width: 100%; accent-color: var(--forest); }
+    .reality-controls { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 14px; }
+    .insight { margin-top: 25px; border-left: 4px solid var(--sun); border-radius: 0 14px 14px 0; padding: 19px 21px; background: #f8eccb; }
+    .insight strong { display: block; margin-bottom: 4px; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 29px; }
+    .field-group.full { grid-column: 1 / -1; }
+    .trade-equation { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr auto 1fr; gap: 13px; align-items: end; border-radius: 18px; padding: 22px; background: var(--forest); color: var(--white); }
+    .trade-equation .field-label { color: rgba(255,255,255,.65); }
+    .trade-equation select { border-color: rgba(255,255,255,.22); background: var(--forest-2); color: var(--white); }
+    .trade-arrow { padding-bottom: 12px; color: var(--sun); font-size: 1.35rem; font-weight: 700; }
+
+    .combo-box { margin-top: 28px; border-radius: 21px; padding: clamp(22px, 4vw, 34px); background: var(--forest); color: var(--white); }
+    .combo-box p { max-width: 720px; color: rgba(255,255,255,.72); }
+    .combo-box textarea { margin-top: 20px; border-color: rgba(255,255,255,.22); background: var(--forest-2); color: var(--white); }
+    .combo-box textarea::placeholder { color: rgba(255,255,255,.5); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 17px; }
+    .chip input { position: absolute; opacity: 0; pointer-events: none; }
+    .chip span { display: inline-flex; min-height: 37px; align-items: center; border: 1px solid rgba(255,255,255,.28); border-radius: 999px; padding: 7px 13px; color: rgba(255,255,255,.75); font-size: .78rem; font-weight: 600; cursor: pointer; }
+    .chip input:checked + span { border-color: var(--sun); background: var(--sun); color: var(--ink); }
+    .chip input:focus-visible + span { outline: 3px solid var(--sun); outline-offset: 3px; }
+    .combo-feedback { min-height: 24px; margin-top: 13px; color: #f6cf6b; font-size: .82rem; font-weight: 600; }
+    .identity-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 22px; }
+
+    .summary-sheet { margin-top: 27px; overflow: hidden; border: 1px solid var(--line); border-radius: 22px; background: var(--white); }
+    .summary-top { padding: clamp(25px, 5vw, 46px); background: var(--forest); color: var(--white); }
+    .summary-top .eyebrow { margin-bottom: 12px; }
+    .summary-title { max-width: 760px; font-family: var(--serif); font-size: clamp(2.3rem, 5vw, 4rem); letter-spacing: -.045em; line-height: 1.06; }
+    .summary-meta { margin-top: 15px; color: rgba(255,255,255,.66); font-size: .84rem; }
+    .summary-body { display: grid; grid-template-columns: 1.04fr .96fr; }
+    .summary-col { padding: clamp(24px, 4vw, 38px); }
+    .summary-col + .summary-col { border-left: 1px solid var(--line); }
+    .summary-label { margin-bottom: 15px; color: var(--sage-dark); font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .summary-list { display: grid; gap: 8px; counter-reset: pri; }
+    .summary-item { counter-increment: pri; display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+    .summary-item::before { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--paper); content: counter(pri); font-family: var(--serif); font-size: .83rem; }
+    .summary-item strong { font-size: .88rem; }
+    .attention-pill { border-radius: 999px; padding: 3px 8px; background: var(--paper); color: var(--soft); font-size: .65rem; white-space: nowrap; }
+    .summary-block + .summary-block { margin-top: 27px; }
+    .summary-block p { color: var(--soft); font-size: .9rem; white-space: pre-wrap; }
+    .summary-block strong { color: var(--ink); }
+    .summary-quote { padding: 24px clamp(24px, 4vw, 38px); border-top: 1px solid var(--line); background: #f8eccb; font-family: var(--serif); font-size: clamp(1.15rem, 2.2vw, 1.55rem); font-style: italic; }
+    .summary-quote small { display: block; margin-top: 8px; color: var(--soft); font: 600 .69rem var(--sans); letter-spacing: .08em; text-transform: uppercase; }
+    .export-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 22px; }
+
+    .panel-nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 33px; padding-top: 24px; border-top: 1px solid var(--line); }
+    .panel-nav .right { display: flex; gap: 9px; margin-left: auto; }
+    .text-button { border: 0; padding: 7px 0; background: transparent; color: var(--soft); font-size: .79rem; font-weight: 700; text-decoration: underline; cursor: pointer; }
+    .toast { position: fixed; z-index: 20; right: 20px; bottom: 20px; max-width: min(360px, calc(100% - 40px)); transform: translateY(20px); border-radius: 12px; padding: 13px 16px; background: var(--ink); color: var(--white); font-size: .82rem; opacity: 0; pointer-events: none; transition: .25s ease; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    .quotes { padding: clamp(80px, 10vw, 120px) 0; background: var(--forest); color: var(--white); }
+    .quotes-head { display: grid; grid-template-columns: .9fr 1.1fr; gap: 70px; align-items: end; }
+    .quotes-head p:last-child { max-width: 510px; color: rgba(255,255,255,.68); }
+    .quote-grid { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 50px; border-top: 1px solid rgba(255,255,255,.2); }
+    .quote-card { min-height: 255px; display: flex; flex-direction: column; padding: 27px 26px 24px 0; border-right: 1px solid rgba(255,255,255,.2); }
+    .quote-card + .quote-card { padding-left: 26px; }
+    .quote-card:last-child { border-right: 0; }
+    .quote-card blockquote { margin: auto 0 22px; font-family: var(--serif); font-size: clamp(1.25rem, 2vw, 1.65rem); line-height: 1.3; }
+    .quote-card a { color: #f6cf6b; font-size: .72rem; font-weight: 700; }
+
+    footer { padding: 26px 0; border-top: 1px solid var(--line); color: var(--soft); font-size: .75rem; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 18px; }
+
+    .print-only { display: none; }
+    noscript { display: block; margin: 25px; border: 2px solid var(--sun); border-radius: 14px; padding: 20px; background: white; }
+
+    @media (max-width: 900px) {
+      .hero-bottom, .exercise-head, .panel-head, .quotes-head { grid-template-columns: 1fr; gap: 23px; }
+      .hero-note { justify-self: start; }
+      .progress { grid-template-columns: repeat(5, minmax(58px, 1fr)); overflow-x: auto; }
+      .progress button { min-height: 66px; justify-content: center; padding: 11px 8px; }
+      .progress .step-label { display: none; }
+      .progress .step-no { flex-basis: 30px; width: 30px; height: 30px; }
+      .summary-body { grid-template-columns: 1fr; }
+      .summary-col + .summary-col { border-top: 1px solid var(--line); border-left: 0; }
+      .quote-grid { grid-template-columns: 1fr; }
+      .quote-card, .quote-card + .quote-card { min-height: 0; padding: 28px 0; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.2); }
+      .quote-card:last-child { border-bottom: 0; }
+      .quote-card blockquote { margin: 15px 0 16px; }
+    }
+    @media (max-width: 680px) {
+      body { font-size: 16px; }
+      .wrap { width: min(calc(100% - 30px), var(--max)); }
+      nav { padding-top: 19px; }
+      .nav-back { display: none; }
+      .hero { min-height: 680px; padding-top: 125px; }
+      h1 { font-size: clamp(3.05rem, 15vw, 4.25rem); }
+      .source-strip .wrap { align-items: flex-start; flex-direction: column; gap: 4px; }
+      .app-shell { border-radius: 20px; }
+      .panel { padding: 25px 16px 27px; }
+      .rank-card { grid-template-columns: 36px 34px 1fr; gap: 8px; padding: 10px 8px; }
+      .rank-number { width: 34px; height: 34px; font-size: .96rem; }
+      .rank-desc { display: none; }
+      .rank-actions { grid-column: 3; justify-self: end; margin-top: -3px; }
+      .icon-btn { width: 32px; height: 32px; }
+      .add-priority { grid-template-columns: 1fr; }
+      .attention-card { grid-template-columns: 36px 1fr 46px; gap: 10px; }
+      .attention-card input { grid-column: 2 / -1; }
+      .form-grid, .identity-row { grid-template-columns: 1fr; }
+      .trade-equation { grid-template-columns: 1fr; }
+      .trade-arrow { padding: 0; transform: rotate(90deg); justify-self: center; }
+      .field-group.full { grid-column: auto; }
+      .panel-nav { align-items: stretch; flex-direction: column; }
+      .panel-nav .right { width: 100%; margin-left: 0; }
+      .panel-nav .right .button { flex: 1; }
+      .export-actions .button { flex: 1 1 140px; }
+      footer .wrap { flex-direction: column; gap: 4px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+
+    @media print {
+      @page { size: A4; margin: 12mm; }
+      body { background: white !important; color: #18302d; font-size: 10pt; }
+      body::before, nav, .hero, .source-strip, .exercise-head, .progress, .panel:not([data-panel="5"]), .panel[data-panel="5"] > .panel-head, .panel-nav, .export-actions, .quotes, footer, .toast { display: none !important; }
+      .exercise, .wrap, .app-shell, .panel[data-panel="5"] { display: block !important; width: 100% !important; max-width: none !important; margin: 0 !important; padding: 0 !important; border: 0 !important; box-shadow: none !important; background: white !important; }
+      .summary-sheet { margin: 0; border: 1px solid #cfd9d4; border-radius: 12px; }
+      .summary-top { padding: 22px 25px; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .summary-title { font-size: 28pt; }
+      .summary-body { display: grid; grid-template-columns: 1fr 1fr; }
+      .summary-col { padding: 21px; }
+      .summary-col + .summary-col { border-top: 0; border-left: 1px solid #d7ded9; }
+      .summary-quote { padding: 18px 21px; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .attention-pill, .summary-item::before { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <nav aria-label="Main navigation">
+    <div class="wrap">
+      <a class="wordmark" href="/">Jan Trautwein</a>
+      <a class="nav-back" href="/">Back to the main site</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">A 10-minute life exercise</p>
+      <h1>What comes <em>first?</em></h1>
+      <div class="hero-bottom">
+        <p class="lead">You cannot give everything first place. Put the ten areas of life in your order, notice where your time disagrees, and choose the trade you are willing to make.</p>
+        <p class="hero-note">Inspired by Alex Hormozi’s reflections on commitment, choice and the fact that every yes quietly contains a no.</p>
+      </div>
+    </div>
+  </header>
+
+  <aside class="source-strip">
+    <div class="wrap">
+      <p>“Only one thing can come first.”</p>
+      <a href="https://www.youtube.com/watch?v=OHu1FY1R-x0&t=245s" target="_blank" rel="noopener">Watch the source ↗</a>
+    </div>
+  </aside>
+
+  <main>
+    <section class="exercise" id="exercise">
+      <div class="wrap">
+        <div class="exercise-head">
+          <div>
+            <p class="eyebrow">Choose your season</p>
+            <h2>Build a life you chose.</h2>
+          </div>
+          <p class="intro">This is not a scorecard for a “balanced” life. <strong>Your order can change.</strong> The point is to decide consciously, rather than letting expired options and other people’s preferences decide for you.</p>
+        </div>
+
+        <div class="app-shell" id="priorityApp">
+          <div class="progress" aria-label="Exercise progress">
+            <button type="button" class="active" data-go="1"><span class="step-no">1</span><span class="step-label">Order</span></button>
+            <button type="button" data-go="2"><span class="step-no">2</span><span class="step-label">Reality</span></button>
+            <button type="button" data-go="3"><span class="step-no">3</span><span class="step-label">Trade</span></button>
+            <button type="button" data-go="4"><span class="step-no">4</span><span class="step-label">Combine</span></button>
+            <button type="button" data-go="5"><span class="step-no">5</span><span class="step-label">Keep</span></button>
+          </div>
+
+          <section class="panel active" data-panel="1">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Step one</p>
+                <h2>Put them in your order.</h2>
+              </div>
+              <p>Drag the cards, or use the arrow buttons. Do not rank what sounds admirable. Rank what you genuinely want to make important in this season.</p>
+            </div>
+            <div class="rank-list" id="rankList" aria-live="polite"></div>
+            <div class="add-priority">
+              <input class="field" id="customPriority" maxlength="60" placeholder="Something missing? Add your own priority">
+              <button class="button small secondary" type="button" id="addPriority">Add priority</button>
+            </div>
+            <div class="panel-nav">
+              <span class="saved">Saved on this device</span>
+              <div class="right"><button class="button" type="button" data-next="2">Next: reality check →</button></div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="2">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Step two</p>
+                <h2>Does your life agree?</h2>
+              </div>
+              <p>For each area, estimate the attention it actually receives now. Think time, energy, care and money, not just good intentions.</p>
+            </div>
+            <div class="attention-list" id="attentionList"></div>
+            <div class="reality-controls">
+              <button class="text-button" type="button" id="toggleAll">Show all priorities</button>
+              <span class="helper">0 = almost none · 10 = a great deal</span>
+            </div>
+            <div class="insight" id="alignmentInsight"></div>
+            <div class="panel-nav">
+              <button class="button secondary" type="button" data-back="1">← Back</button>
+              <div class="right"><button class="button" type="button" data-next="3">Next: name the trade →</button></div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="3">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Step three</p>
+                <h2>Make the trade visible.</h2>
+              </div>
+              <p>Every added hour comes from somewhere. A clean trade is kinder than a vague promise to somehow do more of everything.</p>
+            </div>
+            <div class="form-grid">
+              <div class="trade-equation">
+                <div>
+                  <label class="field-label" for="giveMore">I will give more to</label>
+                  <select id="giveMore"></select>
+                </div>
+                <div class="trade-arrow" aria-hidden="true">←</div>
+                <div>
+                  <label class="field-label" for="giveLess">By taking a little from</label>
+                  <select id="giveLess"></select>
+                </div>
+              </div>
+              <div class="field-group full">
+                <label class="field-label" for="acceptedTrade">What trade-off are you consciously accepting?</label>
+                <textarea id="acceptedTrade" placeholder="Example: For this season, I accept slower career growth in exchange for being more present with my family."></textarea>
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="chosenRegret">What might you regret, and why is this still your choice?</label>
+                <textarea id="chosenRegret" placeholder="Name the cost without turning it into a reason to avoid choosing."></textarea>
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="nextMove">What will you do in the next seven days?</label>
+                <textarea id="nextMove" placeholder="One small, scheduled move that makes the new order real."></textarea>
+              </div>
+            </div>
+            <div class="panel-nav">
+              <button class="button secondary" type="button" data-back="2">← Back</button>
+              <div class="right"><button class="button" type="button" data-next="4">Next: check more boxes →</button></div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="4">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Step four</p>
+                <h2>Find the richer move.</h2>
+              </div>
+              <p>Alex’s practical idea: look for actions that serve several priorities at once. Not as a trick to have it all, but as intelligent design.</p>
+            </div>
+            <div class="combo-box">
+              <h3>One action, several boxes</h3>
+              <p>Describe an activity that could nourish two or more of your priorities, then choose the areas it serves.</p>
+              <textarea id="comboAction" placeholder="Example: A weekly hike with my partner and two close friends."></textarea>
+              <div class="chips" id="comboChips"></div>
+              <div class="combo-feedback" id="comboFeedback">Choose at least two areas.</div>
+            </div>
+            <div class="identity-row">
+              <div>
+                <label class="field-label" for="personName">Your name (optional)</label>
+                <input class="field" id="personName" maxlength="70" placeholder="For the exported page">
+              </div>
+              <div>
+                <label class="field-label" for="seasonName">Name this season (optional)</label>
+                <input class="field" id="seasonName" maxlength="80" placeholder="Example: The season of homecoming">
+              </div>
+            </div>
+            <div class="panel-nav">
+              <button class="button secondary" type="button" data-back="3">← Back</button>
+              <div class="right"><button class="button" type="button" data-next="5">See my priorities →</button></div>
+            </div>
+          </section>
+
+          <section class="panel" data-panel="5">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Step five</p>
+                <h2>Keep the choice close.</h2>
+              </div>
+              <p>Download this as an image, share it from your phone, or print it as a PDF. Revisit the order when your season changes.</p>
+            </div>
+            <div class="summary-sheet" id="summarySheet">
+              <div class="summary-top">
+                <p class="eyebrow">My priorities</p>
+                <div class="summary-title" id="summaryTitle">What comes first for me.</div>
+                <p class="summary-meta" id="summaryMeta"></p>
+              </div>
+              <div class="summary-body">
+                <div class="summary-col">
+                  <div class="summary-label">In order</div>
+                  <div class="summary-list" id="summaryList"></div>
+                </div>
+                <div class="summary-col">
+                  <div class="summary-block">
+                    <div class="summary-label">The trade I choose</div>
+                    <p id="summaryTrade"></p>
+                  </div>
+                  <div class="summary-block">
+                    <div class="summary-label">The cost I accept</div>
+                    <p id="summaryRegret"></p>
+                  </div>
+                  <div class="summary-block">
+                    <div class="summary-label">My next seven days</div>
+                    <p id="summaryMove"></p>
+                  </div>
+                  <div class="summary-block">
+                    <div class="summary-label">One action, several boxes</div>
+                    <p id="summaryCombo"></p>
+                  </div>
+                </div>
+              </div>
+              <div class="summary-quote">“You get to pick your regrets, or they will be chosen for you.”<small>Alex Hormozi · 5:11</small></div>
+            </div>
+            <div class="export-actions">
+              <button class="button" type="button" id="shareImage">Share image</button>
+              <button class="button secondary" type="button" id="downloadImage">Download image</button>
+              <button class="button secondary" type="button" id="printPdf">Save as PDF</button>
+            </div>
+            <div class="panel-nav">
+              <button class="button secondary" type="button" data-back="4">← Back</button>
+              <div class="right"><button class="text-button" type="button" id="resetExercise">Start over</button></div>
+            </div>
+          </section>
+        </div>
+
+        <noscript>
+          <strong>This exercise needs JavaScript for reordering and export.</strong>
+          <p>You can still do it on paper. Rank: community, romance or partner, parenting, family, recreation, friends, career, physical health, spiritual health and personal growth. Then write what gets more, what gets less, and one move for the next seven days.</p>
+        </noscript>
+      </div>
+    </section>
+
+    <section class="quotes on-dark">
+      <div class="wrap">
+        <div class="quotes-head">
+          <div>
+            <p class="eyebrow">From the source</p>
+            <h2>Three reminders for when choosing gets uncomfortable.</h2>
+          </div>
+          <p>The point is not to copy Alex’s priorities. It is to stop pretending there is a choice without a cost, and to make the choice yours.</p>
+        </div>
+        <div class="quote-grid">
+          <article class="quote-card">
+            <span class="eyebrow">Choice</span>
+            <blockquote>“You must make trades.”</blockquote>
+            <a href="https://www.youtube.com/watch?v=OHu1FY1R-x0&t=403s" target="_blank" rel="noopener">6:43 in the video ↗</a>
+          </article>
+          <article class="quote-card">
+            <span class="eyebrow">Time</span>
+            <blockquote>“We have a zero-sum life when it comes to time.”</blockquote>
+            <a href="https://www.youtube.com/watch?v=OHu1FY1R-x0&t=341s" target="_blank" rel="noopener">5:41 in the video ↗</a>
+          </article>
+          <article class="quote-card">
+            <span class="eyebrow">Design</span>
+            <blockquote>“Try to do things that check multiple boxes.”</blockquote>
+            <a href="https://www.youtube.com/watch?v=OHu1FY1R-x0&t=497s" target="_blank" rel="noopener">8:17 in the video ↗</a>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>© Jan Trautwein</span>
+      <span>Inspired by Alex Hormozi. Exercise and wording adapted by Jan Trautwein.</span>
+    </div>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      const STORAGE_KEY = 'jan-priorities-v1';
+      const defaults = [
+        { id: 'community', name: 'Community', desc: 'Contributing, belonging and giving back', attention: 5 },
+        { id: 'romance', name: 'Romance / partner', desc: 'Your intimate relationship or marriage', attention: 5 },
+        { id: 'parenting', name: 'Parenting', desc: 'Being present for and raising your children', attention: 5 },
+        { id: 'family', name: 'Family', desc: 'Parents, siblings, cousins and extended family', attention: 5 },
+        { id: 'recreation', name: 'Recreation', desc: 'Rest, play, fun and relaxation', attention: 5 },
+        { id: 'friends', name: 'Friends', desc: 'Friendship, companionship and shared time', attention: 5 },
+        { id: 'career', name: 'Career', desc: 'Work, craft and professional aspiration', attention: 5 },
+        { id: 'physical', name: 'Physical health', desc: 'Strength, energy, movement and wellbeing', attention: 5 },
+        { id: 'spiritual', name: 'Spiritual health', desc: 'Faith, presence, meaning and inner life', attention: 5 },
+        { id: 'growth', name: 'Personal growth', desc: 'Learning, development and self-knowledge', attention: 5 }
+      ];
+      const emptyState = {
+        items: defaults,
+        giveMore: 'community',
+        giveLess: 'career',
+        acceptedTrade: '',
+        chosenRegret: '',
+        nextMove: '',
+        comboAction: '',
+        comboIds: [],
+        personName: '',
+        seasonName: '',
+        step: 1,
+        showAll: false
+      };
+      let state = loadState();
+      let dragId = null;
+      let touchDragId = null;
+      let toastTimer;
+
+      const $ = (sel, root = document) => root.querySelector(sel);
+      const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+      const escapeHTML = (value = '') => value.replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[char]));
+      const itemById = id => state.items.find(item => item.id === id);
+      const itemName = id => itemById(id)?.name || 'Not chosen';
+
+      function loadState() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+          if (!saved || !Array.isArray(saved.items)) return structuredClone(emptyState);
+          const mergedItems = saved.items.map(item => ({ ...item, attention: Number.isFinite(+item.attention) ? +item.attention : 5 }));
+          return { ...structuredClone(emptyState), ...saved, items: mergedItems, step: Math.min(5, Math.max(1, +saved.step || 1)) };
+        } catch (_) {
+          return structuredClone(emptyState);
+        }
+      }
+
+      function saveState() {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      function toast(message) {
+        const el = $('#toast');
+        el.textContent = message;
+        el.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
+      }
+
+      function moveItem(id, direction) {
+        const index = state.items.findIndex(item => item.id === id);
+        const next = index + direction;
+        if (index < 0 || next < 0 || next >= state.items.length) return;
+        [state.items[index], state.items[next]] = [state.items[next], state.items[index]];
+        saveState();
+        renderAll();
+      }
+
+      function reorderItem(fromId, toId) {
+        if (!fromId || fromId === toId) return;
+        const from = state.items.findIndex(item => item.id === fromId);
+        const to = state.items.findIndex(item => item.id === toId);
+        if (from < 0 || to < 0) return;
+        const [moved] = state.items.splice(from, 1);
+        state.items.splice(to, 0, moved);
+        saveState();
+        renderAll();
+      }
+
+      function renderRankList() {
+        const list = $('#rankList');
+        list.innerHTML = state.items.map((item, index) => `
+          <article class="rank-card" draggable="true" data-id="${escapeHTML(item.id)}">
+            <div class="rank-number" aria-label="Priority ${index + 1}">${index + 1}</div>
+            <button class="drag-handle" type="button" aria-label="Drag ${escapeHTML(item.name)} to reorder" title="Drag to reorder">⠿</button>
+            <div>
+              <div class="rank-name">${escapeHTML(item.name)}${item.custom ? '<span class="custom-tag">Yours</span>' : ''}</div>
+              <div class="rank-desc">${escapeHTML(item.desc || 'A priority you added')}</div>
+            </div>
+            <div class="rank-actions">
+              <button class="icon-btn" type="button" data-up="${escapeHTML(item.id)}" aria-label="Move ${escapeHTML(item.name)} up" ${index === 0 ? 'disabled' : ''}>↑</button>
+              <button class="icon-btn" type="button" data-down="${escapeHTML(item.id)}" aria-label="Move ${escapeHTML(item.name)} down" ${index === state.items.length - 1 ? 'disabled' : ''}>↓</button>
+              ${item.custom ? `<button class="icon-btn remove-btn" type="button" data-remove="${escapeHTML(item.id)}" aria-label="Remove ${escapeHTML(item.name)}">×</button>` : ''}
+            </div>
+          </article>`).join('');
+
+        $$('[data-up]', list).forEach(btn => btn.addEventListener('click', () => moveItem(btn.dataset.up, -1)));
+        $$('[data-down]', list).forEach(btn => btn.addEventListener('click', () => moveItem(btn.dataset.down, 1)));
+        $$('[data-remove]', list).forEach(btn => btn.addEventListener('click', () => {
+          const id = btn.dataset.remove;
+          state.items = state.items.filter(item => item.id !== id);
+          state.comboIds = state.comboIds.filter(itemId => itemId !== id);
+          if (state.giveMore === id) state.giveMore = state.items[0]?.id || '';
+          if (state.giveLess === id) state.giveLess = state.items[1]?.id || state.items[0]?.id || '';
+          saveState();
+          renderAll();
+        }));
+
+        $$('.rank-card', list).forEach(card => {
+          card.addEventListener('dragstart', event => {
+            dragId = card.dataset.id;
+            event.dataTransfer.effectAllowed = 'move';
+            event.dataTransfer.setData('text/plain', dragId);
+            requestAnimationFrame(() => card.classList.add('dragging'));
+          });
+          card.addEventListener('dragend', () => {
+            dragId = null;
+            $$('.rank-card').forEach(el => el.classList.remove('dragging', 'drag-over'));
+          });
+          card.addEventListener('dragover', event => { event.preventDefault(); card.classList.add('drag-over'); });
+          card.addEventListener('dragleave', () => card.classList.remove('drag-over'));
+          card.addEventListener('drop', event => {
+            event.preventDefault();
+            card.classList.remove('drag-over');
+            reorderItem(event.dataTransfer.getData('text/plain') || dragId, card.dataset.id);
+          });
+        });
+
+        $$('.drag-handle', list).forEach(handle => {
+          handle.addEventListener('pointerdown', event => {
+            if (event.pointerType === 'mouse') return;
+            touchDragId = handle.closest('.rank-card').dataset.id;
+            handle.setPointerCapture?.(event.pointerId);
+          });
+          handle.addEventListener('pointermove', event => {
+            if (!touchDragId) return;
+            event.preventDefault();
+            const target = document.elementFromPoint(event.clientX, event.clientY)?.closest('.rank-card');
+            $$('.rank-card').forEach(el => el.classList.toggle('drag-over', el === target));
+          });
+          handle.addEventListener('pointerup', event => {
+            if (!touchDragId) return;
+            const target = document.elementFromPoint(event.clientX, event.clientY)?.closest('.rank-card');
+            if (target) reorderItem(touchDragId, target.dataset.id);
+            touchDragId = null;
+            $$('.rank-card').forEach(el => el.classList.remove('drag-over'));
+          });
+          handle.addEventListener('pointercancel', () => { touchDragId = null; });
+        });
+      }
+
+      function renderAttention() {
+        const list = $('#attentionList');
+        list.innerHTML = state.items.map((item, index) => `
+          <div class="attention-card ${!state.showAll && index >= 5 ? 'muted-row' : ''}">
+            <div class="attention-rank">#${index + 1}</div>
+            <div class="attention-name">${escapeHTML(item.name)}</div>
+            <input type="range" min="0" max="10" step="1" value="${item.attention}" data-attention="${escapeHTML(item.id)}" aria-label="Current attention for ${escapeHTML(item.name)}">
+            <div class="attention-value" data-value="${escapeHTML(item.id)}">${item.attention}</div>
+          </div>`).join('');
+        $$('[data-attention]', list).forEach(input => input.addEventListener('input', () => {
+          const item = itemById(input.dataset.attention);
+          item.attention = +input.value;
+          $(`[data-value="${CSS.escape(item.id)}"]`).textContent = input.value;
+          saveState();
+          renderAlignment();
+          renderSummary();
+        }));
+        $('#toggleAll').textContent = state.showAll ? 'Show only top five' : `Show all ${state.items.length} priorities`;
+        renderAlignment();
+      }
+
+      function renderAlignment() {
+        const top = state.items.slice(0, Math.min(3, state.items.length));
+        if (!top.length) return;
+        const neglected = [...top].sort((a, b) => a.attention - b.attention)[0];
+        const overfed = state.items.slice(3).sort((a, b) => b.attention - a.attention)[0];
+        let body = `<strong>Your clearest question</strong> Your #${state.items.indexOf(neglected) + 1} priority, ${escapeHTML(neglected.name)}, currently gets ${neglected.attention}/10 attention.`;
+        if (overfed && overfed.attention > neglected.attention) body += ` Meanwhile ${escapeHTML(overfed.name)} gets ${overfed.attention}/10. Is that a conscious trade, or drift?`;
+        else body += ' Does that reflect your real life, or only your stated intention?';
+        $('#alignmentInsight').innerHTML = body;
+      }
+
+      function renderSelects() {
+        const options = state.items.map(item => `<option value="${escapeHTML(item.id)}">${escapeHTML(item.name)}</option>`).join('');
+        const more = $('#giveMore');
+        const less = $('#giveLess');
+        more.innerHTML = options;
+        less.innerHTML = options;
+        if (!itemById(state.giveMore)) state.giveMore = state.items[0]?.id || '';
+        if (!itemById(state.giveLess)) state.giveLess = state.items[1]?.id || state.items[0]?.id || '';
+        more.value = state.giveMore;
+        less.value = state.giveLess;
+      }
+
+      function renderChips() {
+        $('#comboChips').innerHTML = state.items.map(item => `
+          <label class="chip">
+            <input type="checkbox" value="${escapeHTML(item.id)}" ${state.comboIds.includes(item.id) ? 'checked' : ''}>
+            <span>${escapeHTML(item.name)}</span>
+          </label>`).join('');
+        $$('#comboChips input').forEach(input => input.addEventListener('change', () => {
+          state.comboIds = $$('#comboChips input:checked').map(el => el.value);
+          saveState();
+          renderComboFeedback();
+          renderSummary();
+        }));
+        renderComboFeedback();
+      }
+
+      function renderComboFeedback() {
+        const count = state.comboIds.length;
+        $('#comboFeedback').textContent = count < 2 ? 'Choose at least two areas.' : `${count} boxes from one action. That is a richer move.`;
+      }
+
+      function renderSummary() {
+        const name = state.personName.trim();
+        const season = state.seasonName.trim();
+        $('#summaryTitle').textContent = season || (name ? `What comes first for ${name}.` : 'What comes first for me.');
+        const date = new Intl.DateTimeFormat('en', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
+        $('#summaryMeta').textContent = [name && season ? name : '', date].filter(Boolean).join(' · ');
+        $('#summaryList').innerHTML = state.items.map(item => `
+          <div class="summary-item"><strong>${escapeHTML(item.name)}</strong><span class="attention-pill">attention ${item.attention}/10</span></div>`).join('');
+        const autoTrade = state.giveMore && state.giveLess ? `More ${itemName(state.giveMore)}. A little less ${itemName(state.giveLess)}.` : '';
+        $('#summaryTrade').textContent = state.acceptedTrade.trim() || autoTrade || 'Not written yet.';
+        $('#summaryRegret').textContent = state.chosenRegret.trim() || 'Not written yet.';
+        $('#summaryMove').textContent = state.nextMove.trim() || 'Not written yet.';
+        const comboNames = state.comboIds.map(itemName).join(' + ');
+        $('#summaryCombo').textContent = state.comboAction.trim() ? `${state.comboAction.trim()}${comboNames ? ` (${comboNames})` : ''}` : 'Not written yet.';
+      }
+
+      function showStep(step, scroll = true) {
+        state.step = Math.min(5, Math.max(1, +step));
+        $$('.panel').forEach(panel => panel.classList.toggle('active', +panel.dataset.panel === state.step));
+        $$('.progress button').forEach(button => {
+          const target = +button.dataset.go;
+          button.classList.toggle('active', target === state.step);
+          button.classList.toggle('done', target < state.step);
+          button.setAttribute('aria-current', target === state.step ? 'step' : 'false');
+        });
+        if (state.step === 5) renderSummary();
+        saveState();
+        if (scroll) $('#priorityApp').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      function renderAll() {
+        renderRankList();
+        renderAttention();
+        renderSelects();
+        renderChips();
+        renderSummary();
+      }
+
+      function bindStateField(id, key, event = 'input') {
+        const el = $('#' + id);
+        el.value = state[key] || '';
+        el.addEventListener(event, () => {
+          state[key] = el.value;
+          saveState();
+          renderSummary();
+        });
+      }
+
+      function wrapText(ctx, text, maxWidth) {
+        const paragraphs = String(text || '').split(/\n/);
+        const lines = [];
+        paragraphs.forEach((paragraph, pIndex) => {
+          const words = paragraph.split(/\s+/).filter(Boolean);
+          let line = '';
+          words.forEach(word => {
+            const test = line ? `${line} ${word}` : word;
+            if (ctx.measureText(test).width > maxWidth && line) { lines.push(line); line = word; }
+            else line = test;
+          });
+          if (line) lines.push(line);
+          if (pIndex < paragraphs.length - 1) lines.push('');
+        });
+        return lines;
+      }
+
+      function drawWrapped(ctx, text, x, y, width, lineHeight, maxLines = 99) {
+        const lines = wrapText(ctx, text, width).slice(0, maxLines);
+        lines.forEach((line, index) => ctx.fillText(line, x, y + index * lineHeight));
+        return y + lines.length * lineHeight;
+      }
+
+      async function summaryBlob() {
+        await document.fonts?.ready;
+        const w = 1400;
+        const rowH = 65;
+        const listH = state.items.length * rowH;
+        const h = Math.max(1760, 670 + listH);
+        const scale = window.devicePixelRatio > 1 ? 1.15 : 1;
+        const canvas = document.createElement('canvas');
+        canvas.width = w * scale;
+        canvas.height = h * scale;
+        const ctx = canvas.getContext('2d');
+        ctx.scale(scale, scale);
+        ctx.fillStyle = '#eef1ed'; ctx.fillRect(0, 0, w, h);
+        ctx.fillStyle = '#173c35'; ctx.fillRect(0, 0, w, 360);
+        ctx.fillStyle = 'rgba(255,255,255,.09)';
+        for (let x = 25; x < w; x += 42) for (let y = 25; y < 360; y += 42) { ctx.beginPath(); ctx.arc(x, y, 1.4, 0, Math.PI * 2); ctx.fill(); }
+        ctx.fillStyle = '#f5b72d'; ctx.font = '700 22px "DM Sans", Arial'; ctx.fillText('MY PRIORITIES', 90, 82);
+        ctx.fillStyle = '#fcfdfb'; ctx.font = '500 72px Lora, Georgia';
+        drawWrapped(ctx, $('#summaryTitle').textContent, 90, 180, 1210, 82, 2);
+        ctx.fillStyle = 'rgba(255,255,255,.67)'; ctx.font = '500 21px "DM Sans", Arial'; ctx.fillText($('#summaryMeta').textContent, 90, 315);
+
+        const leftX = 90, leftW = 570, rightX = 760, rightW = 550;
+        let y = 430;
+        ctx.fillStyle = '#365f59'; ctx.font = '700 19px "DM Sans", Arial'; ctx.fillText('IN ORDER', leftX, y);
+        y += 50;
+        state.items.forEach((item, index) => {
+          ctx.fillStyle = '#dfe7e1'; ctx.beginPath(); ctx.arc(leftX + 24, y - 8, 24, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = '#18302d'; ctx.font = '500 21px Lora, Georgia'; ctx.textAlign = 'center'; ctx.fillText(String(index + 1), leftX + 24, y - 1); ctx.textAlign = 'left';
+          ctx.font = '700 24px "DM Sans", Arial'; ctx.fillText(item.name, leftX + 68, y);
+          ctx.fillStyle = '#405651'; ctx.font = '500 17px "DM Sans", Arial'; ctx.textAlign = 'right'; ctx.fillText(`${item.attention}/10 now`, leftX + leftW, y); ctx.textAlign = 'left';
+          ctx.strokeStyle = 'rgba(24,48,45,.16)'; ctx.beginPath(); ctx.moveTo(leftX, y + 25); ctx.lineTo(leftX + leftW, y + 25); ctx.stroke();
+          y += rowH;
+        });
+
+        let ry = 430;
+        const blocks = [
+          ['THE TRADE I CHOOSE', $('#summaryTrade').textContent],
+          ['THE COST I ACCEPT', $('#summaryRegret').textContent],
+          ['MY NEXT SEVEN DAYS', $('#summaryMove').textContent],
+          ['ONE ACTION, SEVERAL BOXES', $('#summaryCombo').textContent]
+        ];
+        blocks.forEach(([label, text]) => {
+          ctx.fillStyle = '#365f59'; ctx.font = '700 19px "DM Sans", Arial'; ctx.fillText(label, rightX, ry);
+          ry += 37;
+          ctx.fillStyle = '#18302d'; ctx.font = '500 23px "DM Sans", Arial';
+          ry = drawWrapped(ctx, text, rightX, ry, rightW, 33, 5) + 38;
+        });
+
+        const quoteY = Math.max(y + 35, ry + 20, h - 270);
+        ctx.fillStyle = '#f8eccb'; ctx.fillRect(60, quoteY, w - 120, 150);
+        ctx.fillStyle = '#18302d'; ctx.font = 'italic 500 34px Lora, Georgia';
+        ctx.fillText('“You get to pick your regrets, or they will be chosen for you.”', 95, quoteY + 62);
+        ctx.fillStyle = '#405651'; ctx.font = '700 17px "DM Sans", Arial'; ctx.fillText('ALEX HORMOZI · 5:11', 95, quoteY + 108);
+        ctx.fillStyle = '#405651'; ctx.font = '500 17px "DM Sans", Arial'; ctx.fillText('jantrautwein.com/priorities', 90, h - 55);
+        ctx.textAlign = 'right'; ctx.fillText('Made with intention, not perfection.', w - 90, h - 55); ctx.textAlign = 'left';
+        return new Promise(resolve => canvas.toBlob(resolve, 'image/png', .96));
+      }
+
+      async function downloadImage() {
+        const blob = await summaryBlob();
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'my-priorities.png';
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+        toast('Your priorities image was downloaded.');
+      }
+
+      async function shareImage() {
+        const blob = await summaryBlob();
+        const file = new File([blob], 'my-priorities.png', { type: 'image/png' });
+        if (navigator.canShare?.({ files: [file] })) {
+          try {
+            await navigator.share({ title: 'My priorities', text: 'Here is what comes first for me in this season.', files: [file] });
+            return;
+          } catch (error) {
+            if (error.name === 'AbortError') return;
+          }
+        }
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a'); link.href = url; link.download = file.name; link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1500);
+        toast('Sharing is not available here, so the image was downloaded.');
+      }
+
+      $('#addPriority').addEventListener('click', () => {
+        const input = $('#customPriority');
+        const name = input.value.trim();
+        if (!name) { input.focus(); return; }
+        const id = `custom-${Date.now()}`;
+        state.items.push({ id, name, desc: 'A priority you added', attention: 5, custom: true });
+        input.value = '';
+        saveState(); renderAll();
+        toast(`${name} was added to your list.`);
+      });
+      $('#customPriority').addEventListener('keydown', event => { if (event.key === 'Enter') $('#addPriority').click(); });
+      $('#toggleAll').addEventListener('click', () => { state.showAll = !state.showAll; saveState(); renderAttention(); });
+
+      bindStateField('acceptedTrade', 'acceptedTrade');
+      bindStateField('chosenRegret', 'chosenRegret');
+      bindStateField('nextMove', 'nextMove');
+      bindStateField('comboAction', 'comboAction');
+      bindStateField('personName', 'personName');
+      bindStateField('seasonName', 'seasonName');
+      $('#giveMore').addEventListener('change', event => { state.giveMore = event.target.value; saveState(); renderSummary(); });
+      $('#giveLess').addEventListener('change', event => { state.giveLess = event.target.value; saveState(); renderSummary(); });
+
+      $$('[data-go]').forEach(btn => btn.addEventListener('click', () => showStep(btn.dataset.go)));
+      $$('[data-next]').forEach(btn => btn.addEventListener('click', () => showStep(btn.dataset.next)));
+      $$('[data-back]').forEach(btn => btn.addEventListener('click', () => showStep(btn.dataset.back)));
+      $('#downloadImage').addEventListener('click', downloadImage);
+      $('#shareImage').addEventListener('click', shareImage);
+      $('#printPdf').addEventListener('click', () => { renderSummary(); window.print(); });
+      $('#resetExercise').addEventListener('click', () => {
+        if (!confirm('Start over and clear your saved answers?')) return;
+        localStorage.removeItem(STORAGE_KEY);
+        state = structuredClone(emptyState);
+        ['acceptedTrade','chosenRegret','nextMove','comboAction','personName','seasonName'].forEach(key => $('#' + key).value = '');
+        renderAll(); showStep(1); toast('Fresh page. Choose again.');
+      });
+
+      renderAll();
+      showStep(state.step, false);
+    })();
+  </script>
+</body>
+</html>

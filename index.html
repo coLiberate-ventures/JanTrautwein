@@ -501,9 +501,10 @@
     #companies { padding: 44px 0 48px; border-bottom: 1px solid var(--border); }
     .cw-head { font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 400; margin-bottom: 24px; }
     .cw-head .cw-accent { color: var(--text); font-style: normal; }
-    .cw-track { gap: 56px; animation: none; }
-    .cw-marquee { overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
-    .cw-logo[aria-hidden="true"] { display: none; }
+    .cw-track { gap: 56px; animation: cw-scroll 46s linear infinite; }
+    .cw-marquee { overflow: hidden; scrollbar-width: none; -ms-overflow-style: none; }
+    .cw-marquee::-webkit-scrollbar { display: none; }
+    .cw-logo[aria-hidden="true"] { display: block; }
     #hi-jan { padding: 85px 0; }
     .hi-jan-grid { max-width: 1040px; grid-template-columns: 1fr 300px; gap: 80px; }
     .hi-jan-text h2 { font-size: 2rem; line-height: 1.35; margin-bottom: 22px; }

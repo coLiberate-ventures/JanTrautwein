@@ -8,11 +8,17 @@
   <link rel="manifest" href="/site.webmanifest">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jan Trautwein — Coaching for Impact-Driven Founders</title>
-  <meta name="description" content="Transformative business coaching for ambitious, heart-led entrepreneurs who want to create meaningful success without burning out.">
+  <title>Jan Trautwein | Life as an RPG &amp; Personal Coaching</title>
+  <meta name="description" content="Personal coaching with Jan Trautwein. See life through the lens of an RPG, choose a meaningful quest, and grow into your next chapter with clarity and playfulness.">
+  <link rel="canonical" href="https://jantrautwein.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Jan Trautwein | Life as an RPG &amp; Personal Coaching">
+  <meta property="og:description" content="See the bigger story, choose a quest that matters, and enjoy the life you are creating. Deep, personal 1:1 coaching with Jan Trautwein.">
+  <meta property="og:url" content="https://jantrautwein.com/">
+  <meta property="og:image" content="https://jantrautwein.com/images/hero-image.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@400;500;600&family=Grenze:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -27,6 +33,7 @@
       --section-py: 100px;
     }
     html { scroll-behavior: smooth; }
+    img { height: auto; }
     body {
       font-family: 'Inter', sans-serif;
       color: var(--muted);
@@ -91,48 +98,22 @@
     .nav-cta:hover { background: var(--gold-hover); color: var(--text); }
 
     /* HERO */
-    #hero { position: relative; overflow: hidden; padding: 0; }
-    .hero-img-wrap { width: 100%; line-height: 0; }
-    .hero-img-wrap img, .hero-img-wrap video { display: block; width: 100%; height: auto; }
-    .hero-img-wrap .hero-fallback { display: none; }
-    #hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to right, rgba(218,231,222,0.82) 38%, rgba(218,231,222,0.2) 62%, transparent 80%);
-      z-index: 1; pointer-events: none;
-    }
-    .hero-text-wrap {
-      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      display: flex; align-items: center;
-      pointer-events: none; z-index: 2;
-    }
-    .hero-text {
-      max-width: 520px; padding: 0 0 0 6%;
-      pointer-events: auto;
-    }
-    .hero-headline {
-      font-family: 'Lora', serif; font-size: 1.95rem; line-height: 1.25;
-      color: var(--text); font-weight: 500; margin-bottom: 1.2rem;
-    }
-    .hero-headline .highlight { color: var(--gold); font-style: italic; }
-    .hero-headline strong { font-weight: 700; color: var(--text); }
-    /* ROTATING WORD */
-    .rotator-wrap { position: relative; display: inline-block; min-width: 4.5ch; text-align: left; }
-    .rotator-word {
-      color: var(--gold); font-style: italic; display: inline-block;
-      opacity: 1; transition: opacity 350ms ease;
-      position: relative;
-    }
-    .rotator-word.fading { opacity: 0; }
-    .rotator-word::after {
-      content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 3px;
-      background: var(--gold); border-radius: 2px;
-      transform: scaleX(0); transform-origin: left center;
-      transition: transform 2000ms cubic-bezier(0.65, 0.05, 0.36, 1);
-    }
-    .rotator-word.underlined::after { transform: scaleX(1); }
-    .rotator-word.instant::after { transition: none; }
-    .hero-subtitle { font-family: 'Lora', serif; font-size: 0.98rem; line-height: 1.65; color: var(--muted); }
-    .hero-subtitle p { margin-bottom: 0.5rem; }
+    #hero { position: relative; overflow: hidden; padding: 0; isolation: isolate; }
+    .hero-img-wrap { position: absolute; inset: 0; z-index: -2; }
+    .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    #hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(218,231,222,.98) 8%, rgba(218,231,222,.94) 31%, rgba(218,231,222,.6) 53%, rgba(218,231,222,.06) 77%); }
+    .hero-text-wrap { width: 100%; max-width: 1440px; margin: auto; padding: 88px 6% 80px; }
+    .hero-text { max-width: 600px; }
+    .hero-headline { font-size: clamp(2.5rem, 3.8vw, 3.45rem); line-height: 1.14; letter-spacing: -.045em; font-weight: 500; margin-bottom: 26px; }
+    .hero-headline em { color: #426554; font-weight: 500; }
+    .hero-subtitle { max-width: 450px; font-size: 1.03rem; line-height: 1.75; color: #405b53; }
+    .hero-subtitle p { margin-bottom: .55rem; }
+    .hero-actions { display: flex; align-items: center; gap: 26px; margin: 28px 0 20px; flex-wrap: wrap; }
+    .hero-actions .cta-button { margin-top: 0; }
+    .hero-note { color: #466052; font-size: .76rem; letter-spacing: .035em; }
+    .text-link { color: var(--text); font-size: .88rem; border-bottom: 1px solid #7c9286; padding-bottom: 4px; }
+    .text-link:hover { color: #426554; border-color: #426554; }
+    .text-link span, .cta-button span { margin-left: 8px; }
 
     /* FEATURED QUOTE */
     #featured-quote { padding: 30px 0 50px; }
@@ -350,15 +331,6 @@
     @media (max-width: 900px) {
       :root { --section-py: 72px; }
       h2 { font-size: 1.8rem; }
-      .hero-headline { font-size: 1.55rem; }
-      #hero { min-height: 360px; }
-      .hero-img-wrap { position: absolute; inset: 0; }
-      .hero-img-wrap img, .hero-img-wrap video { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
-      .hero-img-wrap .hero-video { display: none; }
-      .hero-img-wrap .hero-fallback { display: block; }
-      .hero-text-wrap { padding: 28px 5% 28px; align-items: flex-start; }
-      .hero-text { max-width: 100%; padding: 0; }
-      #hero::before { background: linear-gradient(135deg, rgba(218,231,222,0.93) 42%, rgba(218,231,222,0.55) 68%, transparent 88%); }
       .featured-quote-inner { flex-direction: column; text-align: center; gap: 20px; }
       .quote-photo { margin: 0 auto; order: 2; }
       .hi-jan-grid { grid-template-columns: 1fr; gap: 28px; }
@@ -388,7 +360,6 @@
     @media (max-width: 600px) {
       body { font-size: 16px; }
       h2 { font-size: 1.55rem; }
-      .hero-headline { font-size: 1.3rem; }
 
       .divider img { width: 200px; }
     }
@@ -519,7 +490,120 @@
     .li-link { display: inline-flex; align-items: center; color: var(--muted); margin-left: 6px; vertical-align: middle; transition: color 0.2s; }
     .li-link:hover { color: #0A66C2; }
     .li-icon { display: block; }
+
+    /* Personal coaching and the RPG perspective */
+    [hidden] { display: none !important; }
+    :focus-visible { outline: 3px solid #8a6700; outline-offset: 5px; }
+    .skip-link { position: fixed; top: -100px; left: 20px; z-index: 300; padding: 10px 18px; background: var(--gold); color: var(--text); }
+    .skip-link:focus { top: 12px; }
+    .section-label { color: #775b13; font-size: .72rem; }
+    .hero-text .section-label { margin-bottom: 24px; }
+    #companies { padding: 44px 0 48px; border-bottom: 1px solid var(--border); }
+    .cw-head { font-family: 'Inter', sans-serif; font-size: .8rem; font-weight: 400; margin-bottom: 24px; }
+    .cw-head .cw-accent { color: var(--text); font-style: normal; }
+    .cw-track { gap: 56px; animation: none; }
+    .cw-marquee { overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+    .cw-logo[aria-hidden="true"] { display: none; }
+    #hi-jan { padding: 85px 0; }
+    .hi-jan-grid { max-width: 1040px; grid-template-columns: 1fr 300px; gap: 80px; }
+    .hi-jan-text h2 { font-size: 2rem; line-height: 1.35; margin-bottom: 22px; }
+    .hi-jan-text .location-note { font-size: .8rem; margin-top: 24px; }
+    #reality { background: #1e3c32; color: #d9e5db; padding: 80px 0 52px; }
+    .perspective-inner { max-width: 1080px; padding: 0 32px; margin: auto; }
+    .perspective-intro { max-width: 700px; }
+    #reality .section-label { color: #f1c752; }
+    #reality h2, #reality h3 { color: #f0f1e5; }
+    #reality h2 { font-size: clamp(1.85rem, 3vw, 2.65rem); }
+    .perspective-tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 46px 0 0; }
+    .perspective-tabs button { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; position: relative; cursor: pointer; border: 0; background: none; color: #cedcd2; font: 500 .82rem 'Inter', sans-serif; text-align: left; padding: 0 0 22px; border-bottom: 1px solid #597166; }
+    .perspective-tabs button::after { content: ''; position: absolute; top: 22px; left: 58px; right: 8px; height: 1px; background: #567065; }
+    .perspective-tabs button:last-child::after { display: none; }
+    .quest-number { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid #83998b; border-radius: 50%; font-size: .75rem; }
+    .perspective-tabs [aria-selected="true"] { color: #ffe092; border-bottom-color: var(--gold); }
+    .perspective-tabs [aria-selected="true"] .quest-number { background: var(--gold); border-color: var(--gold); color: var(--text); }
+    .perspective-tabs button:hover .quest-number { border-color: #ffe092; }
+    #reality :focus-visible { outline-color: #f1c752; }
+    .perspective-panel { display: grid; grid-template-columns: 1.4fr 1fr; gap: 70px; padding: 38px 0 24px; min-height: 285px; align-items: start; }
+    .chapter-label { color: #bccdbf; letter-spacing: .08em; text-transform: uppercase; font-size: .67rem; margin-bottom: 13px; }
+    .perspective-panel h3 { font-size: 1.7rem; margin-bottom: 18px; }
+    .perspective-panel p { font-size: .94rem; }
+    .perspective-panel blockquote { font: italic 1.5rem/1.5 'Lora', serif; color: #f4e4b6; padding-left: 28px; border-left: 1px solid #75836c; margin-top: 36px; }
+    .perspective-panel blockquote span { display: block; font: 400 .65rem/1.6 'Inter', sans-serif; letter-spacing: .09em; text-transform: uppercase; color: #bacbbb; margin-bottom: 16px; }
+    .perspective-outro { border-top: 1px solid #567065; padding-top: 28px; font: italic 1rem/1.6 'Lora', serif; color: #c5d4c7; }
+    #featured-quote { padding: 68px 0; background: rgba(255,255,255,.15); }
+    .quote-photo { width: 108px; height: 108px; }
+    #who-i-am { padding-bottom: 60px; }
+    .about-grid { grid-template-columns: 310px 1fr; max-width: 1060px; }
+    #how-i-work { background: rgba(255,255,255,.18); }
+    .how-grid { max-width: 1060px; }
+    #who-i-work-with { padding: 72px 0; }
+    .who-intro { max-width: 790px; }
+    .who-intro h2 { font-size: 1.9rem; margin-bottom: 22px; }
+    .who-intro p { font-size: .96rem; }
+    #holistic { padding-top: 60px; }
+    .holistic-layout { max-width: 1060px; margin: 40px auto 0; padding: 0 32px; display: grid; grid-template-columns: 340px 1fr; gap: 70px; align-items: center; }
+    .holistic-image-wrap { margin: 0; }
+    .holistic-areas { padding: 0; text-align: left; }
+    .holistic-area { padding-bottom: 22px; margin-bottom: 22px; border-bottom: 1px solid var(--border); }
+    .holistic-area:last-child { margin-bottom: 0; padding-bottom: 0; border: 0; }
+    .holistic-area p { font-size: .96rem; }
+    .voices-photo-cell { appearance: none; border: 0; padding: 0; background: transparent; font: inherit; }
+    .voices-photo-cell[aria-pressed="true"] { box-shadow: 0 0 0 3px #547662; }
+    .hamburger { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+    footer { color: #bacdc0; }
+    footer a, footer a.muted-link { color: #d1ddd2; }
+    @media (min-width: 1500px) { .hero-text-wrap { padding-left: 72px; } }
+    @media (max-width: 900px) {
+      .hero-text-wrap { padding: 64px 6%; }
+      .hero-text { max-width: 560px; }
+      #hero::before { background: linear-gradient(90deg, rgba(218,231,222,.97) 15%, rgba(218,231,222,.9) 48%, rgba(218,231,222,.42) 100%); }
+      .hero-headline { font-size: 2.7rem; }
+      .hi-jan-grid { grid-template-columns: 1fr 220px; gap: 35px; }
+      .hi-jan-text h2 { font-size: 1.7rem; }
+      .about-grid, .how-grid { grid-template-columns: 1fr; }
+      .perspective-panel { gap: 34px; min-height: 335px; }
+      .holistic-layout { grid-template-columns: 230px 1fr; gap: 32px; }
+    }
+    @media (max-width: 600px) {
+      html { font-size: 16px; }
+      .nav-inner { padding: 0 24px; }
+      .hero-text-wrap { padding: 48px 26px 46px; }
+      .hero-text { max-width: 100%; }
+      .hero-headline { font-size: clamp(2.3rem, 9.2vw, 3rem); max-width: 470px; }
+      .hero-img-wrap img { object-position: 63% center; }
+      #hero::before { background: linear-gradient(90deg, rgba(218,231,222,.96), rgba(218,231,222,.83)); }
+      .hero-subtitle { font-size: 1rem; }
+      .hero-actions { gap: 22px; margin-top: 25px; }
+      .hero-actions .cta-button { padding: 13px 26px; }
+      .hero-actions .text-link { font-size: .81rem; }
+      .hero-note { margin-top: 26px; }
+      #hi-jan { padding: 54px 0; }
+      .hi-jan-grid { grid-template-columns: 1fr; gap: 20px; }
+      .hi-jan-image { order: -1; text-align: left; }
+      .hi-jan-image img { width: 145px; margin: 0; }
+      .hi-jan-text h2 { font-size: 1.85rem; }
+      #reality { padding: 54px 0 36px; }
+      .perspective-inner { padding: 0 26px; }
+      .perspective-tabs { grid-template-columns: repeat(5, minmax(62px, 1fr)); gap: 5px; margin-top: 32px; overflow-x: auto; }
+      .perspective-tabs button { font-size: .7rem; gap: 12px; letter-spacing: -.025em; }
+      .quest-number { width: 36px; height: 36px; font-size: .64rem; }
+      .perspective-tabs button::after { top: 18px; left: 41px; right: 4px; }
+      .perspective-panel { grid-template-columns: 1fr; gap: 24px; min-height: 430px; padding-top: 28px; }
+      .perspective-panel h3 { font-size: 1.6rem; }
+      .perspective-panel blockquote { font-size: 1.3rem; margin-top: 0; padding-left: 20px; }
+      .perspective-panel blockquote span { margin-bottom: 10px; }
+      .perspective-outro { font-size: .9rem; }
+      .holistic-layout { grid-template-columns: 1fr; gap: 32px; }
+      .holistic-image-wrap { width: 240px; margin: auto; }
+      .who-intro h2 { font-size: 1.7rem; }
+      #next-step { padding-bottom: 70px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: 0s !important; }
+    }
   </style>
+  <link rel="stylesheet" href="journey-theme.css">
   <!-- PostHog analytics -->
   <script>
     !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
@@ -533,44 +617,51 @@
   </script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 
 <nav id="navbar">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">Jan Trautwein</a>
     <div class="nav-links">
+      <a href="#how-i-work">Coaching</a>
       <a href="story.html">My Story</a>
       <a href="client-voices.html">Client Voices</a>
       <a href="worldview.html">Worldview</a>
       <a href="contact.html" class="nav-cta">Connect</a>
     </div>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
 <div class="menu-overlay" id="menuOverlay"></div>
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" inert>
+  <a href="#how-i-work">Coaching</a>
   <a href="story.html">My Story</a>
   <a href="client-voices.html">Client Voices</a>
   <a href="worldview.html">Worldview</a>
   <a href="contact.html">Connect</a>
 </div>
 
-<section id="hero">
-  <div class="hero-img-wrap">
-    <video class="hero-video" autoplay loop muted playsinline preload="auto"
-           poster="images/hero-image.png" aria-label="Jan Trautwein — coaching for heart-led founders">
-      <source src="images/hero-video.mp4" type="video/mp4">
-    </video>
-    <img class="hero-fallback" src="images/hero-image.png" alt="Jan Trautwein — coaching for heart-led founders">
+<main id="main-content">
+<section id="hero" aria-labelledby="hero-heading">
+  <div class="hero-img-wrap" aria-hidden="true">
+    <img src="images/hero-journey.png" alt="" fetchpriority="high" width="1672" height="941">
   </div>
   <div class="hero-text-wrap">
     <div class="hero-text">
-      <h1 class="hero-headline">The AI age needs <span class="rotator-wrap"><span class="rotator-word" id="rotatorWord">founders</span></span><br>who build toward the <strong>more beautiful world</strong> our hearts know is possible.</h1>
+      <p class="section-label">Life as an RPG · 1:1 coaching</p>
+      <h1 class="hero-headline" id="hero-heading">What if you could play your life like an <em>adventure game?</em></h1>
       <div class="hero-subtitle">
-        <p>The ones who shape the future won't be the fastest, but the clearest about what they're building and why.</p>
+        <p>See the bigger story you're living, choose a quest that matters to you, and grow into your next chapter.</p>
+        <p>And remember to have some fun along the way.</p>
       </div>
+      <div class="hero-actions">
+        <a href="contact.html" class="cta-button">Let's talk <span aria-hidden="true">↗</span></a>
+        <a href="#reality" class="text-link">Explore the perspective <span aria-hidden="true">↓</span></a>
+      </div>
+      <p class="hero-note">Personal coaching with Jan Trautwein</p>
     </div>
   </div>
 </section>
@@ -690,86 +781,113 @@
 </section>
 
 
-<section id="hi-jan">
+<section id="hi-jan" aria-labelledby="hi-jan-heading">
   <div class="hi-jan-grid">
     <div class="hi-jan-text">
       <div class="section-label">Hi, I'm Jan</div>
-      <p>I'm a holistic business coach, growth partner and performance advisor for founders and creators building in the AI space.</p>
-      <p>I help ambitious people grow their impact and income without burning out or losing themselves in the process.</p>
-      <p>I'm based in Lisbon. Working with clients worldwide.</p>
+      <h2 id="hi-jan-heading">A coach. A curious human.<br>A lover of the game of life.</h2>
+      <p>I help people create a life that feels meaningful, free and alive. Their work is often a big part of that. So are their relationships, their energy, and who they're becoming.</p>
+      <p>One perspective I love is seeing life as an RPG. A role playing game. You have a character, a quest, skills to develop, and a whole world to explore.</p>
+      <p>It brings a little more perspective and playfulness to the deep work of being human.</p>
+      <p class="location-note">Based in Lisbon. Working with clients worldwide.</p>
     </div>
     <div class="hi-jan-image">
-      <img src="images/jan-profile.png" alt="Jan Trautwein">
+      <img src="images/jan-profile.png" alt="Jan Trautwein" loading="lazy" width="750" height="750">
     </div>
   </div>
 </section>
 
 
+
+
+<section id="reality" aria-labelledby="perspective-heading">
+  <div class="perspective-inner">
+    <div class="perspective-intro">
+      <div class="section-label">A perspective I love</div>
+      <h2 id="perspective-heading">Life as a role playing game.</h2>
+      <p>We all have ways of making sense of life. I find this one particularly useful. You can see yourself as both the character living the story and the player who can step back and choose a direction.</p>
+      <p>Your life is real. Your challenges matter. And sometimes a different perspective opens up possibilities you couldn't see before.</p>
+    </div>
+    <div class="perspective-tabs" role="tablist" aria-label="Explore the RPG perspective" hidden>
+        <button type="button" id="perspective-tab-0" role="tab" aria-selected="true" aria-controls="perspective-panel-0" tabindex="0"><span class="quest-number" aria-hidden="true">01</span><span>Perspective</span></button>
+        <button type="button" id="perspective-tab-1" role="tab" aria-selected="false" aria-controls="perspective-panel-1" tabindex="-1"><span class="quest-number" aria-hidden="true">02</span><span>Main quest</span></button>
+        <button type="button" id="perspective-tab-2" role="tab" aria-selected="false" aria-controls="perspective-panel-2" tabindex="-1"><span class="quest-number" aria-hidden="true">03</span><span>Skill tree</span></button>
+        <button type="button" id="perspective-tab-3" role="tab" aria-selected="false" aria-controls="perspective-panel-3" tabindex="-1"><span class="quest-number" aria-hidden="true">04</span><span>Challenges</span></button>
+        <button type="button" id="perspective-tab-4" role="tab" aria-selected="false" aria-controls="perspective-panel-4" tabindex="-1"><span class="quest-number" aria-hidden="true">05</span><span>Play</span></button>
+    </div>
+    <div class="perspective-panels">
+      <div class="perspective-panel" id="perspective-panel-0">
+        <div><p class="chapter-label">01 / Perspective</p><h3>See the bigger story.</h3><p>You can zoom out from the situation in front of you and see the chapter you're living. What has shaped you? What matters now? What kind of experience do you want to create?</p></div>
+        <blockquote><span>A question to sit with</span>What would you notice if you could zoom out?</blockquote>
+      </div>
+      <div class="perspective-panel" id="perspective-panel-1">
+        <div><p class="chapter-label">02 / Main quest</p><h3>Choose a quest that matters.</h3><p>You can bring more intention to where your attention goes. Your main quest might be building a business, creating a home, deepening a relationship, or bringing something beautiful into the world.</p></div>
+        <blockquote><span>A question to sit with</span>What feels worth giving yourself to in this chapter?</blockquote>
+      </div>
+      <div class="perspective-panel" id="perspective-panel-2">
+        <div><p class="chapter-label">03 / Skill tree</p><h3>Grow into your next chapter.</h3><p>You can get clear on the skills and qualities your next chapter asks of you. Courage. Communication. Focus. Leadership. Your time is limited, so it helps to choose what you want to practise.</p></div>
+        <blockquote><span>A question to sit with</span>What would you love to become more capable of?</blockquote>
+      </div>
+      <div class="perspective-panel" id="perspective-panel-3">
+        <div><p class="chapter-label">04 / Challenges</p><h3>Turn experience into growth.</h3><p>You can meet a challenge with curiosity. A difficult conversation, a setback, or an old pattern can show you where there is something to learn. You can try, reflect, adjust, and see the progress you're making.</p></div>
+        <blockquote><span>A question to sit with</span>What might this challenge be inviting you to learn?</blockquote>
+      </div>
+      <div class="perspective-panel" id="perspective-panel-4">
+        <div><p class="chapter-label">05 / Play</p><h3>Enjoy being alive.</h3><p>You can care deeply about your life and still hold it a little more lightly. Try things. Follow your curiosity. Celebrate a small win. Leave room for the unexpected. There is more to the adventure than reaching the next level.</p></div>
+        <blockquote><span>A question to sit with</span>Where could you bring a little more play into your life?</blockquote>
+      </div>
+    </div>
+    <p class="perspective-outro">A little more intention. A little more curiosity. A little more room to play.</p>
+  </div>
+</section>
+
 <section id="featured-quote">
   <div class="featured-quote-inner">
-    <img class="quote-photo" src="images/featured-quote.png" alt="Alex Nicita">
+    <img class="quote-photo" src="images/featured-quote.png" alt="Alex Nicita" width="400" height="400">
     <div class="quote-content">
       <blockquote>
         "I feel that I have grown professionally as well as personally in ways that I never expected. There are lessons that I've learned in communicating with Jan that I trust will serve me for years to come, and frankly, you could not put a price on these services."
       </blockquote>
-      <span class="quote-attr">— Alex Nicita, Entrepreneur + AI Builder</span>
+      <span class="quote-attr">Alex Nicita · Entrepreneur + AI Builder</span>
     </div>
-  </div>
-</section>
-
-
-<section id="reality">
-  <div class="reality-text">
-    <div class="section-label">The Situation</div>
-    <h2>The AI space is one of the most exciting places to be building right now.</h2>
-    <p>It's also one of the most <span class="gold-underline">demanding</span>.</p>
-    <p>New models, new tools, new competitors, new use cases every week. The online culture rewards speed and celebrates those who move fastest.</p>
-    <p>That can be a lot to handle…</p>
-    <p class="stat-line">83% of founders experience high stress. In the AI space, this number is probably even higher.<sup><a class="footnote-ref" href="https://sifted.eu/articles/founders-mental-health-2025" target="_blank" rel="noopener">1</a></sup></p>
-    <p>There's no natural pause point, no milestone that feels stable enough to stop and ask how you're doing. With so much demand and opportunity, it's easy to fall into a reactive pattern.</p>
-    <p>Some try to do too much at once. Others get so overwhelmed they can't move at all.</p>
-    <p>The people who thrive long-term aren't the ones who move fastest. They're the ones who know what they are building, and why, and can hold their focus while everything around them keeps shifting. They know what to ignore and when to adjust their plan.</p>
   </div>
 </section>
 
 
 <section id="who-i-am">
   <div class="about-grid">
-    <div class="about-image"><img src="images/about-photo.png" alt="Jan Trautwein"></div>
+    <div class="about-image"><img src="images/about-photo.png" alt="Jan Trautwein" loading="lazy" width="1000" height="1000"></div>
     <div class="about-text">
       <div class="section-label">Who I Am</div>
       <h2>Outside the mainstream.</h2>
       <p>I've never had a traditional job.</p>
-      <p>The “normal” path never felt enticing to me.</p>
-      <p>I'd rather create my own way than follow a path just because everyone else is on it. I'm a bit of a free rebel in that way.</p>
-      <p>I value contribution, freedom and autonomy.</p>
-      <p>After I finished my physics degree, I co-founded a social startup. It was exciting and fun… until it wasn't.</p>
-      <p>The biggest realization I had after I left: Happiness has to be the fuel, not the reward.</p>
-      <p>In 2018 I found my passion in supporting others through deep 1:1 work and dedicated myself fully to it.</p>
-      <p>Since then I've worked with over 100 clients across the world. These days most of them are building projects in the AI space.</p>
-      <p>Since ChatGPT launched I've been deeply exploring the AI space, staying on top of every major shift, vibe-coding tools for myself, and working closely with the people educating and building with AI.</p>
-      <p>On a more personal note: I've done 2 Vipassana retreats, multiple plant medicine ceremonies, an 8-day darkness retreat and many other retreats and experiences that helped me heal past trauma and become freer.</p>
-      <p>I continuously invest in my own development, and besides programs in marketing and business development, that includes working with the best coaches in the world.</p>
-      <p>I grew up in Stuttgart, Germany in a middle-class family. I have 2 younger brothers. I play lots of different sports, I love adventures and nature. I read a lot, for fun and for personal growth.</p>
-      <p>I'm based in Lisbon since 2023 with my wife, Diara and our 2 cats Luno and Koda.</p>
-      <p>I have been offering 1:1 support full-time now for almost a decade. Today I work primarily with AI founders, educators, and creators - people who have moved fast and are genuinely excited about what this technology makes possible, and who want to build something meaningful without burning out or losing themselves in the process.</p>
-      <p style="margin-top:1.4rem;"><a href="story.html" style="font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;">More about my story here &rarr;</a></p>
+      <p>The “normal” path never felt enticing to me. I'd rather create my own way than follow a path just because everyone else is on it. I'm a bit of a free rebel in that way.</p>
+      <p>After I finished my physics degree, I cofounded a social startup. It was exciting and fun… until it wasn't.</p>
+      <p>The biggest realization I had after I left: <strong>Happiness has to be the fuel, not the reward.</strong></p>
+      <p>In 2018 I found my passion in supporting others through deep 1:1 work and dedicated myself fully to it. Since then I've worked with over 100 clients across the world.</p>
+      <p>I've always loved games, adventures, nature and personal growth. Seeing life as an RPG brings those worlds together for me. There is something freeing about taking your life seriously while also remembering that you get to play.</p>
+      <p>I keep investing in my own development, through coaching, retreats, and the everyday practice of living what I learn.</p>
+      <p>I'm based in Lisbon with my wife, Diara, and our two cats, Luno and Koda. I play lots of different sports. I read a lot. And I love a good adventure.</p>
+      <p><a href="story.html" class="text-link">More about my story <span aria-hidden="true">↗</span></a></p>
     </div>
   </div>
 </section>
 
 
-<section id="how-i-work">
+<section id="how-i-work" aria-labelledby="coaching-heading">
   <div class="how-grid">
     <div class="how-text">
       <div class="section-label">How I Work</div>
-      <h2>Deep, focused, 1:1.</h2>
-      <p>I only work 1:1, no group programs. I support only a small number of clients at any given time. We go deep and far together, over several months, usually 2-3 sessions / month and support in between.</p>
-      <p>The work is holistic by design. We look at the whole picture, your business, your mindset, your energy, your patterns, your vision. Strategy without inner work only goes so far and inner work without practical direction stays theoretical.</p>
-      <p>Sessions happen over video call or over audio while we're both outside walking in nature. (The best conversations don't always happen sitting down and a bit more movement and less screentime is something we'd all benefit from.)</p>
-      <p>I'm selective about who I work with. When I work with someone, I'm all in to support them, their mission and their life, so I choose my clients as carefully as they choose me.</p>
+      <h2 id="coaching-heading">Deep, focused, 1:1.</h2>
+      <p>I work with a small number of clients at any given time. We go deep and far together, over several months, usually with two or three sessions a month and support in between.</p>
+      <p>We start with you. What you want to create, where you are now, and what feels difficult. Sometimes that means getting clear on your next move. Sometimes it means looking at the beliefs and patterns shaping the way you see yourself.</p>
+      <p>I bring questions, perspective, honest reflection, and the kind of support that helps you follow through. We turn what you see in our conversations into something you can actually live.</p>
+      <p>The RPG perspective is one of the lenses we can use. Our conversations follow what is useful for you.</p>
+      <p>Sessions happen over video call or over audio while we're both outside walking in nature. The best conversations don't always happen sitting down.</p>
+      <p>When I work with someone, I'm all in to support them, their mission and their life. So I choose my clients as carefully as they choose me.</p>
+      <a href="application.html" class="text-link">Explore working together <span aria-hidden="true">↗</span></a>
     </div>
-    <div class="how-image"><img src="images/how-image.png" alt="Looking up through the trees"></div>
+    <div class="how-image"><img src="images/how-image.png" alt="Looking up through the trees" loading="lazy" width="1024" height="1024"></div>
   </div>
 </section>
 
@@ -777,21 +895,23 @@
 <section id="who-i-work-with">
   <div class="who-intro">
     <div class="section-label">Who I Work With</div>
-    <h2>Founders, creators &amp; educators shaping what's next.</h2>
+    <h2>People creating a life of their own.</h2>
+    <p>Many of my clients are founders, creators, educators and leaders. What connects them is a desire to grow, contribute, and enjoy the life they're building.</p>
+    <p>You might be building something, moving into a new chapter, or wanting to meet your current life with more clarity and courage.</p>
   </div>
   <div class="clients-grid">
     <div class="client-card">
-      <img class="client-photo client-photo-img" data-toggle src="images/client-1.jpg" alt="Rui Vas">
+      <img class="client-photo client-photo-img" data-toggle src="images/client-1.jpg" alt="Rui Vas" width="400" height="400">
       <div class="client-name">Rui Vas <a class="li-link" href="https://www.linkedin.com/in/rui-vas/" target="_blank" rel="noopener" aria-label="Rui Vas on LinkedIn"><svg class="li-icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a></div>
       <div class="client-role"><span class="client-role-title">AI Educator &amp; Founder</span><br>Teaches at <span class="org">Mindvalley</span>, runs his own AI program &amp; community</div>
     </div>
     <div class="client-card">
-      <img class="client-photo client-photo-img" data-toggle src="images/client-2.jpg" alt="Philippe Birker">
+      <img class="client-photo client-photo-img" data-toggle src="images/client-2.jpg" alt="Philippe Birker" width="400" height="400">
       <div class="client-name">Philippe Birker <a class="li-link" href="https://www.linkedin.com/in/philippe-birker-94960014/" target="_blank" rel="noopener" aria-label="Philippe Birker on LinkedIn"><svg class="li-icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a></div>
       <div class="client-role"><span class="client-role-title">Founder &amp; Community Builder</span><br>Behind <span class="org">ClimateFarmers</span> &amp; <span class="org">Love Foundation</span>, regenerating land &amp; people</div>
     </div>
     <div class="client-card">
-      <img class="client-photo client-photo-img" data-toggle src="images/client-3.jpg" alt="Kyle Findley-Meier">
+      <img class="client-photo client-photo-img" data-toggle src="images/client-3.jpg" alt="Kyle Findley-Meier" width="400" height="400">
       <div class="client-name">Kyle Findley-Meier <a class="li-link" href="https://www.linkedin.com/in/kyle-findley-meier-aa138920b/" target="_blank" rel="noopener" aria-label="Kyle Findley-Meier on LinkedIn"><svg class="li-icon" viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a></div>
       <div class="client-role"><span class="client-role-title">Co-Founder &amp; Builder</span><br>Currently shaping a <span class="org">secret AI startup</span> for the next wave of tools</div>
     </div>
@@ -799,35 +919,18 @@
 </section>
 
 
-<section id="holistic">
+<section id="holistic" aria-labelledby="holistic-heading">
   <div class="holistic-intro">
     <div class="section-label">A Holistic Approach to Growth</div>
-    <h2>It's both and.</h2>
-    <p>Building in the AI space means your attention is naturally pulled outward: New tools, new opportunities, new decisions every week. That matters, and you'll have my full support there. But lasting progress requires looking at the full picture: Your business, your mindset, your patterns, your vision.</p>
+    <h2 id="holistic-heading">It's both and.</h2>
+    <p>Your outer world and inner world shape each other. We make room for both: what you want to create, and who you are being as you create it.</p>
   </div>
-  <div class="holistic-image-wrap"><img src="images/holistic-image.png" alt="A holistic approach to growth"></div>
-  <div class="holistic-areas">
-    <p>We move between the following areas as needed. Some weeks it's strategy and priorities. Others it's the inner work to create more clarity, leadership or confidence.</p>
-    <div class="holistic-area">
-      <h3>Vision</h3>
-      <p>Most founders are so deep in the day-to-day that they've lost sight of what they're actually building and why. We start by getting radically clear on your vision. Not just the business goals, but the life you want to be living while you build it. Clarity at this level is the foundation.</p>
-    </div>
-    <div class="holistic-area">
-      <h3>Strategy</h3>
-      <p>We turn your vision into a focused, realistic strategy that works <em>with</em> your preferences and strengths, not against them. You'll always know what to focus on next, and you'll make consistent progress one step after another.</p>
-    </div>
-    <div class="holistic-area">
-      <h3>Overcome Resistance</h3>
-      <p>This is where most growth actually happens. Every founder has patterns, avoidance, procrastination, and self-doubt that quietly slow everything down. We work on these in real time, week after week, so they stop disrupting your momentum and keeping you from the progress you're capable of.</p>
-      <p>This includes accountability, checking in week after week so you stay on track and don't get distracted, so that the things that really matter actually get done.</p>
-    </div>
-    <div class="holistic-area">
-      <h3>Meaning Making</h3>
-      <p>The stories we tell ourselves shape the experience we have. The meaning we attach to what happens with co-founders, investors, employees determines how we feel and how we respond. This work is about becoming aware of those stories and realizing that we can rewrite them to our advantage.</p>
-    </div>
-    <div class="holistic-area">
-      <h3>Identity</h3>
-      <p>When we want to get to a new level in our business, that usually comes with a shift in identity. When our identity shifts, our behavior and actions naturally follow rather than trying to force different results while staying the same person.</p>
+  <div class="holistic-layout">
+    <div class="holistic-image-wrap"><img src="images/holistic-image.png" alt="An illustration of interconnected areas of life" loading="lazy" width="1000" height="1000"></div>
+    <div class="holistic-areas">
+      <div class="holistic-area"><h3>Vision &amp; direction</h3><p>What do you want this chapter to be about? We get clear on what matters to you and turn that into practical priorities. Your work, your relationships, and the life you want to be living while you build.</p></div>
+      <div class="holistic-area"><h3>Identity &amp; inner work</h3><p>The stories you tell yourself shape what feels possible. We explore the fears, beliefs and patterns that come up, and create more freedom in how you respond.</p></div>
+      <div class="holistic-area"><h3>Action &amp; integration</h3><p>We bring it into everyday life. A conversation you've been avoiding. A decision you want to make. A habit you want to practise. We check in, learn from what happens, and keep moving.</p></div>
     </div>
   </div>
 </section>
@@ -840,18 +943,10 @@
   </div>
   <div class="voices-layout">
     <div class="voices-photo-grid">
-      <div class="voices-photo-cell active" data-voice="0">
-        <img src="images/voice-1.png" alt="Katie Doherty">
-      </div>
-      <div class="voices-photo-cell" data-voice="1">
-        <img src="images/voice-2.png" alt="Sebastian">
-      </div>
-      <div class="voices-photo-cell" data-voice="2">
-        <img src="images/voice-3.png" alt="Stefanie Baisch">
-      </div>
-      <div class="voices-photo-cell" data-voice="3">
-        <img src="images/voice-4.png" alt="Oliver Löwe">
-      </div>
+      <button type="button" class="voices-photo-cell active" data-voice="0" aria-label="Read Katie Doherty's testimonial" aria-pressed="true"><img src="images/voice-1.png" alt="Katie Doherty" width="400" height="400"></button>
+      <button type="button" class="voices-photo-cell" data-voice="1" aria-label="Read Sebastian's testimonial" aria-pressed="false"><img src="images/voice-2.png" alt="Sebastian" width="400" height="400"></button>
+      <button type="button" class="voices-photo-cell" data-voice="2" aria-label="Read Stefanie Baisch's testimonial" aria-pressed="false"><img src="images/voice-3.png" alt="Stefanie Baisch" width="400" height="400"></button>
+      <button type="button" class="voices-photo-cell" data-voice="3" aria-label="Read Oliver Löwe's testimonial" aria-pressed="false"><img src="images/voice-4.png" alt="Oliver Löwe" width="400" height="400"></button>
     </div>
     <div class="voices-testimonial">
       <blockquote id="voiceQuote">"Jan has a holistic approach. He doesn't just focus on business strategy, but also on identifying core fears, limiting beliefs, and the deeper issues that can hold you back. I came into our work together feeling lost, confused, and uninspired. Over time, with his guidance and accountability, I gained clarity and momentum again. I wholeheartedly recommend Jan!"</blockquote>
@@ -893,8 +988,9 @@
     var roleEl = document.getElementById('voiceRole');
 
     function selectVoice(idx) {
-      cells.forEach(function(c) { c.classList.remove('active'); });
+      cells.forEach(function(c) { c.classList.remove('active'); c.setAttribute('aria-pressed', 'false'); });
       cells[idx].classList.add('active');
+      cells[idx].setAttribute('aria-pressed', 'true');
       quoteEl.textContent = voices[idx].quote;
       nameEl.textContent = voices[idx].name;
       roleEl.textContent = voices[idx].role;
@@ -912,7 +1008,7 @@
 <section id="faq">
   <div class="faq-inner">
     <div class="section-label">Common Questions</div>
-    <h2>FAQ</h2>
+    <h2>A few things you might be wondering.</h2>
 
     <div class="faq-item">
       <button class="faq-question" aria-expanded="false">
@@ -921,9 +1017,9 @@
       </button>
       <div class="faq-answer" role="region">
         <div class="faq-answer-inner">
-          <p>I've worked with high-level leaders of big corporations like Apple and Amazon, award-winning actors, solopreneurs, artists, professors, resourceful students, mothers and other human beings who had a project they wanted help with.</p>
-          <p>The biggest group of people I've worked with are founders. I love working with impact-driven founders, and currently I'm especially excited to support businesses in the AI space, education, climate and mental health.</p>
-          <p>You can find some of my past clients on the client love page.</p>
+          <p>I've worked with leaders of big corporations like Apple and Amazon, actors, solopreneurs, artists, professors, resourceful students, mothers and other human beings who had something they wanted help with.</p>
+          <p>The biggest group of people I've worked with are founders. I love supporting people who want to create something meaningful, whether that is a business, a creative project, or a different way of living.</p>
+          <p>You can read about their experiences on the <a href="client-voices.html">Client Voices page</a>.</p>
         </div>
       </div>
     </div>
@@ -935,8 +1031,8 @@
       </button>
       <div class="faq-answer" role="region">
         <div class="faq-answer-inner">
-          <p>Most clients meet with me 2–3 times a month for 90 minutes. That rhythm tends to offer a good balance of spaciousness and momentum.</p>
-          <p>Between sessions, I'm available for ongoing support, whether it's going deeper into what we've explored in the last session or navigating something time-sensitive. You can reach me by text or voice memo whenever something meaningful arises.</p>
+          <p>Most clients meet with me two or three times a month for 90 minutes. That rhythm tends to offer a good balance of spaciousness and momentum.</p>
+          <p>Between sessions, I'm available for ongoing support, whether it's going deeper into what we've explored in the last session or navigating something that needs timely attention. You can reach me by text or voice memo whenever something meaningful arises.</p>
         </div>
       </div>
     </div>
@@ -949,8 +1045,8 @@
       </button>
       <div class="faq-answer" role="region">
         <div class="faq-answer-inner">
-          <p>Coaching engagements start at $3,000 and vary with the length and intensity of the coaching agreement.</p>
-          <p>After we have had a first coaching conversation and are both excited about the idea of doing some great work together, we will discuss what coaching engagement makes the most sense.</p>
+          <p>Coaching engagements start at 3000€ and vary with the length and intensity of the coaching agreement.</p>
+          <p>After we have a first complimentary coaching session and are both excited about the idea of doing some great work together, we will discuss what coaching engagement makes the most sense.</p>
           <p>And I will only offer you to work with me if I know I can help you and I trust you will get a positive return on your investment.</p>
         </div>
       </div>
@@ -964,23 +1060,30 @@
       <div class="faq-answer" role="region">
         <div class="faq-answer-inner">
           <p>No. Part of the transformative nature of this work is stepping into it with full commitment. So under no circumstances will you get a refund.</p>
-          <p>This is why I take enough time in coaching conversations with you to give us both the chance to figure out if we are all in or not.</p>
-          <p>If you are unsure if you want to work with me, or if you have what it takes to create an amazing return on your investment, you are not ready.</p>
+          <p>This is why we will spend time in coaching conversations <strong>before</strong> you transfer any money to give us both the chance to figure out if we are all in or not.</p>
+          <p>If you are unsure if you want my help, or if you have what it takes to create an amazing return on your investment, it's probably better we don't work together.</p>
         </div>
       </div>
     </div>
 
     <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">Do I need to be into gaming?<span class="faq-icon" aria-hidden="true"></span></button>
+      <div class="faq-answer" role="region"><div class="faq-answer-inner"><p>No. RPG stands for role playing game. I love the perspective because it makes things like direction, growth and choice easier to see. You can find it useful without ever having played one.</p><p>And you don't have to use the metaphor at all. The coaching is personal. We work in the way that helps you most.</p></div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" aria-expanded="false">What does seeing life as a game actually mean?<span class="faq-icon" aria-hidden="true"></span></button>
+      <div class="faq-answer" role="region"><div class="faq-answer-inner"><p>For me, it's an invitation to bring more intention, curiosity and playfulness to being human. A quest gives you direction. A skill tree helps you choose what to develop. A wider perspective helps you see more options.</p><p>You still care about your life and the people in it. You can take a difficult experience seriously and give yourself room to learn, try again, and enjoy the journey.</p></div></div>
+    </div>
+
+    <div class="faq-item">
       <button class="faq-question" aria-expanded="false">
-        What if I want hands-on help to grow my business on LinkedIn?
+        What if I want practical help to grow my business on LinkedIn?
         <span class="faq-icon" aria-hidden="true"></span>
       </button>
       <div class="faq-answer" role="region">
         <div class="faq-answer-inner">
-          <p>In the past two years, my wife Diara and I built a business together providing exactly that. The focus is on helping consultants and service-providers get their first or next clients on LinkedIn.</p>
-          <p>At the core of everything we do, we are focusing exclusively on B2B business coaching.</p>
-          <p>So if you are specifically looking for help growing and getting leads on LinkedIn, Diara is your person.</p>
-          <p><a href="https://coliberate.ventures" target="_blank" rel="noopener">coliberate.ventures</a></p>
+          <p>In the past two years, my wife Diara and I built a business together providing exactly that. The focus is on helping consultants and service providers get their first or next clients on LinkedIn.</p>
+          <p>Find more information on <a href="https://coliberate.ventures/" target="_blank" rel="noopener">coliberate.ventures</a>.</p>
         </div>
       </div>
     </div>
@@ -994,6 +1097,12 @@
   items.forEach(function(item) {
     var btn = item.querySelector('.faq-question');
     var answer = item.querySelector('.faq-answer');
+    var index = Array.prototype.indexOf.call(items, item);
+    btn.id = 'faq-question-' + index;
+    answer.id = 'faq-answer-' + index;
+    btn.setAttribute('aria-controls', answer.id);
+    answer.setAttribute('aria-labelledby', btn.id);
+    answer.inert = true;
     btn.addEventListener('click', function() {
       var isOpen = item.classList.contains('open');
       // close all
@@ -1001,10 +1110,12 @@
         i.classList.remove('open');
         i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
         i.querySelector('.faq-answer').style.maxHeight = '0';
+        i.querySelector('.faq-answer').inert = true;
       });
       if (!isOpen) {
         item.classList.add('open');
         btn.setAttribute('aria-expanded', 'true');
+        answer.inert = false;
         answer.style.maxHeight = answer.scrollHeight + 'px';
       }
     });
@@ -1016,12 +1127,15 @@
   <div class="next-grid">
     <div class="next-text">
       <div class="section-label">The Next Step</div>
-      <h2>If any of what you've read here resonates, let's talk.</h2>
-      <a href="contact.html" class="cta-button">Connect</a>
+      <h2>What would you love your next chapter to be about?</h2>
+      <p>If any of what you've read here resonates, let's talk. I'd love to hear where you are and what you want to create.</p>
+      <a href="contact.html" class="cta-button">Let's talk <span aria-hidden="true">↗</span></a>
     </div>
-    <div class="next-image"><img src="images/next-image.png" alt="An open door leading to a green path"></div>
+    <div class="next-image"><img src="images/next-image.png" alt="An open door leading to a green path" width="750" height="750"></div>
   </div>
 </section>
+
+</main>
 
 <footer>
   <p>&copy; 2026 Jan Trautwein &middot; <a href="https://www.linkedin.com/in/jantrautwein/" target="_blank">LinkedIn</a> &middot; <a href="https://www.instagram.com/jan_trautwein/" target="_blank">Instagram</a> &middot; <a href="https://privacy.coliberate.ventures/" target="_blank" class="muted-link">Privacy</a></p>
@@ -1038,56 +1152,26 @@
   const mobileMenu = document.getElementById('mobileMenu');
   const menuOverlay = document.getElementById('menuOverlay');
 
-  function toggleMenu() {
-    hamburger.classList.toggle('active');
-    mobileMenu.classList.toggle('open');
-    menuOverlay.classList.toggle('active');
+  function setMenu(open) {
+    hamburger.classList.toggle('active', open);
+    hamburger.setAttribute('aria-expanded', String(open));
+    hamburger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    mobileMenu.classList.toggle('open', open);
+    mobileMenu.inert = !open;
+    menuOverlay.classList.toggle('active', open);
   }
+  function toggleMenu() { setMenu(!mobileMenu.classList.contains('open')); }
+  mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && mobileMenu.classList.contains('open')) { setMenu(false); hamburger.focus(); }
+  });
+  window.matchMedia('(min-width: 901px)').addEventListener('change', event => { if (event.matches) setMenu(false); });
 
   hamburger.addEventListener('click', toggleMenu);
   menuOverlay.addEventListener('click', toggleMenu);
 </script>
 
 <script>
-(function() {
-  var el = document.getElementById('rotatorWord');
-  if (!el) return;
-  var words = ['founders', 'creators', 'educators'];
-  var idx = 0;
-
-  function runPhase() {
-    // Phase A (immediate): word visible, no underline. Wait 2s.
-    el.classList.remove('underlined');
-    setTimeout(function() {
-      // Phase B: draw underline (2s CSS transition).
-      el.classList.add('underlined');
-      setTimeout(function() {
-        // Phase C: full underline visible for 2s.
-        setTimeout(function() {
-          // Phase D: fade out, swap word, fade in.
-          el.classList.add('fading');
-          setTimeout(function() {
-            // Reset underline INSTANTLY (no transition) while word is hidden
-            el.classList.add('instant');
-            el.classList.remove('underlined');
-            void el.offsetWidth; // force reflow so the reset takes effect
-            el.classList.remove('instant'); // re-enable transition for next draw
-            // Swap word while still faded out
-            idx = (idx + 1) % words.length;
-            el.textContent = words[idx];
-            void el.offsetWidth;
-            // Fade new word back in (no underline yet)
-            el.classList.remove('fading');
-            runPhase();
-          }, 350);
-        }, 2000);
-      }, 2000);
-    }, 2000);
-  }
-
-  // Kick off
-  runPhase();
-})();
 // Tap-to-color for client photos (touch devices); desktop already handled by :hover
 document.querySelectorAll('.client-photo-img[data-toggle]').forEach(function(img) {
   img.addEventListener('click', function() { this.classList.toggle('colored'); });
@@ -1108,5 +1192,44 @@ document.querySelectorAll('.client-photo-img[data-toggle]').forEach(function(img
       });
     });
   </script>
+
+<script>
+(function () {
+  const tablist = document.querySelector('.perspective-tabs');
+  const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+  const panels = tabs.map(tab => document.getElementById(tab.getAttribute('aria-controls')));
+  function select(index, moveFocus) {
+    tabs.forEach((tab, i) => {
+      tab.setAttribute('aria-selected', String(i === index));
+      tab.tabIndex = i === index ? 0 : -1;
+      panels[i].hidden = i !== index;
+    });
+    if (moveFocus) tabs[index].focus();
+  }
+  panels.forEach((panel, i) => {
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('aria-labelledby', tabs[i].id);
+    panel.tabIndex = 0;
+  });
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => select(index, false));
+    tab.addEventListener('keydown', event => {
+      let next = index;
+      if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+      else if (event.key === 'ArrowLeft') next = (index + tabs.length - 1) % tabs.length;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = tabs.length - 1;
+      else return;
+      event.preventDefault();
+      select(next, true);
+    });
+  });
+  select(0, false);
+  tablist.hidden = false;
+  window.addEventListener('resize', () => {
+    document.querySelectorAll('.faq-item.open .faq-answer').forEach(answer => { answer.style.maxHeight = answer.scrollHeight + 'px'; });
+  });
+})();
+</script>
 </body>
 </html>

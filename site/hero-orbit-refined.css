@@ -1,0 +1,62 @@
+/* The original orbit composition with a quieter, wider frame. */
+.hero {
+  --paper: #eceae4;
+  background: var(--paper);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 25px 2% 27px;
+  z-index: 1;
+  border: 1px solid rgba(25, 27, 30, 0.23);
+  pointer-events: none;
+}
+
+.hero .portrait {
+  z-index: 2;
+}
+
+.hero .portrait::before {
+  background: var(--paper);
+}
+
+.back-word {
+  left: 4%;
+}
+
+.nav {
+  padding: 17px 0;
+}
+
+.scroll-cue {
+  bottom: 37px;
+}
+
+.scroll-cue span {
+  font-size: 22px;
+}
+
+@media (max-width: 1000px) {
+  .back-word {
+    left: 4.5%;
+  }
+}
+
+@media (max-width: 800px) {
+  .hero::before {
+    inset: 13px 2% 15px;
+  }
+
+  .nav {
+    padding: 13px 0;
+  }
+
+  .back-word {
+    left: 5%;
+  }
+
+  .scroll-cue {
+    bottom: 24px;
+  }
+}

@@ -1,0 +1,29 @@
+/* A quiet field note frame around the original moving orbit hero. */
+.hero {
+  --paper: #eceae4;
+  background: var(--paper);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 25px 4.5% 27px;
+  z-index: 1;
+  border: 1px solid rgba(25, 27, 30, 0.23);
+  pointer-events: none;
+}
+
+/* The portrait sits above this line, so the left elbow crosses the frame. */
+.hero .portrait {
+  z-index: 2;
+}
+
+.hero .portrait::before {
+  background: var(--paper);
+}
+
+@media (max-width: 800px) {
+  .hero::before {
+    inset: 14px 4% 18px;
+  }
+}

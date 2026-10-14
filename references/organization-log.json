@@ -1,0 +1,578 @@
+{
+  "date": "2026-10-10",
+  "root": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026",
+  "moves": [
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/Archive",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/Archive",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/Graphical Elements",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/Graphical Elements",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/In Use",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/In Use",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/MD files",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/MD files",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/Misc",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/Misc",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/images",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/images",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/Website copy from Notion.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/Website copy from Notion.html",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/bg intro grassy river.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/bg intro grassy river.png",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/color-scheme.txt",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/color-scheme.txt",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/pricing.md",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/pricing.md",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/website-tracker.jsx",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/website-tracker.jsx",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/index_v1.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/index_v1.html",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/index_v10.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/index_v10.html",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/index_v11.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/index_v11.html",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/index_v12.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/index_v12.html",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/index_v13.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/index_v13.html",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/index_v14.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/index_v14.html",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/index_v2.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/index_v2.html",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/index_v4.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/index_v4.html",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/index_v5.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/index_v5.html",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/index_v6.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/index_v6.html",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/index_v7.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/index_v7.html",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/index_v8.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/index_v8.html",
+      "status": "complete"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/index_v9.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/90 Archive/Previous Website/index_v9.html",
+      "status": "complete"
+    }
+  ],
+  "duplicates": [
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Alex.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Alex.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Alex.png",
+      "sha256": "a8cb78ae1742ae677d74cd2bd707dce48a15cb1f974eb19f995f266eed69cc64",
+      "bytes": 60268
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Chaim.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Chaim.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Chaim.png",
+      "sha256": "464a4b0dc98f3735980311013bcb959d1417fbdf12d378a103756f92a3358a8a",
+      "bytes": 65526
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Clint.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Clint.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Clint.png",
+      "sha256": "faebcfc0dd81618d6c079a011942ae00d29184f05cefa7d2598db5d83087151a",
+      "bytes": 59275
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Katie.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Katie.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Katie.png",
+      "sha256": "bb5eb48f40df78710c4316fdfb9624a70945342bbf1964d475a4869a5d36dd27",
+      "bytes": 67184
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Oli.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Oli.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Oli.png",
+      "sha256": "331ded7c1af8fe4ffac54762a6daca840b7bef87f2e5291a82c1f6481aebe343",
+      "bytes": 57812
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Philippe.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Philippe.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Philippe.png",
+      "sha256": "dfe493b6a7370c4e080c4cb3599ed6f20098fa36978392bed843a9418049806f",
+      "bytes": 63006
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Scott.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Scott.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Scott.png",
+      "sha256": "dd6e4ec25bb794e83ed772e0ebea68b977c9920632acff6e94809591a2d13ba1",
+      "bytes": 62196
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Sebastian.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Sebastian.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Sebastian.png",
+      "sha256": "e26c815a5ddd75f68ef1f72fc5cead6cea5e24c341bfeba852e36cb679f72506",
+      "bytes": 52038
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Stafanie.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/AI Website Client Voices - Jan Trautwein/Stafanie.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Stafanie.png",
+      "sha256": "0c235dd34f7800f953c574f0b60f188778fbd7fdf5efce92c70770b53c45ad0c",
+      "bytes": 57882
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Hero Image (cooler).png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Hero Image (cooler).png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Hero Image (cooler).png",
+      "sha256": "65e3d20b9e768f628220791d15bb8f8091b201e6eba1652a63b0a14e96489646",
+      "bytes": 1648375
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/Screenshot 2026-05-26 at 12.14.20 AM.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/Screenshot 2026-05-26 at 12.14.20 AM.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/1991 Growing Up in Stuttgart/Screenshot 2026-05-26 at 12.14.20 AM.png",
+      "sha256": "2f5ebfe12f913c91a511c542a1bd72ff0220cbdefeaffa370532631bd0bbaf31",
+      "bytes": 3325803
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/Teenager.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/Teenager.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/1991 Growing Up in Stuttgart/Teenager.jpg",
+      "sha256": "c8d17119f6c0d34e53d2a13723b052f2f624075db5d344a845330523ae6f8cea",
+      "bytes": 574374
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/brothers jumping in living room.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/brothers jumping in living room.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/1991 Growing Up in Stuttgart/brothers jumping in living room.png",
+      "sha256": "256a11b7fb608d4bed64775bbcbddcff2d554b858c4f0214c513fa54df255bc2",
+      "bytes": 2015556
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/first day of school.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/first day of school.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/1991 Growing Up in Stuttgart/first day of school.png",
+      "sha256": "5b3973bc3f3e38af05f34b8586f454943d2439d57bf6b6799101d1387ec403f0",
+      "bytes": 1821438
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/learning.JPG",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/learning.JPG",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/1991 Growing Up in Stuttgart/learning.JPG",
+      "sha256": "c53f49bd606cdff1ddf25b711047f91dad229772b65410644c102699eafdba1c",
+      "bytes": 698355
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/mum and brothers (in costumes).png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/mum and brothers (in costumes).png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/1991 Growing Up in Stuttgart/mum and brothers (in costumes).png",
+      "sha256": "a020e57390e290069aac614ff0c2e49bc175216cbe1f23b9a5c394db0c08aed7",
+      "bytes": 3326928
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/speaker system.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/speaker system.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/1991 Growing Up in Stuttgart/speaker system.png",
+      "sha256": "27605d7dbb143266475ba41d0f10ddffb4cb8b1952f2d97d2b0af926b6970326",
+      "bytes": 572620
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/teenager with glove.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/1991 Growing Up in Stuttgart/teenager with glove.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/1991 Growing Up in Stuttgart/teenager with glove.jpg",
+      "sha256": "13d11f5b28b463a6c40970d5750a75bd10484b13aacbb72f89d7f0d82ece6971",
+      "bytes": 617443
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2010 Physics, and the First Startup/DSC_1240.JPG",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2010 Physics, and the First Startup/DSC_1240.JPG",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2010 Physics, and the First Startup/DSC_1240.JPG",
+      "sha256": "4393d2a299929ad5880c5ab6d307f5598906b806f3016fce1777ad87a35e1767",
+      "bytes": 296022
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2010 Physics, and the First Startup/IMG-20160922-WA0007.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2010 Physics, and the First Startup/IMG-20160922-WA0007.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2010 Physics, and the First Startup/IMG-20160922-WA0007.jpg",
+      "sha256": "a3e5052664ddc5c666bb8aa06d74dc5a079ff2d8134cba2711ee6ccf32635531",
+      "bytes": 235011
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2010 Physics, and the First Startup/IMG_20160624_123833.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2010 Physics, and the First Startup/IMG_20160624_123833.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2010 Physics, and the First Startup/IMG_20160624_123833.jpg",
+      "sha256": "4eca2f9d5d7558d29de3018659ed033e43fde0cfed521162db801607d6440444",
+      "bytes": 621853
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2017 The Year Everything Shifted/20170402105444.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2017 The Year Everything Shifted/20170402105444.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2017 The Year Everything Shifted/20170402105444.jpg",
+      "sha256": "a8bf950b5ccfe4204d667dc3458be60aff7bee9b548277b2f1c5cf13b588ace0",
+      "bytes": 296632
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2017 The Year Everything Shifted/20170527_171155.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2017 The Year Everything Shifted/20170527_171155.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2017 The Year Everything Shifted/20170527_171155.jpg",
+      "sha256": "2db2e77c1b9344dbfeca153792425b16cd8246b979174a0cae5852053f51c133",
+      "bytes": 2955094
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2017 The Year Everything Shifted/20171114_083543.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2017 The Year Everything Shifted/20171114_083543.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2017 The Year Everything Shifted/20171114_083543.jpg",
+      "sha256": "0a8b15c0ee1e0f4f0936354971f027eede32241a320781740dcd583001ea5ccf",
+      "bytes": 2693299
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2017 The Year Everything Shifted/AER shot campervan v2.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2017 The Year Everything Shifted/AER shot campervan v2.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2017 The Year Everything Shifted/AER shot campervan v2.jpg",
+      "sha256": "a4d0c278eeed397d343de9769ebebdb34cc504862af604aa0b32ce293da5fb5d",
+      "bytes": 9870927
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2018 aervideo — Last Startup/20170422_152545.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2018 aervideo — Last Startup/20170422_152545.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2018 aervideo — Last Startup/20170422_152545.jpg",
+      "sha256": "b760a323ca6db13b83f1008d4576813e359b5a68890ac2e70e1405f004ca8760",
+      "bytes": 838585
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2018 aervideo — Last Startup/SAM_0024.JPG",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2018 aervideo — Last Startup/SAM_0024.JPG",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2018 aervideo — Last Startup/SAM_0024.JPG",
+      "sha256": "d7e0ae06e56da273b67797da407d07cd5893129dc0eb896d8b04d4587f9b9a24",
+      "bytes": 5714956
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2018 aervideo — Last Startup/Screenshot 2026-05-26 at 7.16.40 PM.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2018 aervideo — Last Startup/Screenshot 2026-05-26 at 7.16.40 PM.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2018 aervideo — Last Startup/Screenshot 2026-05-26 at 7.16.40 PM.png",
+      "sha256": "98a097d8e15457fc84807511783f1172dbe3c7d86a1986ada07a6d8c6c38a5e6",
+      "bytes": 1037668
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2018-2 Life-Purpose Unlocked/10.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2018-2 Life-Purpose Unlocked/10.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2018-2 Life-Purpose Unlocked/10.png",
+      "sha256": "91ad9a72f112320356d2d238b04dbb68f68ba06a570c354033c83c750903d66a",
+      "bytes": 1300916
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2018-2 Life-Purpose Unlocked/5.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2018-2 Life-Purpose Unlocked/5.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2018-2 Life-Purpose Unlocked/5.png",
+      "sha256": "63ff09b6948bd84e67cd5e3e0cbd0b2e3c5fc379fe182b593b85a9a657978c18",
+      "bytes": 921995
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2018-2 Life-Purpose Unlocked/IMG-20190526-WA0048.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2018-2 Life-Purpose Unlocked/IMG-20190526-WA0048.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2018-2 Life-Purpose Unlocked/IMG-20190526-WA0048.jpg",
+      "sha256": "1576a1aaeb8fddd9dbbbe56efc0c84d75ebcade841170244e69fc123a8f86ae0",
+      "bytes": 88154
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2018-2 Life-Purpose Unlocked/IMG_0270.PNG",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2018-2 Life-Purpose Unlocked/IMG_0270.PNG",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2018-2 Life-Purpose Unlocked/IMG_0270.PNG",
+      "sha256": "ba11797b657721691adbfdc77b1da4b74b563480773e40def8380ac16e3407bf",
+      "bytes": 2926206
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2018-2 Life-Purpose Unlocked/_MG_9584-COLLAGE.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2018-2 Life-Purpose Unlocked/_MG_9584-COLLAGE.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2018-2 Life-Purpose Unlocked/_MG_9584-COLLAGE.jpg",
+      "sha256": "ed21de12d9886f044d73a934bf174a808e67c534c49845c5ad7400258a8752e8",
+      "bytes": 502544
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2019 Going Deeper/20190810_171517.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2019 Going Deeper/20190810_171517.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2019 Going Deeper/20190810_171517.jpg",
+      "sha256": "27c023cb045b24a383c9cc14c0b5b44b400bb2867c8680e073aed4d470717ec3",
+      "bytes": 2228496
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2019 Going Deeper/650e9298-8798-4f15-9578-aef432edca63.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2019 Going Deeper/650e9298-8798-4f15-9578-aef432edca63.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2019 Going Deeper/650e9298-8798-4f15-9578-aef432edca63.jpg",
+      "sha256": "92fe58f1b456ec5a7930641928656d3e5d441dd4cd14f83f393ade2c87adbbfb",
+      "bytes": 111079
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2019 Going Deeper/Forest Meditation.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2019 Going Deeper/Forest Meditation.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2019 Going Deeper/Forest Meditation.jpg",
+      "sha256": "eb3c86a8e61eb5dd4a7054766dc108a2c59069ea3ca8be0671c30865a6db4bd3",
+      "bytes": 420032
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2023 New Home in Portugal/57280ddf-fae1-45f2-98bb-94ac4e14a866.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2023 New Home in Portugal/57280ddf-fae1-45f2-98bb-94ac4e14a866.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2023 New Home in Portugal/57280ddf-fae1-45f2-98bb-94ac4e14a866.jpg",
+      "sha256": "91835e6bdf79c3ccee913d6ec60dd5fd9cd31845524e5a2cbb103009c009d560",
+      "bytes": 330866
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2023 New Home in Portugal/95b2c37c-e19a-44f7-a075-f9f4863f783e.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2023 New Home in Portugal/95b2c37c-e19a-44f7-a075-f9f4863f783e.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2023 New Home in Portugal/95b2c37c-e19a-44f7-a075-f9f4863f783e.jpg",
+      "sha256": "1357aebcd94813300a8c3d3a52e90b891838f793f53366dbaf0fce60a4ca3243",
+      "bytes": 494468
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2023 New Home in Portugal/IMG_9998.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2023 New Home in Portugal/IMG_9998.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2023 New Home in Portugal/IMG_9998.jpg",
+      "sha256": "be2f09cfa76a25f693e2efc4cef61403504954ad401684a2a07f70453b174af1",
+      "bytes": 426923
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2023 New Home in Portugal/Screenshot 2026-05-27 at 4.09.33 PM.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2023 New Home in Portugal/Screenshot 2026-05-27 at 4.09.33 PM.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2023 New Home in Portugal/Screenshot 2026-05-27 at 4.09.33 PM.png",
+      "sha256": "f47238bebf0691d9c4f2a608300cb15523106d47a7b956d9cfc2912b4438377b",
+      "bytes": 2738801
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2023 New Home in Portugal/b0980c2c-db26-4555-bffc-a723ff975b3b.jpg",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2023 New Home in Portugal/b0980c2c-db26-4555-bffc-a723ff975b3b.jpg",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2023 New Home in Portugal/b0980c2c-db26-4555-bffc-a723ff975b3b.jpg",
+      "sha256": "093d998a290a99cd775350a8d7bf04b3fbd9f9e8fdfd8a18922d84b618a8b404",
+      "bytes": 1206797
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/Timeline/2023 New Home in Portugal/❤️Jan and Diara-14.JPG",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/Timeline/2023 New Home in Portugal/❤️Jan and Diara-14.JPG",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/Timeline/2023 New Home in Portugal/❤️Jan and Diara-14.JPG",
+      "sha256": "453c0fbef63f03b76529474aa658e54b344a44ea1b068ff012d79c3b0c121b14",
+      "bytes": 3294218
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/about-me AI.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/about-me AI.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/about-me AI.png",
+      "sha256": "c5c6339ce0f50f2b216ceee440aa0fddcfcb58b8dcd280f04e33c5093cd4157b",
+      "bytes": 536171
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/holistic-growth AI.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/holistic-growth AI.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/holistic-growth AI.png",
+      "sha256": "d0e093209acff1cc57f265f46ba9891b90c1578bbde3d5cd652e3d6ffcc4cb5d",
+      "bytes": 498939
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/how-i-work AI.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/how-i-work AI.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/how-i-work AI.png",
+      "sha256": "bfeb56d33f9b758911be8b9d441de54a2cc32d94bbc773b7f201a9933b92241a",
+      "bytes": 1807415
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Assets/next-step AI.png",
+      "destination": "/Users/jantrautwein/.Trash/Claude Website duplicates 2026-10-10/AI Website/Assets/next-step AI.png",
+      "status": "complete",
+      "retained": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/next-step AI.png",
+      "sha256": "9921bb32fdab32be2908f9cd452eb5f1e260c51c937c3a3d63e73e963d9e92e9",
+      "bytes": 283474
+    }
+  ],
+  "copies": [
+    {
+      "source": "outputs/stone-bronze.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/site/index.html"
+    },
+    {
+      "source": "work/stone-bronze-before-portrait.html",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/archive/index-before-bronze-portrait.html"
+    },
+    {
+      "source": "outputs/assets/jan-bronze.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/site/assets/jan-bronze.png"
+    },
+    {
+      "source": "outputs/assets/journey.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/site/assets/journey.png"
+    },
+    {
+      "source": "outputs/jan-subtle-bronze.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/01 Jan/jan-bronze.png"
+    },
+    {
+      "source": "outputs/assets/journey.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/03 Journey/journey-landscape.png"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Alex.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/02 Testimonials/Named set to review/Alex.png"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Chaim.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/02 Testimonials/Named set to review/Chaim.png"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Clint.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/02 Testimonials/Named set to review/Clint.png"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Katie.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/02 Testimonials/Named set to review/Katie.png"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Oli.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/02 Testimonials/Named set to review/Oli.png"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Philippe.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/02 Testimonials/Named set to review/Philippe.png"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Scott.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/02 Testimonials/Named set to review/Scott.png"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Sebastian.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/02 Testimonials/Named set to review/Sebastian.png"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/AI Deploy/AI Website Client Voices - Jan Trautwein/Stafanie.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/02 Testimonials/Named set to review/Stafanie.png"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Client Voices (warmer tones)/1.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/02 Testimonials/Warmer variants to review/1.png"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Client Voices (warmer tones)/2.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/02 Testimonials/Warmer variants to review/2.png"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Client Voices (warmer tones)/3.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/02 Testimonials/Warmer variants to review/3.png"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Client Voices (warmer tones)/4.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/02 Testimonials/Warmer variants to review/4.png"
+    },
+    {
+      "source": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/AI Website/Client Voices (warmer tones)/5.png",
+      "destination": "/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website/assets/02 Testimonials/Warmer variants to review/5.png"
+    }
+  ]
+}

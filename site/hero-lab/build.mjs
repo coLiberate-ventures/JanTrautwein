@@ -1,0 +1,26 @@
+import {createRequire} from "node:module";
+import {mkdir,copyFile,readdir} from "node:fs/promises";
+import path from "node:path";
+const base="/Users/jantrautwein/Library/Mobile Documents/com~apple~CloudDocs/3 - Resources (macbook)/Claude Website 2026/01 New Website";
+const repo=path.join(base,"tools/magicui");
+const require=createRequire(path.join(repo,"node_modules/.pnpm/node_modules/esbuild/package.json"));
+const {build}=require("esbuild");
+await mkdir(path.join(base,"site/hero/assets/logos"),{recursive:true});
+await build({entryPoints:[path.join(base,"site/hero-lab/App.jsx")],bundle:true,minify:true,jsx:"automatic",external:["*.png"],outfile:path.join(base,"site/hero/app.js"),nodePaths:[path.join(repo,"apps/www/node_modules"),path.join(repo,"node_modules/.pnpm/node_modules")],define:{"process.env.NODE_ENV":'"production"'}});
+await copyFile("/Users/jantrautwein/.codex/generated_images/01a124fe-09c5-79c2-84fe-c6b47dfa63a0/exec-abf9425c-19cc-479d-bda1-4f330a3172a1.png",path.join(base,"site/hero/assets/jan-cutout.png"));
+await copyFile("/Users/jantrautwein/Pictures/Pics of me/IMG_5391.jpg",path.join(base,"assets/01 Jan/IMG_5391-original.jpg"));
+await copyFile(path.join(base,"site/hero/assets/jan-cutout.png"),path.join(base,"assets/01 Jan/jan-hero-cutout-v1.png"));
+await copyFile(path.join(base,"site/assets/journey.png"),path.join(base,"site/hero/assets/journey.png"));
+const logodir=path.join(base,"../DEPLOY/images/logos");
+for(const file of await readdir(logodir))await copyFile(path.join(logodir,file),path.join(base,"site/hero/assets/logos",file));
+const out="/Users/jantrautwein/Documents/Codex/2026-10-10/gi/outputs";
+await mkdir(path.join(out,"hero/assets/logos"),{recursive:true});
+await mkdir(path.join(out,"hero/assets/testimonials"),{recursive:true});
+for(const file of ["app.js","app.css"])await copyFile(path.join(base,"site/hero",file),path.join(out,"hero",file));
+for(const file of ["jan-cutout.png","journey.png"])await copyFile(path.join(base,"site/hero/assets",file),path.join(out,"hero/assets",file));
+for(const file of await readdir(path.join(base,"site/hero/assets/logos")))await copyFile(path.join(base,"site/hero/assets/logos",file),path.join(out,"hero/assets/logos",file));
+for(const file of await readdir(path.join(base,"site/hero/assets/testimonials")))await copyFile(path.join(base,"site/hero/assets/testimonials",file),path.join(out,"hero/assets/testimonials",file));
+for(const page of ["hero-motion.html","coaching.html"])await copyFile(path.join(base,"site",page),path.join(out,page));
+await copyFile(path.join(repo,"LICENSE.md"),path.join(out,"hero/MagicUI-LICENSE.md"));
+console.log("Hero built with Magic UI BlurFade. Original and edited assets saved. Preview refreshed.");
+

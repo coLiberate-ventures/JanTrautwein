@@ -9,6 +9,15 @@ import { AIMentoringSection } from "./AIMentoringSection";
 import { CoachingPage } from "./CoachingPage";
 import { ExploreWorkingTogetherPage } from "./ExploreWorkingTogetherPage";
 import { SiteFooter } from "./SiteFooter";
+import { ContactPage } from "./ContactPage";
+import { ClientVoicesPage } from "./ClientVoicesPage";
+
+if (!document.querySelector('script[src="analytics.js"]')) {
+ const analytics=document.createElement("script");analytics.src="analytics.js";analytics.defer=true;document.head.appendChild(analytics);
+}
+if (!document.querySelector('link[rel="icon"]')) {
+ const favicon=document.createElement("link");favicon.rel="icon";favicon.type="image/svg+xml";favicon.href="favicon.svg";document.head.appendChild(favicon);
+}
 
 const logos = [["apple.svg","Apple",true],["climate-farmers.png","Climate Farmers",true],["liminal.png","Liminal",false],["amazon.svg","Amazon",true],["kologica.png","Kológica",true],["natural-symbiosis.png","Natural Symbiosis",false],["superoperator.svg","Superoperator",true],["motorworld.png","Motorworld",true],["wildlife-conservation-society.png","Wildlife Conservation Society",true],["catalyst-studio.png","Catalyst Studio",false],["evergreen-labs.png","Evergreen Labs",true],["parlance.png","Parlance",true],["adventures-in-connection.png","Adventures in Connection",false]];
 const words=["LIVE","GROW","ENJOY","CREATE"];
@@ -60,7 +69,7 @@ function HomePage(){
  return <div className={moving?"page":"page still"}>
  <a className="skip" href="#intro">Skip to introduction</a>
  <div className="prototype"><span>MAIN WEBSITE CONCEPT · STONE & BRONZE</span><div className="preview-controls"><label htmlFor="headline-style">But also</label><select id="headline-style" value={headlineStyle} onChange={e=>setHeadlineStyle(e.target.value)}>{Object.entries(headlineStyles).map(([value,label])=><option key={value} value={value}>{label}</option>)}</select><label htmlFor="word-style">Word movement</label><select id="word-style" value={wordStyle} onChange={e=>setWordStyle(e.target.value)}><option value="flip">1 · Soft flip</option><option value="glide">2 · Vertical glide</option><option value="dissolve">3 · Quiet dissolve</option><option value="letters">4 · Letter cascade</option></select><button type="button" aria-pressed={paused||!!reduced} onClick={()=>setPaused(!paused)}>{reduced?"Reduced motion enabled":paused?"Enable movement":"Pause movement"}</button></div></div>
- <header className="nav"><a className="brand" href="#top"><span aria-hidden="true">△</span> Jan Trautwein</a><nav aria-label="Main navigation"><a href="coaching.html">Coaching</a><a href="story.html">My Story</a><a href="#ai">AI mentoring</a><a href="#journey">Journey</a><a className="nav-contact" href="https://jantrautwein.com/contact.html">Let’s talk <span aria-hidden="true">↗</span></a></nav></header>
+ <header className="nav"><a className="brand" href="#top"><span aria-hidden="true">△</span> Jan Trautwein</a><nav aria-label="Main navigation"><a href="coaching.html">Coaching</a><a href="client-voices.html">Client voices</a><a href="story.html">My Story</a><a href="#ai">AI mentoring</a><a href="#journey">Journey</a><a className="nav-contact" href="contact.html">Let’s talk <span aria-hidden="true">↗</span></a></nav></header>
  <main>
  <section className="hero" id="top" ref={stage} aria-label="Introduction to Jan">
  <div className="back-word" data-word={words[word]} aria-hidden="true"><AnimatePresence mode="wait"><motion.span className="rotating-word" key={words[word]+wordStyle} initial={moving?wordStyles[wordStyle].initial:false} animate={wordStyles[wordStyle].animate} exit={moving?wordStyles[wordStyle].exit:{opacity:1}} transition={{duration:moving?.65:0,ease:[.22,1,.36,1]}}>{wordStyle==="letters"?words[word].split("").map((letter,i)=><motion.span className="word-letter" key={i} initial={moving?{opacity:0,y:25,rotateX:55}:false} animate={{opacity:1,y:0,rotateX:0}} transition={{duration:moving?.65:0,delay:moving?i*.09:0,ease:[.22,1,.36,1]}}>{letter}</motion.span>):words[word]}</motion.span></AnimatePresence></div>
@@ -82,5 +91,5 @@ function HomePage(){
  </div>
 }
 const root=document.getElementById("root");
-createRoot(root).render(root.dataset.page==="coaching"?<CoachingPage/>:root.dataset.page==="explore"?<ExploreWorkingTogetherPage/>:<HomePage/>);
+createRoot(root).render(root.dataset.page==="coaching"?<CoachingPage/>:root.dataset.page==="explore"?<ExploreWorkingTogetherPage/>:root.dataset.page==="contact"?<ContactPage/>:root.dataset.page==="voices"?<ClientVoicesPage/>:<HomePage/>);
 

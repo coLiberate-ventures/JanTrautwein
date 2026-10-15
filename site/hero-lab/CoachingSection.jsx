@@ -24,7 +24,7 @@ export function CoachingSection({moving}) {
     <p className="coaching-description">You’re building something that matters to you. And you want the life around it to feel meaningful too.</p>
     <p className="coaching-description">You have a partner who challenges your thinking, holds you accountable, and helps you follow through. A second pair of eyes and another mind working alongside yours to find creative solutions.</p>
     <div className="coaching-themes" aria-label="Themes we can explore together">{themes.map(({number,title,text})=><details className="coaching-theme" key={number}><summary><span className="theme-number">{number}</span><span>{title}</span><span className="theme-toggle" aria-hidden="true"/></summary><p>{text}</p></details>)}</div>
-    <div className="coaching-invitation"><p>Curious about working together?</p><a className="button" href="https://jantrautwein.com/contact.html">Let’s have a conversation <span aria-hidden="true">↗</span></a></div>
+    <div className="coaching-invitation"><p>Curious about working together?</p><a className="button" href="contact.html">Let’s have a conversation <span aria-hidden="true">↗</span></a></div>
    </div>
   </motion.div>
  </section>

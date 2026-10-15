@@ -15,7 +15,7 @@ export function AIMentoringSection(){
    <p>We start with me looking over your shoulder: seeing how you work, what takes your time, and what you keep doing yourself.</p>
    <p>Together, we identify where AI could make a real difference, which processes you no longer need to handle manually, and what you could create with the time and energy you get back.</p>
    <p className="ai-beta">AI has changed how I work and live. I’m now opening this up to a few first clients, combining mentoring with practical implementation where it makes sense.</p>
-   <a className="quiet-link" href="https://jantrautwein.com/contact.html">Let’s explore what’s possible <span aria-hidden="true">↗</span></a>
+   <a className="quiet-link" href="contact.html">Let’s explore what’s possible <span aria-hidden="true">↗</span></a>
   </div>
   <div className="ai-examples" aria-label="Examples of what we could explore"><p className="eyebrow">WHAT COULD THIS LOOK LIKE?</p>{examples.map(({number,title,text})=><article key={number}><span className="example-number" aria-hidden="true">{number}</span><div><h3>{title}</h3><p>{text}</p></div></article>)}</div>
  </section>

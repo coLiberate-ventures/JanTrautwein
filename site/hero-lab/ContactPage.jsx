@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { SiteFooter } from "./SiteFooter";
 
-const endpoint="https://journey.jantrautwein.com/api/coaching-applications";
+const endpoint="https://api.web3forms.com/submit";
+const accessKey="a077514e-a332-4b1d-aa27-c6aaafed462a";
 
 export function ContactPage(){
  const [status,setStatus]=useState("idle");
@@ -10,11 +11,14 @@ export function ContactPage(){
   setStatus("sending");
   try{
    const form=event.currentTarget;
-   const data=Object.fromEntries(new FormData(form).entries());
-   const response=await fetch(endpoint,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:data.name,email:data.email,message:data.message,source:"jantrautwein.com contact form"})});
+   const data=new FormData(form);
+   data.set("access_key",accessKey);
+   data.set("subject","New message from jantrautwein.com");
+   data.set("from_name","jantrautwein.com contact form");
+   const response=await fetch(endpoint,{method:"POST",headers:{Accept:"application/json"},body:data});
    const result=await response.json().catch(()=>({}));
-   if(!response.ok||result.success===false)throw new Error("Form delivery failed");
-   event.currentTarget.reset();setStatus("sent");
+   if(!response.ok||result.success!==true)throw new Error("Form delivery failed");
+   form.reset();setStatus("sent");
   }catch{setStatus("error");}
  };
  return <div className="page contact-page">

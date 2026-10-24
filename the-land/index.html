@@ -1032,10 +1032,41 @@ if (!Object.keys(scenarios).length) {
     try { await store.write(id, sc); } catch {}
   }
 }
+// yurts may only stand inside the land: move any saved yurt outside it to a free spot in the north, near yurt 19
+function relocateOutside(ys, spacing, buffer) {
+  const bad = ys.filter(y => !validSpot(y.x, y.y)); if (!bad.length) return 0;
+  const ok = ys.filter(y => validSpot(y.x, y.y)), anchor = SEED[18] || { x: 154, y: 142 };
+  const clearOf = (x, y, sp) => ok.every(o => (o.x - x) ** 2 + (o.y - y) ** 2 >= sp * sp);
+  const cands = [];
+  for (let dx = -160; dx <= 160; dx += 2) for (let dy = -160; dy <= 160; dy += 2) cands.push([anchor.x + dx, anchor.y + dy, dx * dx + dy * dy + (dy < 0 ? 2500 : 0)]);
+  cands.sort((a, b) => a[2] - b[2]);
+  let moved = 0;
+  for (const y of bad) {
+    let spot = null;
+    for (const sp of [spacing, 16, 12]) {
+      for (const [x, yy] of cands) {
+        if (!clearOf(x, yy, sp) || !validSpot(x, yy)) continue;
+        if (buffer && riverDist(x, yy) < buffer) continue;
+        if (buildingBoxes.some(bb => Math.hypot(Math.max(bb.x0 - x, 0, x - bb.x1), Math.max(bb.y0 - yy, 0, yy - bb.y1)) < DECK_R + .8)) continue;
+        spot = [x, yy]; break;
+      }
+      if (spot) break;
+    }
+    if (!spot) continue;
+    y.x = spot[0]; y.y = spot[1]; ok.push(y); moved++;
+  }
+  return moved;
+}
+let movedTotal = 0;
+for (const [id, sc] of Object.entries(scenarios)) {
+  const ys = unpackYurts(sc), n = relocateOutside(ys, sc.spacing ?? 20, sc.buffer ?? 50);
+  if (n) { movedTotal += n; sc.yf = ys.flatMap(y => [+y.x.toFixed(2), +y.y.toFixed(2), +y.r.toFixed(3)]); sc.updated = Date.now(); try { await store.write(id, sc); } catch {} }
+}
 const last = prefs().last;
 await openScenario(scenarios[last] ? last : Object.keys(scenarios).sort((a, b) => (scenarios[b].updated || 0) - (scenarios[a].updated || 0))[0]);
 setSave(store.kind === 'db' ? 'ok' : 'local', store.kind === 'db' ? 'Your scenarios are saved to your account' : 'Your scenarios are saved in this browser');
 setTool(tool);
+if (movedTotal) setTimeout(() => toast(`Moved ${movedTotal} yurt${movedTotal > 1 ? 's' : ''} that stood outside the land to the north, near yurt 19.`), 800);
 try { if (touch && !localStorage.getItem('the-land-help-seen')) { localStorage.setItem('the-land-help-seen', '1'); setTimeout(openHelp, 600); } } catch {}
 progress(1); $('loading').hidden = true;
 window.__planner = { persp, orbit, topCam, setView, get yurts() { return yurts; } };

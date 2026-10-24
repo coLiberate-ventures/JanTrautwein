@@ -961,7 +961,7 @@ function inlineForm(html, onOk) {
   $('fOk').onclick = async () => { f.hidden = true; await onOk(f); }; $('fNo').onclick = () => { f.hidden = true; };
 }
 $('scnNew').onclick = () => inlineForm(`<label class="lab" for="fName">Name of the new scenario</label><input type="text" id="fName" maxlength="60" value="Plan ${Object.keys(scenarios).length + 1}">
-  <label class="row" style="gap:7px"><input type="radio" name="fStart" id="fEmpty" checked> Start empty</label><label class="row" style="gap:7px"><input type="radio" name="fStart" id="fSeed"> Start from the original 26 yurts</label>`,
+  <label class="row" style="gap:7px"><input type="radio" name="fStart" id="fEmpty" checked> Start empty</label><label class="row" style="gap:7px"><input type="radio" name="fStart" id="fSeed"> Start from the suggested layout (26 yurts)</label>`,
   async () => { const name = $('fName').value.trim() || 'New plan'; await createScenario(name, $('fSeed').checked ? SEED : [], settings); toast(`Created "${name}".`); });
 $('scnDup').onclick = () => inlineForm(`<label class="lab" for="fName">Name of the copy</label><input type="text" id="fName" maxlength="60" value="${escapeHtml(current().name)} (copy)">`,
   async () => { const name = $('fName').value.trim() || 'Copy'; await createScenario(name, yurts, settings); toast(`Copied to "${name}".`); });
@@ -1008,6 +1008,14 @@ try { scenarios = await store.list(); } catch { store = localStore; scenarios = 
 if (!Object.keys(scenarios).length) {
   const id = newId(); scenarios[id] = { name: 'Starting layout', yf: SEED.flatMap(y => [y.x, y.y, y.r]), spacing: 20, buffer: 50, keepTrees: true, count: SEED.length, updated: Date.now() };
   try { await store.write(id, scenarios[id]); } catch { store = localStore; await localStore.write(id, scenarios[id]); }
+}
+// upgrade an untouched old starting layout (it had 5 yurts outside the real outline) to the new one
+{
+  const old = (site.seed_v1 || []).flat(), same = (a, b) => a.length === b.length && a.every((v, i) => Math.abs(v - b[i]) < 0.02);
+  for (const [id, sc] of Object.entries(scenarios)) if (sc.name === 'Starting layout' && same(sc.yf || [], old)) {
+    sc.yf = SEED.flatMap(y => [y.x, y.y, y.r]); sc.updated = Date.now();
+    try { await store.write(id, sc); } catch {}
+  }
 }
 const last = prefs().last;
 await openScenario(scenarios[last] ? last : Object.keys(scenarios).sort((a, b) => (scenarios[b].updated || 0) - (scenarios[a].updated || 0))[0]);

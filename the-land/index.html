@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Place yurts on a 3D model of The Land in Marvão and see how many fit.">
+<link rel="icon" href="/favicon.svg">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>The Land Yurt Planner</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: full-bleed 3D land, one floating field-notebook panel (bottom sheet on phones), a selected-yurt card. */
+:root{
+  --bg:#eef1ea; --panel:#fbfcf8; --fg:#1d2620; --muted:#5b685e; --line:#dbe1d5; --chip:#eef2ea;
+  --accent:#b9821a; --accent-ink:#ffffff; --river:#2f63a8; --ok:#3d7a4b; --warn:#c0570f; --bad:#b42323;
+  --shadow:0 10px 30px rgba(24,36,26,.16),0 2px 6px rgba(24,36,26,.08);
+  --f-display:"Young Serif",Georgia,"Times New Roman",serif;
+  --f-body:"Figtree",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121613; --panel:#181d19; --fg:#e7ebe4; --muted:#9ba89d; --line:#2c342e; --chip:#222924;
+  --accent:#e0ae42; --accent-ink:#1a1405; --river:#79a6e6; --ok:#76b886; --warn:#f09a55; --bad:#f07575;
+  --shadow:0 10px 30px rgba(0,0,0,.45),0 2px 6px rgba(0,0,0,.3); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121613; --panel:#181d19; --fg:#e7ebe4; --muted:#9ba89d; --line:#2c342e; --chip:#222924;
+  --accent:#e0ae42; --accent-ink:#1a1405; --river:#79a6e6; --ok:#76b886; --warn:#f09a55; --bad:#f07575;
+  --shadow:0 10px 30px rgba(0,0,0,.45),0 2px 6px rgba(0,0,0,.3); color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:14px;overflow:hidden;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+#stage{position:fixed;inset:0;touch-action:none}
+#stage canvas{display:block;width:100%;height:100%;outline:none}
+#labels{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.place{position:absolute;transform:translate(-50%,-100%);font:600 11.5px/1.2 var(--f-body);color:#fff;
+  text-shadow:0 1px 2px rgba(0,0,0,.85),0 0 6px rgba(0,0,0,.5);white-space:nowrap;letter-spacing:.01em}
+.place::after{content:"";display:block;width:5px;height:5px;border-radius:50%;background:#fff;margin:3px auto 0;box-shadow:0 0 3px rgba(0,0,0,.8)}
+
+.panel{position:fixed;z-index:5;top:calc(16px + env(safe-area-inset-top,0px));left:max(16px,env(safe-area-inset-left,0px));
+  width:330px;max-height:calc(100% - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));overflow:auto;
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
+  display:flex;flex-direction:column}
+.sec{padding:14px 16px;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line)}
+.sec:first-child{border-top:0}
+.eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{font-family:var(--f-display);font-weight:400;font-size:24px;line-height:1.1;margin:0;text-wrap:balance}
+.brand{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.grow{flex:1;min-width:0}
+label.lab{font-size:12px;color:var(--muted);font-weight:600}
+select,input[type=text]{font:inherit;color:var(--fg);background:var(--chip);border:1px solid var(--line);border-radius:8px;padding:7px 9px;width:100%;min-width:0}
+button{font:inherit;color:var(--fg);background:var(--chip);border:1px solid var(--line);border-radius:8px;padding:7px 10px;cursor:pointer;font-weight:600;font-size:13px;white-space:nowrap}
+button:hover{border-color:var(--muted)}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+button.ghost{background:transparent}
+button.danger{color:var(--bad)}
+button:disabled{opacity:.45;cursor:default}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:var(--chip);border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px}
+.seg button{border:0;background:transparent;border-radius:7px;padding:7px 6px}
+.seg button[aria-pressed="true"]{background:var(--fg);color:var(--panel);box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.count{display:flex;align-items:baseline;gap:10px}
+.count b{font-family:var(--f-display);font-weight:400;font-size:58px;line-height:.9;font-variant-numeric:tabular-nums}
+.count span{font-size:15px;color:var(--muted);font-weight:500}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--chip);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.chip.warn .dot{background:var(--warn)} .chip.bad .dot{background:var(--bad)} .chip.tree .dot{background:#5f8a3a}
+.chip.zero{opacity:.5}
+.slider{display:flex;flex-direction:column;gap:4px}
+.slider .top{display:flex;justify-content:space-between;font-size:12.5px}
+.slider .top b{font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;font-size:13px}
+.checks label{display:flex;gap:7px;align-items:center;cursor:pointer}
+input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px}
+.note{font-size:12px;color:var(--muted);line-height:1.45}
+.save{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.save i{width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block}
+.save.busy i{background:var(--accent)} .save.local i{background:var(--warn)}
+.confirm{background:var(--chip);border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:8px;font-size:13px}
+.toggle-sheet{display:none}
+
+.card{position:fixed;z-index:6;right:max(16px,env(safe-area-inset-right,0px));top:calc(16px + env(safe-area-inset-top,0px));width:270px;
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.card h2{font-family:var(--f-display);font-weight:400;font-size:22px;margin:0}
+.kv{display:grid;grid-template-columns:1fr auto;gap:4px 12px;font-size:13px}
+.kv dt{color:var(--muted)} .kv dd{margin:0;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.issues{display:flex;flex-direction:column;gap:4px;font-size:12.5px}
+.issues div{display:flex;gap:7px;align-items:center}
+.hint{position:fixed;z-index:4;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom,0px));
+  background:rgba(20,26,22,.82);color:#fff;border-radius:999px;padding:8px 16px;font-size:13px;font-weight:500;pointer-events:none;
+  max-width:calc(100% - 32px);text-align:center;backdrop-filter:blur(6px)}
+.toast{position:fixed;z-index:9;left:50%;transform:translateX(-50%);top:calc(18px + env(safe-area-inset-top,0px));background:var(--fg);color:var(--panel);
+  border-radius:10px;padding:10px 16px;font-size:13px;font-weight:600;box-shadow:var(--shadow);max-width:calc(100% - 32px)}
+.compass{position:fixed;z-index:4;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));
+  width:46px;height:46px;border-radius:50%;background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);display:grid;place-items:center}
+.compass svg{width:30px;height:30px}
+#loading{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:var(--bg)}
+#loading div{display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--muted)}
+#loading h1{color:var(--fg)}
+.bar{width:220px;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+kbd{font:600 11px var(--f-body);background:var(--chip);border:1px solid var(--line);border-radius:4px;padding:0 4px}
+
+@media (max-width:720px){
+  .panel{top:auto;bottom:calc(0px + env(safe-area-inset-bottom,0px));left:0;right:0;width:auto;border-radius:16px 16px 0 0;max-height:62%;
+    padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+  .panel.collapsed .more,.panel.collapsed #scnBtns,.panel.collapsed .brand .eyebrow{display:none}
+  .panel .sec{padding:10px 14px;gap:8px}
+  h1{font-size:20px}
+  .chip{font-size:11.5px;padding:3px 8px}
+  .toggle-sheet{display:inline-flex}
+  .count b{font-size:44px}
+  .card{top:calc(48px + env(safe-area-inset-top,0px));left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));width:auto;z-index:7;padding:12px 14px;gap:8px}
+  .card .kv{grid-template-columns:auto auto auto auto;font-size:12px}
+  .hint{bottom:auto;top:calc(12px + env(safe-area-inset-top,0px));font-size:12px}
+  .compass{display:none}
+}
+@media (pointer:coarse){.kbd{display:none}}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+  <!-- PostHog analytics -->
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_C8dTjYdsh3ks4qtx7FjQsFXkdXXDwsHyNwCGyDHRsXKT', {
+      api_host: 'https://eu.i.posthog.com',
+      ui_host: 'https://eu.posthog.com',
+      person_profiles: 'identified_only',
+      respect_dnt: true,
+      defaults: '2025-05-24'
+    })
+  </script>
+</head>
+<body>
+
+<div id="stage"></div>
+<div id="labels"></div>
+
+<div id="loading"><div><span class="eyebrow">Terra Sangha · Marvão</span><h1>The Land</h1><div class="bar"><i id="loadbar"></i></div><span id="loadmsg">Loading the LiDAR terrain…</span></div></div>
+
+<aside class="panel" id="panel" aria-label="Yurt planner">
+  <div class="sec">
+    <div class="brand">
+      <div><div class="eyebrow">Terra Sangha · Marvão · 15.8 ha</div><h1>Yurt Planner</h1></div>
+      <button class="ghost toggle-sheet" id="sheetBtn" aria-expanded="true">Less</button>
+    </div>
+    <div class="row">
+      <select id="scnSel" class="grow" aria-label="Scenario"></select>
+    </div>
+    <div class="row" id="scnBtns">
+      <button id="scnNew">New</button><button id="scnDup">Duplicate</button><button id="scnRen">Rename</button><button id="scnDel" class="danger">Delete</button>
+    </div>
+    <div id="scnForm" hidden></div>
+  </div>
+  <div class="sec">
+    <div class="count"><b id="nYurts">0</b><span id="nLabel">yurts placed</span></div>
+    <div class="chips" id="chips"></div>
+    <div class="seg" role="group" aria-label="Tool">
+      <button id="tMove" aria-pressed="true">Move</button><button id="tAdd" aria-pressed="false">Add</button><button id="tDel" aria-pressed="false">Remove</button>
+    </div>
+    <div class="seg" role="group" aria-label="View">
+      <button id="v3d" aria-pressed="true">3D view</button><button id="vTop" aria-pressed="false">Top view</button>
+    </div>
+  </div>
+  <div class="more">
+    <div class="sec">
+      <div class="eyebrow">Rules</div>
+      <div class="slider"><div class="top"><label for="spacing">Distance between yurt centres</label><b id="spacingV">20 m</b></div>
+        <input type="range" id="spacing" min="10" max="40" step="1" value="20"></div>
+      <div class="slider"><div class="top"><label for="buffer">Keep away from the river</label><b id="bufferV">50 m</b></div>
+        <input type="range" id="buffer" min="0" max="120" step="5" value="50"></div>
+      <p class="note">Each yurt is 6 m across on a 10 m deck. Decks level themselves on the slope, with legs down to the ground.</p>
+    </div>
+    <div class="sec">
+      <div class="eyebrow">How many fit?</div>
+      <button class="primary" id="fill">Fill the free space with yurts</button>
+      <label class="row" style="font-size:13px;gap:7px"><input type="checkbox" id="keepTrees" checked> Keep existing trees (no clearing)</label>
+      <p class="note">Adds yurts wherever the rules above allow, inside the land and away from buildings. Undo takes them away again.</p>
+    </div>
+    <div class="sec">
+      <div class="eyebrow">Show</div>
+      <div class="checks">
+        <label><input type="checkbox" id="lTrees" checked> Trees</label>
+        <label><input type="checkbox" id="lNames" checked> Place names</label>
+        <label><input type="checkbox" id="lBuf" checked> River buffer</label>
+        <label><input type="checkbox" id="lRings" checked> Spacing circles</label>
+        <label><input type="checkbox" id="lParcels"> Parcel lines</label>
+        <label><input type="checkbox" id="lNums" checked> Yurt numbers</label>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="row">
+        <button id="undo" disabled>Undo</button>
+        <button id="exportCsv">Export CSV</button>
+        <button id="clearAll" class="danger">Remove all</button>
+      </div>
+      <div id="clearForm" hidden></div>
+      <div class="save" id="save"><i></i><span>Loading…</span></div>
+      <p class="note kbd"><kbd>A</kbd> add · <kbd>V</kbd> move · <kbd>T</kbd> top view · <kbd>Q</kbd>/<kbd>E</kbd> turn door · <kbd>Del</kbd> remove · <kbd>⌘Z</kbd> undo</p>
+    </div>
+  </div>
+</aside>
+
+<div class="card" id="card" hidden>
+  <div class="row" style="justify-content:space-between"><h2 id="cTitle">Yurt</h2><button class="ghost" id="cClose" aria-label="Close">Close</button></div>
+  <dl class="kv" id="cKv"></dl>
+  <div class="issues" id="cIssues"></div>
+  <div class="row"><button id="rotL" aria-label="Turn door left">↶ Turn door</button><button id="rotR" aria-label="Turn door right">↷</button><button id="cDel" class="danger">Remove</button></div>
+</div>
+
+<div class="hint" id="hint">Drag a yurt to move it · drag the ground to look around</div>
+<div class="toast" id="toast" hidden></div>
+<div class="compass" title="North"><svg viewBox="0 0 30 30" id="compassSvg" aria-hidden="true"><g id="needle"><path d="M15 3 L19 15 L15 13 L11 15 Z" fill="#c23b2a"/><path d="M15 27 L11 15 L15 17 L19 15 Z" fill="#8a948c"/><text x="15" y="2.6" font-size="0" fill="none">N</text></g></svg></div>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { Line2 } from 'three/addons/lines/Line2.js';
+import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
+import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
+
+const $ = id => document.getElementById(id);
+const touch = matchMedia('(pointer: coarse)').matches;
+const DECK_R = 5, WALL_R = 3, WALL_H = 2.0, ROOF_H = 1.45, CLEAR = 0.35, DECK_T = 0.15, MAXY = 1500;
+const progress = (p, m) => { $('loadbar').style.width = (p * 100) + '%'; if (m) $('loadmsg').textContent = m; };
+
+// ---------- data ----------
+progress(.05);
+const site = await (await fetch('site.json')).json();
+const T = site.terrain, P = site.photo, B = site.backdrop;
+progress(.15, 'Loading the LiDAR terrain…');
+const hraw = new Uint16Array(await (await fetch('terrain.bin')).arrayBuffer());
+const HT = new Float32Array(hraw.length); for (let i = 0; i < hraw.length; i++) HT[i] = hraw[i] / 100;
+progress(.3, 'Loading trees and buildings…');
+const traw = new Float32Array(await (await fetch('trees.bin')).arrayBuffer());
+const braw = new Uint16Array(await (await fetch('backdrop.bin')).arrayBuffer());
+
+// local coords: lx east, ly north (metres, Blender origin); world: x=lx, y=h, z=-ly
+function H(lx, ly) {
+  let c = (lx - T.x0) / T.res, r = (T.y1 - ly) / T.res;
+  c = Math.min(Math.max(c, 0), T.nx - 1.001); r = Math.min(Math.max(r, 0), T.ny - 1.001);
+  const c0 = c | 0, r0 = r | 0, fc = c - c0, fr = r - r0, i = r0 * T.nx + c0;
+  return (HT[i] * (1 - fc) + HT[i + 1] * fc) * (1 - fr) + (HT[i + T.nx] * (1 - fc) + HT[i + T.nx + 1] * fc) * fr;
+}
+const inTerrain = (lx, ly) => lx > T.x0 + 2 && lx < T.x0 + T.nx - 3 && ly < T.y1 - 2 && ly > T.y1 - T.ny + 3;
+const boundary = site.boundary;
+function pip(x, y, poly) { let ins = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) ins = !ins; } return ins; }
+const inLand = (x, y) => boundary.some(p => pip(x, y, p)) && !site.holes.some(p => pip(x, y, p));
+const riverPts = site.river.flat();
+function riverDist(x, y) {
+  let best = 1e9;
+  for (const line of site.river) for (let i = 0; i < line.length - 1; i++) {
+    const [ax, ay] = line[i], [bx, by] = line[i + 1], dx = bx - ax, dy = by - ay, L = dx * dx + dy * dy || 1;
+    const t = Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / L)), ex = ax + t * dx - x, ey = ay + t * dy - y, d = ex * ex + ey * ey;
+    if (d < best) best = d;
+  }
+  return Math.sqrt(best);
+}
+const toLonLat = (x, y) => [site.lonlat.lon[0] * x + site.lonlat.lon[1] * y + site.lonlat.lon[2], site.lonlat.lat[0] * x + site.lonlat.lat[1] * y + site.lonlat.lat[2]];
+
+// ---------- renderer / scene ----------
+const stage = $('stage');
+const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, touch ? 1.75 : 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.3;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+stage.appendChild(renderer.domElement);
+const scene = new THREE.Scene();
+const SKY = new THREE.Color('#c7d6e0');
+scene.background = SKY; scene.fog = new THREE.Fog(SKY, 2500, 11000);
+const hemi = new THREE.HemisphereLight('#dbe8f5', '#5c5240', 1.15); scene.add(hemi);
+const sun = new THREE.DirectionalLight('#fff1dc', 2.7);
+const ctr = new THREE.Vector3(0, H(0, 0), 0);
+sun.position.set(-260, 420, 330).add(ctr); sun.target.position.copy(ctr); scene.add(sun, sun.target);
+sun.castShadow = true; sun.shadow.mapSize.set(touch ? 2048 : 4096, touch ? 2048 : 4096);
+Object.assign(sun.shadow.camera, { left: -430, right: 430, top: 430, bottom: -430, near: 10, far: 1600 });
+sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.8;
+
+const texLoader = new THREE.TextureLoader();
+const loadTex = url => new Promise((res, rej) => texLoader.load(url, res, undefined, rej));
+progress(.4, 'Loading the aerial photo…');
+const [ortho, riverTex, bgTex] = await Promise.all([loadTex('ortho.jpg'), loadTex('river_dist.png'), loadTex('backdrop.jpg')]);
+ortho.colorSpace = THREE.SRGBColorSpace; ortho.anisotropy = renderer.capabilities.getMaxAnisotropy();
+bgTex.colorSpace = THREE.SRGBColorSpace; bgTex.anisotropy = 4;
+riverTex.colorSpace = THREE.NoColorSpace;
+
+// terrain mesh (2 m)
+progress(.6, 'Building the terrain…');
+{
+  const S = 2, nx = Math.floor((T.nx - 1) / S) + 1, ny = Math.floor((T.ny - 1) / S) + 1;
+  const pos = new Float32Array(nx * ny * 3), uv = new Float32Array(nx * ny * 2);
+  for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
+    const lx = T.x0 + i * S, ly = T.y1 - j * S, k = j * nx + i;
+    pos[k * 3] = lx; pos[k * 3 + 1] = HT[(j * S) * T.nx + i * S]; pos[k * 3 + 2] = -ly;
+    uv[k * 2] = (lx - P.x0) / (P.x1 - P.x0); uv[k * 2 + 1] = (ly - P.y0) / (P.y1 - P.y0);
+  }
+  const idx = new Uint32Array((nx - 1) * (ny - 1) * 6); let n = 0;
+  for (let j = 0; j < ny - 1; j++) for (let i = 0; i < nx - 1; i++) { const a = j * nx + i, b = a + 1, c = a + nx, d = c + 1; idx.set([a, c, b, b, c, d], n); n += 6; }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv, 2)); g.setIndex(new THREE.BufferAttribute(idx, 1)); g.computeVertexNormals();
+  var terrainMat = new THREE.MeshStandardMaterial({ map: ortho, roughness: 1, metalness: 0 });
+  terrainMat.userData.u = { riverTex: { value: riverTex }, uBuf: { value: 50 }, uShow: { value: 1 } };
+  terrainMat.onBeforeCompile = sh => {
+    Object.assign(sh.uniforms, terrainMat.userData.u);
+    sh.fragmentShader = 'uniform sampler2D riverTex; uniform float uBuf; uniform float uShow;\n' + sh.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
+      { float rd = texture2D(riverTex, vMapUv).r * 255.0;
+        if (uShow > 0.5 && uBuf > 0.5 && rd < uBuf) {
+          float edge = smoothstep(uBuf - 2.2, uBuf - 0.8, rd);
+          float hatch = step(0.5, fract((vMapUv.x + vMapUv.y) * 260.0));
+          diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.16, 0.38, 0.80), 0.13 + 0.10 * hatch);
+          diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.30, 0.58, 1.0), 0.8 * edge);
+        } }`);
+  };
+  const terrain = new THREE.Mesh(g, terrainMat); terrain.receiveShadow = true; scene.add(terrain);
+}
+// backdrop 16 km
+{
+  const n = B.n, pos = new Float32Array(n * n * 3), uv = new Float32Array(n * n * 2);
+  for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
+    const lx = B.x0 + (i + .5) * B.res, ly = B.y1 - (j + .5) * B.res, k = j * n + i;
+    let h = braw[k] - B.zoff;
+    if (lx > T.x0 + 30 && lx < T.x0 + T.nx - 30 && ly < T.y1 - 30 && ly > T.y1 - T.ny + 30) h = Math.min(h, H(lx, ly)) - 4;
+    pos[k * 3] = lx; pos[k * 3 + 1] = h - 0.6; pos[k * 3 + 2] = -ly;
+    uv[k * 2] = (lx - B.x0) / (B.x1 - B.x0); uv[k * 2 + 1] = (ly - B.y0) / (B.y1 - B.y0);
+  }
+  const idx = new Uint32Array((n - 1) * (n - 1) * 6); let m = 0;
+  for (let j = 0; j < n - 1; j++) for (let i = 0; i < n - 1; i++) { const a = j * n + i, b = a + 1, c = a + n, d = c + 1; idx.set([a, c, b, b, c, d], m); m += 6; }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv, 2)); g.setIndex(new THREE.BufferAttribute(idx, 1)); g.computeVertexNormals();
+  const bg = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ map: bgTex, roughness: 1, polygonOffset: true, polygonOffsetFactor: 6, polygonOffsetUnits: 6 }));
+  bg.receiveShadow = false; scene.add(bg);
+}
+
+// buildings + river from the Blender model
+progress(.72, 'Placing the buildings…');
+const gltf = await new Promise((res, rej) => new GLTFLoader().load('scene.glb', res, undefined, rej));
+const MAT = { 'Whitewashed wall': '#ebe6da', 'Terracotta roof': '#a95a3a', 'Timber posts & rails': '#6a492c', 'Timber deck boards': '#a1805a',
+  'Timber cladding (weathered)': '#8b7154', 'Granite ruin stone': '#8e897e', 'Shala roof (cedar shingles)': '#7b5737', 'Old stone (ruin)': '#7c7466' };
+const buildingBoxes = [];
+const toRemove = [];
+gltf.scene.traverse(o => {
+  if (/^\d_/.test(o.name)) toRemove.push(o);
+  if (!o.isMesh) return;
+  o.castShadow = o.receiveShadow = true;
+  const ms = Array.isArray(o.material) ? o.material : [o.material];
+  for (const m of ms) {
+    if (MAT[m.name]) m.color.set(MAT[m.name]);
+    m.roughness = 0.9; m.metalness = 0;
+    if (m.name === 'River water') { m.color.set('#3c6670'); m.roughness = 0.12; m.transparent = true; m.opacity = 0.88; o.castShadow = false; }
+    if (m.name === 'Solar panel') { m.color.set('#132036'); m.roughness = 0.25; m.metalness = 0.5; }
+    if (m.name === 'Window glass') { m.roughness = 0.1; }
+  }
+});
+toRemove.forEach(o => o.parent.remove(o));
+scene.add(gltf.scene);
+gltf.scene.updateMatrixWorld(true);
+for (const c of gltf.scene.children) {
+  if (/River/.test(c.name)) continue;
+  const b = new THREE.Box3().setFromObject(c); if (b.isEmpty()) continue;
+  buildingBoxes.push({ name: c.name.replace(/\s*\(.*\)\s*$/, '').replace(/^Ruiin.*/, 'Ruin 4'), x0: b.min.x, x1: b.max.x, y0: -b.max.z, y1: -b.min.z });
+}
+
+// trees
+progress(.82, 'Planting 12,467 trees…');
+const NT = traw.length / 10;
+const tree = { x: new Float32Array(NT), y: new Float32Array(NT), cleared: new Uint8Array(NT) };
+const treeGrid = new Map(); const TG = 10;
+const tkey = (cx, cy) => cx * 100003 + cy;
+function makeCanopy(rx, ry, cy, seed) {
+  const g = new THREE.IcosahedronGeometry(1, 1); const p = g.attributes.position;
+  let s = seed; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  for (let i = 0; i < p.count; i++) { const k = 0.82 + 0.3 * rnd(); p.setXYZ(i, p.getX(i) * rx * k, p.getY(i) * ry * k + cy, p.getZ(i) * rx * k); }
+  g.computeVertexNormals(); return g;
+}
+const KIND = [
+  { canopy: makeCanopy(.95, .38, .62, 7), trunk: [.3, .5] },  // oak
+  { canopy: makeCanopy(.85, .40, .58, 11), trunk: [.28, .45] }, // olive
+  { canopy: makeCanopy(.80, .44, .58, 19), trunk: [.25, .4] },  // riverside
+  { canopy: makeCanopy(.95, .45, .40, 23), trunk: null },       // shrub
+];
+const canopyMat = new THREE.MeshStandardMaterial({ roughness: 0.95 });
+const barkMat = new THREE.MeshStandardMaterial({ color: '#4a3a2a', roughness: 1 });
+const trunkGeo = new THREE.CylinderGeometry(.05, .08, 1, 6); trunkGeo.translate(0, .5, 0);
+const treeMeshes = [];
+const treeIdx = [[], [], [], []];
+for (let i = 0; i < NT; i++) { const k = Math.min(3, Math.max(0, Math.round(traw[i * 10 + 3]))); treeIdx[k].push(i); tree.x[i] = traw[i * 10]; tree.y[i] = traw[i * 10 + 1];
+  const key = tkey(Math.floor(tree.x[i] / TG), Math.floor(tree.y[i] / TG)); (treeGrid.get(key) || treeGrid.set(key, []).get(key)).push(i); }
+const treeSlot = new Int32Array(NT); const treeOf = new Int32Array(NT);
+const M4 = new THREE.Matrix4(), Q = new THREE.Quaternion(), V3 = new THREE.Vector3(), S3 = new THREE.Vector3(), UP = new THREE.Vector3(0, 1, 0), C = new THREE.Color();
+function treeMatrix(i, out) {
+  const b = i * 10, sx = traw[b + 4], h = traw[b + 6];
+  Q.setFromAxisAngle(UP, (i * 2.399963) % 6.283);
+  return out.compose(V3.set(traw[b], traw[b + 2] - 0.2, -traw[b + 1]), Q, S3.set(sx, h, sx));
+}
+KIND.forEach((K, k) => {
+  const ids = treeIdx[k]; if (!ids.length) return;
+  const can = new THREE.InstancedMesh(K.canopy, canopyMat, ids.length); can.castShadow = true; can.receiveShadow = true;
+  const tr = K.trunk ? new THREE.InstancedMesh(trunkGeo, barkMat, ids.length) : null; if (tr) tr.castShadow = true;
+  ids.forEach((i, s) => {
+    treeSlot[i] = s; treeOf[i] = k;
+    treeMatrix(i, M4); can.setMatrixAt(s, M4);
+    const b = i * 10; C.setRGB(Math.min(1, traw[b + 7] * 1.1), Math.min(1, traw[b + 8] * 1.1), Math.min(1, traw[b + 9] * 1.1), THREE.SRGBColorSpace); can.setColorAt(s, C);
+    if (tr) { const sx = traw[b + 4] * 0.9, h = traw[b + 6] * K.trunk[1]; Q.setFromAxisAngle(UP, 0); tr.setMatrixAt(s, M4.compose(V3.set(traw[b], traw[b + 2] - 0.3, -traw[b + 1]), Q, S3.set(sx, h, sx))); }
+  });
+  can.computeBoundingSphere(); if (tr) tr.computeBoundingSphere();
+  scene.add(can); if (tr) scene.add(tr);
+  treeMeshes[k] = { can, tr };
+});
+const ZERO = new THREE.Matrix4().makeScale(0, 0, 0);
+function setTreeVisible(i, vis) {
+  const { can, tr } = treeMeshes[treeOf[i]], s = treeSlot[i];
+  if (vis) { treeMatrix(i, M4); can.setMatrixAt(s, M4); if (tr) { const b = i * 10, K = KIND[treeOf[i]]; tr.setMatrixAt(s, M4.compose(V3.set(traw[b], traw[b + 2] - 0.3, -traw[b + 1]), Q.identity(), S3.set(traw[b + 4] * .9, traw[b + 6] * K.trunk[1], traw[b + 4] * .9))); } }
+  else { can.setMatrixAt(s, ZERO); if (tr) tr.setMatrixAt(s, ZERO); }
+  can.instanceMatrix.needsUpdate = true; if (tr) tr.instanceMatrix.needsUpdate = true;
+}
+function treesNear(x, y, r, fn) {
+  const c0 = Math.floor((x - r) / TG), c1 = Math.floor((x + r) / TG), r0 = Math.floor((y - r) / TG), r1 = Math.floor((y + r) / TG);
+  for (let cx = c0; cx <= c1; cx++) for (let cy = r0; cy <= r1; cy++) { const l = treeGrid.get(tkey(cx, cy)); if (l) for (const i of l) { const dx = tree.x[i] - x, dy = tree.y[i] - y; if (dx * dx + dy * dy < r * r) fn(i); } }
+}
+
+// boundary + parcel lines
+const lineMats = [];
+function drape(coords, lift, step = 1.5) {
+  const out = [];
+  for (let i = 0; i < coords.length - 1; i++) {
+    const [ax, ay] = coords[i], [bx, by] = coords[i + 1], L = Math.hypot(bx - ax, by - ay), n = Math.max(1, Math.ceil(L / step));
+    for (let k = 0; k < n; k++) { const t = k / n, x = ax + (bx - ax) * t, y = ay + (by - ay) * t; out.push(x, H(x, y) + lift, -y); }
+  }
+  const [lx, ly] = coords[coords.length - 1]; out.push(lx, H(lx, ly) + lift, -ly); return out;
+}
+function fatLine(coords, color, width, lift, opacity = 1) {
+  const g = new LineGeometry(); g.setPositions(drape(coords, lift));
+  const m = new LineMaterial({ color: new THREE.Color(color), linewidth: width, transparent: opacity < 1, opacity, worldUnits: false });
+  m.resolution.set(innerWidth, innerHeight); lineMats.push(m);
+  const l = new Line2(g, m); l.computeLineDistances(); return l;
+}
+boundary.forEach(b => scene.add(fatLine(b, '#f2c14e', 3.2, 0.7)));
+const parcelGroup = new THREE.Group(); site.parcels.forEach(p => parcelGroup.add(fatLine(p, '#ffffff', 1.3, 0.5, 0.75))); parcelGroup.visible = false; scene.add(parcelGroup);
+
+// ---------- yurts (instanced) ----------
+const MAXN = 1500, LEGS = 13;
+const yMat = {
+  deck: new THREE.MeshStandardMaterial({ color: '#a77d50', roughness: .85 }),
+  wall: new THREE.MeshStandardMaterial({ color: '#efe7d6', roughness: .9 }),
+  roof: new THREE.MeshStandardMaterial({ color: '#d9cdb5', roughness: .95 }),
+  crown: new THREE.MeshStandardMaterial({ color: '#6b4a2c', roughness: .8 }),
+  door: new THREE.MeshStandardMaterial({ color: '#b5462c', roughness: .7 }),
+  leg: new THREE.MeshStandardMaterial({ color: '#5d4127', roughness: .9 }),
+  ring: new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: .95, depthWrite: false }),
+};
+const deckGeo = new THREE.CylinderGeometry(DECK_R, DECK_R, DECK_T, 24); deckGeo.translate(0, -DECK_T / 2, 0);
+const wallGeo = new THREE.CylinderGeometry(WALL_R, WALL_R, WALL_H, 36, 1, true); wallGeo.translate(0, WALL_H / 2, 0);
+const roofGeo = new THREE.ConeGeometry(WALL_R + .3, ROOF_H, 36, 1, false); roofGeo.translate(0, WALL_H + ROOF_H / 2 - .08, 0);
+const crownGeo = new THREE.CylinderGeometry(.55, .6, .22, 16); crownGeo.translate(0, WALL_H + ROOF_H - .45, 0);
+const doorGeo = new THREE.BoxGeometry(.95, 1.8, .14); doorGeo.translate(0, .9, WALL_R + .02);
+const legGeo = new THREE.BoxGeometry(.16, 1, .16); legGeo.translate(0, -.5, 0);
+const ringGeo = new THREE.RingGeometry(DECK_R + .25, DECK_R + .85, 48); ringGeo.rotateX(-Math.PI / 2);
+const pickGeo = new THREE.CylinderGeometry(DECK_R, DECK_R, 8, 12); pickGeo.translate(0, 2.5, 0);
+const mk = (g, m, n, shadow = true) => { const im = new THREE.InstancedMesh(g, m, n); im.count = 0; im.castShadow = shadow; im.receiveShadow = shadow; im.frustumCulled = false; scene.add(im); return im; };
+const I = {
+  deck: mk(deckGeo, yMat.deck, MAXN), wall: mk(wallGeo, yMat.wall, MAXN), roof: mk(roofGeo, yMat.roof, MAXN), crown: mk(crownGeo, yMat.crown, MAXN),
+  door: mk(doorGeo, yMat.door, MAXN), leg: mk(legGeo, yMat.leg, MAXN * LEGS), ring: mk(ringGeo, yMat.ring, MAXN, false),
+};
+I.ring.renderOrder = 2;
+const pick = new THREE.InstancedMesh(pickGeo, new THREE.MeshBasicMaterial({ visible: false }), MAXN); pick.count = 0; pick.frustumCulled = false; scene.add(pick);
+
+// number sprites
+const numTex = new Map();
+function numTexture(n) {
+  if (numTex.has(n)) return numTex.get(n);
+  const c = document.createElement('canvas'); c.width = 96; c.height = 96; const g = c.getContext('2d');
+  g.fillStyle = 'rgba(25,30,26,.88)'; g.beginPath(); g.arc(48, 48, 40, 0, Math.PI * 2); g.fill();
+  g.strokeStyle = 'rgba(255,255,255,.95)'; g.lineWidth = 5; g.stroke();
+  g.fillStyle = '#fff'; g.font = `700 ${n > 99 ? 32 : 40}px Figtree, system-ui, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(String(n), 48, 51);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; numTex.set(n, t); return t;
+}
+const numGroup = new THREE.Group(); scene.add(numGroup);
+const sprites = [];
+
+// ---------- state ----------
+let yurts = [];   // {x, y, r}
+let settings = { spacing: 20, buffer: 50, keepTrees: true };
+let selected = -1;
+const info = [];  // computed per yurt
+const RING16 = Array.from({ length: 16 }, (_, k) => [Math.cos(k * Math.PI / 8), Math.sin(k * Math.PI / 8)]);
+const LEGPOS = [[0, 0], ...Array.from({ length: 4 }, (_, k) => [2.3 * Math.cos(k * Math.PI / 2 + .785), 2.3 * Math.sin(k * Math.PI / 2 + .785)]), ...Array.from({ length: 8 }, (_, k) => [4.6 * Math.cos(k * Math.PI / 4 + .39), 4.6 * Math.sin(k * Math.PI / 4 + .39)])];
+
+function level(y) {
+  let gmax = H(y.x, y.y), gmin = gmax;
+  for (const [cx, cy] of RING16) { for (const rr of [2.5, DECK_R]) { const g = H(y.x + cx * rr, y.y + cy * rr); if (g > gmax) gmax = g; } }
+  const bottom = gmax + CLEAR; let tallest = 0; const legs = [];
+  for (const [a, b] of LEGPOS) { const g = H(y.x + a, y.y + b); legs.push(g); if (bottom - g > tallest) tallest = bottom - g; if (g < gmin) gmin = g; }
+  return { bottom, top: bottom + DECK_T, legs, tallest, ground: H(y.x, y.y) };
+}
+
+function analyse() {
+  const n = yurts.length, sp = settings.spacing, buf = settings.buffer;
+  // spatial hash for spacing
+  const grid = new Map(), G = 20;
+  yurts.forEach((y, i) => { const k = tkey(Math.floor(y.x / G), Math.floor(y.y / G)); (grid.get(k) || grid.set(k, []).get(k)).push(i); });
+  const cleared = new Uint8Array(NT);
+  for (let i = 0; i < n; i++) {
+    const y = yurts[i], f = info[i] || (info[i] = {});
+    Object.assign(f, level(y));
+    let near = 1e9, nearI = -1; const cx = Math.floor(y.x / G), cy = Math.floor(y.y / G), R = Math.ceil(Math.max(sp, 60) / G);
+    for (let a = cx - R; a <= cx + R; a++) for (let b = cy - R; b <= cy + R; b++) { const l = grid.get(tkey(a, b)); if (l) for (const j of l) if (j !== i) { const d = Math.hypot(yurts[j].x - y.x, yurts[j].y - y.y); if (d < near) { near = d; nearI = j; } } }
+    f.near = near; f.nearI = nearI;
+    f.inside = inLand(y.x, y.y);
+    f.edge = f.inside && RING16.some(([a, b]) => !inLand(y.x + a * DECK_R, y.y + b * DECK_R));
+    f.river = riverDist(y.x, y.y);
+    f.building = null;
+    for (const b of buildingBoxes) { const dx = Math.max(b.x0 - y.x, 0, y.x - b.x1), dy = Math.max(b.y0 - y.y, 0, y.y - b.y1); if (Math.hypot(dx, dy) < DECK_R + 0.8) { f.building = b.name; break; } }
+    let t = 0; treesNear(y.x, y.y, DECK_R + .6, j => { cleared[j] = 1; t++; }); f.trees = t;
+    const issues = [];
+    if (!f.inside) issues.push(['bad', 'Outside the land']);
+    else if (f.edge) issues.push(['warn', 'Deck crosses the land boundary']);
+    if (near < sp) issues.push(['warn', `Only ${near.toFixed(0)} m to yurt ${nearI + 1}`]);
+    if (buf > 0 && f.river < buf) issues.push(['warn', `${f.river.toFixed(0)} m from the river`]);
+    if (f.building) issues.push(['warn', `Touches ${f.building}`]);
+    if (!inTerrain(y.x, y.y)) issues.push(['bad', 'Outside the terrain model']);
+    f.issues = issues; f.state = issues.some(s => s[0] === 'bad') ? 'bad' : issues.length ? 'warn' : 'ok';
+  }
+  info.length = n;
+  // trees under decks: hide them
+  for (let i = 0; i < NT; i++) if (cleared[i] !== tree.cleared[i]) { tree.cleared[i] = cleared[i]; setTreeVisible(i, !cleared[i]); }
+}
+
+const COL = { ok: new THREE.Color('#58b36a'), warn: new THREE.Color('#f08a2c'), bad: new THREE.Color('#e5383b'), sel: new THREE.Color('#ffd34d') };
+let topView = false;
+function rebuild() {
+  analyse();
+  const n = yurts.length; let L = 0;
+  for (const k in I) I[k].count = k === 'leg' ? 0 : n;
+  pick.count = n;
+  for (let i = 0; i < n; i++) {
+    const y = yurts[i], f = info[i];
+    Q.setFromAxisAngle(UP, y.r);
+    const base = new THREE.Matrix4().compose(V3.set(y.x, f.top, -y.y), Q, S3.set(1, 1, 1));
+    I.deck.setMatrixAt(i, base); I.wall.setMatrixAt(i, base); I.roof.setMatrixAt(i, base); I.crown.setMatrixAt(i, base); I.door.setMatrixAt(i, base);
+    pick.setMatrixAt(i, base);
+    const sel = i === selected, showRing = sel || topView || f.state !== 'ok';
+    I.ring.setMatrixAt(i, showRing ? new THREE.Matrix4().compose(V3.set(y.x, f.top + .03, -y.y), Q, S3.set(sel ? 1.08 : 1, 1, sel ? 1.08 : 1)) : ZERO);
+    I.ring.setColorAt(i, sel ? COL.sel : COL[f.state]);
+    f.legs.forEach((g, k) => {
+      const [a, b] = LEGPOS[k], len = Math.max(.05, f.bottom - g + .3);
+      const ca = Math.cos(y.r), sa = Math.sin(y.r), wx = y.x + a * ca - b * sa, wy = y.y + a * sa + b * ca;
+      I.leg.setMatrixAt(L++, M4.compose(V3.set(wx, f.bottom, -wy), Q, S3.set(1, len, 1)));
+    });
+  }
+  I.leg.count = L;
+  for (const k in I) { I[k].instanceMatrix.needsUpdate = true; if (I[k].instanceColor) I[k].instanceColor.needsUpdate = true; }
+  pick.instanceMatrix.needsUpdate = true; pick.computeBoundingSphere();
+  // numbers
+  while (sprites.length < n) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ depthTest: false, sizeAttenuation: false })); s.renderOrder = 10; numGroup.add(s); sprites.push(s); }
+  sprites.forEach((s, i) => { s.visible = i < n; if (i < n) { if (s.userData.n !== i + 1) { s.material.map = numTexture(i + 1); s.material.needsUpdate = true; s.userData.n = i + 1; } s.position.set(yurts[i].x, info[i].top + WALL_H + ROOF_H + 1.8, -yurts[i].y); } });
+  rebuildRings();
+  updatePanel(); updateCard();
+}
+
+// spacing circles
+let ringLines = null;
+function rebuildRings() {
+  if (ringLines) { scene.remove(ringLines); ringLines.geometry.dispose(); ringLines = null; }
+  if (!$('lRings').checked || !yurts.length) return;
+  const r = settings.spacing / 2, seg = 48, pos = new Float32Array(yurts.length * seg * 6); let k = 0;
+  for (const y of yurts) for (let s = 0; s < seg; s++) {
+    for (const t of [s, s + 1]) { const a = t / seg * Math.PI * 2, x = y.x + Math.cos(a) * r, yy = y.y + Math.sin(a) * r; pos[k++] = x; pos[k++] = H(x, yy) + .8; pos[k++] = -yy; }
+  }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  ringLines = new THREE.LineSegments(g, new THREE.LineBasicMaterial({ color: '#ffffff', transparent: true, opacity: .7, depthWrite: false }));
+  ringLines.renderOrder = 3; scene.add(ringLines);
+}
+
+// ---------- cameras ----------
+const persp = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 1, 30000);
+persp.position.set(ctr.x - 230, ctr.y + 430, ctr.z + 560);
+const orbit = new OrbitControls(persp, renderer.domElement);
+orbit.target.copy(ctr); orbit.enableDamping = true; orbit.dampingFactor = .09; orbit.maxPolarAngle = Math.PI * .47; orbit.minDistance = 15; orbit.maxDistance = 4000; orbit.screenSpacePanning = false;
+const TOPH = 360;
+const topCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 5000);
+function sizeOrtho() { const a = innerWidth / innerHeight; topCam.left = -TOPH * a; topCam.right = TOPH * a; topCam.top = TOPH; topCam.bottom = -TOPH; topCam.updateProjectionMatrix(); }
+sizeOrtho();
+topCam.position.set(ctr.x, ctr.y + 1500, ctr.z + 0.01);
+const topCtl = new OrbitControls(topCam, renderer.domElement);
+topCtl.target.copy(ctr); topCtl.enableRotate = false; topCtl.screenSpacePanning = true; topCtl.enableDamping = true; topCtl.dampingFactor = .12;
+topCtl.minZoom = .5; topCtl.maxZoom = 18; topCtl.zoomToCursor = true;
+topCtl.mouseButtons = { LEFT: THREE.MOUSE.PAN, MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.PAN };
+topCtl.touches = { ONE: THREE.TOUCH.PAN, TWO: THREE.TOUCH.DOLLY_PAN };
+topCtl.enabled = false;
+const cam = () => topView ? topCam : persp;
+const ctl = () => topView ? topCtl : orbit;
+function setView(top) {
+  topView = top; $('v3d').setAttribute('aria-pressed', !top); $('vTop').setAttribute('aria-pressed', top);
+  orbit.enabled = !top; topCtl.enabled = top;
+  if (top) { const t = orbit.target.clone(); topCtl.target.copy(t); topCam.position.set(t.x, t.y + 1500, t.z + 0.01); topCam.zoom = Math.max(.6, Math.min(8, 900 / persp.position.distanceTo(orbit.target))); topCam.updateProjectionMatrix(); topCtl.update(); }
+  else { const t = topCtl.target.clone(), d = Math.max(120, 900 / topCam.zoom); const off = persp.position.clone().sub(orbit.target).setLength(d); orbit.target.copy(t); persp.position.copy(t).add(off); orbit.update(); }
+  rebuild(); setHint();
+}
+
+// ---------- picking ----------
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+function setRay(e) { const r = renderer.domElement.getBoundingClientRect(); ndc.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1); ray.setFromCamera(ndc, cam()); }
+function groundHit(e) {
+  setRay(e); const o = ray.ray.origin, d = ray.ray.direction;
+  if (topView) { const x = o.x, y = -o.z; return inTerrain(x, y) ? { x, y } : null; }
+  let t = 0, prev = 0, step;
+  for (let k = 0; k < 4000 && t < 9000; k++) {
+    step = Math.max(.4, t * .004); t += step;
+    const x = o.x + d.x * t, y = -(o.z + d.z * t), h = o.y + d.y * t;
+    if (!inTerrain(x, y)) { if (t > 3000) break; prev = t; continue; }
+    if (h <= H(x, y)) { let a = prev, b = t; for (let i = 0; i < 10; i++) { const m = (a + b) / 2, mx = o.x + d.x * m, my = -(o.z + d.z * m); if (o.y + d.y * m <= H(mx, my)) b = m; else a = m; } return { x: o.x + d.x * b, y: -(o.z + d.z * b) }; }
+    prev = t;
+  }
+  return null;
+}
+function yurtHit(e) { if (!yurts.length) return -1; setRay(e); const h = ray.intersectObject(pick, false); return h.length ? h[0].instanceId : -1; }
+
+// ---------- interaction ----------
+let tool = 'move';
+function setTool(t) { tool = t; for (const [id, v] of [['tMove', 'move'], ['tAdd', 'add'], ['tDel', 'remove']]) $(id).setAttribute('aria-pressed', v === t); renderer.domElement.style.cursor = t === 'add' ? 'crosshair' : ''; setHint(); }
+function setHint() {
+  const h = { move: touch ? 'Drag a yurt to move it · drag the ground to look around' : 'Drag a yurt to move it · drag the ground to look around · scroll to zoom',
+    add: 'Tap or click on the land to place a yurt', remove: 'Tap or click a yurt to remove it' }[tool];
+  $('hint').textContent = h;
+}
+let drag = null, down = null;
+const el = renderer.domElement;
+stage.addEventListener('pointerdown', e => {
+  if (e.button !== 0 && e.pointerType === 'mouse') return;
+  down = { x: e.clientX, y: e.clientY, t: performance.now(), id: e.pointerId };
+  const i = yurtHit(e);
+  if (i >= 0 && tool !== 'remove') {
+    const g = groundHit(e);
+    drag = { i, dx: g ? yurts[i].x - g.x : 0, dy: g ? yurts[i].y - g.y : 0, moved: false, before: snapshot() };
+    ctl().enabled = false; selected = i; el.setPointerCapture(e.pointerId); rebuild();
+  }
+}, { capture: true });
+el.addEventListener('pointermove', e => {
+  if (drag) {
+    const g = groundHit(e); if (!g) return;
+    const y = yurts[drag.i]; y.x = g.x + drag.dx; y.y = g.y + drag.dy; drag.moved = true; rebuild();
+  } else if (!touch && !down) {
+    const i = yurtHit(e); el.style.cursor = i >= 0 ? (tool === 'remove' ? 'not-allowed' : 'grab') : (tool === 'add' ? 'crosshair' : '');
+  }
+});
+function endPointer(e) {
+  const click = down && Math.hypot(e.clientX - down.x, e.clientY - down.y) < 6 && performance.now() - down.t < 600;
+  if (drag) {
+    ctl().enabled = true;
+    if (drag.moved) commit(drag.before);
+    drag = null;
+  } else if (click) {
+    const i = yurtHit(e);
+    if (tool === 'remove' && i >= 0) { const b = snapshot(); yurts.splice(i, 1); selected = -1; commit(b); rebuild(); }
+    else if (tool === 'add' && i < 0) { const g = groundHit(e); if (g) addYurt(g.x, g.y); }
+    else if (i < 0 && selected >= 0) { selected = -1; rebuild(); }
+  }
+  down = null;
+}
+el.addEventListener('pointerup', endPointer);
+el.addEventListener('pointercancel', () => { if (drag) { ctl().enabled = true; drag = null; } down = null; });
+function addYurt(x, y) {
+  if (yurts.length >= MAXN) return toast(`The planner holds up to ${MAXN} yurts.`);
+  const b = snapshot();
+  // door faces downhill by default
+  const gx = H(x + 3, y) - H(x - 3, y), gy = H(x, y + 3) - H(x, y - 3);
+  const r = (Math.abs(gx) + Math.abs(gy) > .05) ? Math.atan2(-gx, gy) : 0;
+  yurts.push({ x, y, r: +r.toFixed(3) }); selected = yurts.length - 1; commit(b); rebuild();
+}
+function rotateSel(d) { if (selected < 0) return; const b = snapshot(); yurts[selected].r = +((yurts[selected].r + d) % (Math.PI * 2)).toFixed(3); commit(b); rebuild(); }
+function removeSel() { if (selected < 0) return; const b = snapshot(); yurts.splice(selected, 1); selected = -1; commit(b); rebuild(); }
+
+addEventListener('keydown', e => {
+  if (e.target.closest('input,select,textarea')) return;
+  const k = e.key.toLowerCase();
+  if ((e.metaKey || e.ctrlKey) && k === 'z') { e.preventDefault(); undo(); return; }
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (k === 'a') setTool('add'); else if (k === 'v') setTool('move'); else if (k === 'x') setTool('remove');
+  else if (k === 't') setView(!topView);
+  else if (k === 'q') rotateSel(Math.PI / 12); else if (k === 'e') rotateSel(-Math.PI / 12);
+  else if (k === 'delete' || k === 'backspace') { e.preventDefault(); removeSel(); }
+  else if (k === 'escape') { selected = -1; rebuild(); }
+});
+
+// ---------- history ----------
+const history = [];
+const snapshot = () => JSON.stringify(yurts);
+function commit(before) { history.push(before); if (history.length > 80) history.shift(); $('undo').disabled = false; scheduleSave(); }
+function undo() { if (!history.length) return; yurts = JSON.parse(history.pop()); selected = -1; $('undo').disabled = !history.length; rebuild(); scheduleSave(); }
+
+// ---------- panel ----------
+function chip(cls, n, text) { return `<span class="chip ${cls}${n ? '' : ' zero'}"><i class="dot"></i>${n} ${text}</span>`; }
+function updatePanel() {
+  const n = yurts.length; $('nYurts').textContent = n; $('nLabel').textContent = n === 1 ? 'yurt placed' : 'yurts placed';
+  const inside = info.filter(f => f.inside && !f.edge).length, out = info.filter(f => !f.inside).length, edge = info.filter(f => f.edge).length;
+  const close = info.filter(f => f.near < settings.spacing).length, riv = settings.buffer ? info.filter(f => f.river < settings.buffer).length : 0;
+  const bld = info.filter(f => f.building).length, trees = info.reduce((s, f) => s + f.trees, 0);
+  $('chips').innerHTML = chip('', inside, 'inside the land') + (out ? chip('bad', out, 'outside') : '') + (edge ? chip('warn', edge, 'on the boundary') : '') +
+    chip('warn', close, 'too close') + chip('warn', riv, 'near the river') + (bld ? chip('warn', bld, 'at a building') : '') + chip('tree', trees, trees === 1 ? 'tree to clear' : 'trees to clear');
+}
+function updateCard() {
+  const c = $('card');
+  if (selected < 0 || selected >= yurts.length) { c.hidden = true; return; }
+  const y = yurts[selected], f = info[selected], [lon, lat] = toLonLat(y.x, y.y);
+  c.hidden = false; $('cTitle').textContent = `Yurt ${selected + 1}`;
+  const door = ((180 - y.r * 180 / Math.PI) % 360 + 360) % 360, dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  $('cKv').innerHTML = [
+    ['Elevation', `${(f.ground + site.origin.Z0).toFixed(0)} m`], ['Deck above ground', `${(f.top - f.ground).toFixed(1)} m`], ['Tallest leg', `${f.tallest.toFixed(1)} m`],
+    ['Nearest yurt', f.nearI >= 0 ? `${f.near.toFixed(0)} m (no. ${f.nearI + 1})` : '–'], ['River', `${f.river.toFixed(0)} m`], ['Door faces', dirs[Math.round(door / 45) % 8]],
+    ['Trees under deck', f.trees], ['Position', `${lat.toFixed(5)}, ${lon.toFixed(5)}`],
+  ].map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
+  $('cIssues').innerHTML = f.issues.length ? f.issues.map(([s, t]) => `<div><i class="dot" style="background:var(--${s})"></i>${t}</div>`).join('') : `<div><i class="dot"></i>Fits all the rules</div>`;
+}
+$('tMove').onclick = () => setTool('move'); $('tAdd').onclick = () => setTool('add'); $('tDel').onclick = () => setTool('remove');
+$('v3d').onclick = () => setView(false); $('vTop').onclick = () => setView(true);
+$('rotL').onclick = () => rotateSel(Math.PI / 12); $('rotR').onclick = () => rotateSel(-Math.PI / 12); $('cDel').onclick = removeSel;
+$('cClose').onclick = () => { selected = -1; rebuild(); };
+$('undo').onclick = undo;
+$('sheetBtn').onclick = () => { const p = $('panel'), col = p.classList.toggle('collapsed'); $('sheetBtn').textContent = col ? 'More' : 'Less'; $('sheetBtn').setAttribute('aria-expanded', !col); };
+if (innerWidth <= 720) { $('sheetBtn').click(); $('lNames').checked = false; $('labels').hidden = true; }
+function applySettingsUI() {
+  $('spacing').value = settings.spacing; $('spacingV').textContent = settings.spacing + ' m';
+  $('buffer').value = settings.buffer; $('bufferV').textContent = settings.buffer ? settings.buffer + ' m' : 'off';
+  $('keepTrees').checked = settings.keepTrees; terrainMat.userData.u.uBuf.value = settings.buffer;
+}
+$('spacing').oninput = e => { settings.spacing = +e.target.value; applySettingsUI(); rebuild(); scheduleSave(); };
+$('buffer').oninput = e => { settings.buffer = +e.target.value; applySettingsUI(); rebuild(); scheduleSave(); };
+$('keepTrees').onchange = e => { settings.keepTrees = e.target.checked; scheduleSave(); };
+$('lTrees').onchange = e => treeMeshes.forEach(t => { if (t) { t.can.visible = e.target.checked; if (t.tr) t.tr.visible = e.target.checked; } });
+$('lNames').onchange = e => { $('labels').hidden = !e.target.checked; };
+$('lBuf').onchange = e => { terrainMat.userData.u.uShow.value = e.target.checked ? 1 : 0; };
+$('lRings').onchange = rebuildRings;
+$('lParcels').onchange = e => { parcelGroup.visible = e.target.checked; };
+$('lNums').onchange = e => { numGroup.visible = e.target.checked; };
+
+let toastT;
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, 4200); }
+
+// remove all (inline confirm)
+$('clearAll').onclick = () => {
+  if (!yurts.length) return;
+  const f = $('clearForm'); f.hidden = false;
+  f.innerHTML = `<div class="confirm">Remove all ${yurts.length} yurts from this scenario? Undo brings them back.<div class="row"><button class="danger" id="clrYes">Remove all</button><button id="clrNo">Cancel</button></div></div>`;
+  $('clrYes').onclick = () => { const b = snapshot(); yurts = []; selected = -1; commit(b); rebuild(); f.hidden = true; };
+  $('clrNo').onclick = () => { f.hidden = true; };
+};
+
+// auto fill
+$('fill').onclick = () => {
+  const sp = settings.spacing, buf = settings.buffer, keep = settings.keepTrees, b = snapshot();
+  const G = sp, grid = new Map();
+  const put = (x, y) => { const k = tkey(Math.floor(x / G), Math.floor(y / G)); (grid.get(k) || grid.set(k, []).get(k)).push([x, y]); };
+  yurts.forEach(y => put(y.x, y.y));
+  const free = (x, y) => { const cx = Math.floor(x / G), cy = Math.floor(y / G); for (let a = cx - 1; a <= cx + 1; a++) for (let c = cy - 1; c <= cy + 1; c++) { const l = grid.get(tkey(a, c)); if (l) for (const [px, py] of l) if ((px - x) ** 2 + (py - y) ** 2 < sp * sp) return false; } return true; };
+  let xs = [], ys = []; for (const p of boundary) for (const [x, y] of p) { xs.push(x); ys.push(y); }
+  const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys), st = 2;
+  let added = 0;
+  for (let y = y1; y >= y0 && yurts.length < MAXN; y -= st) for (let x = x0; x <= x1 && yurts.length < MAXN; x += st) {
+    if (!free(x, y) || !inLand(x, y) || !inTerrain(x, y)) continue;
+    if (RING16.some(([a, c]) => !inLand(x + a * DECK_R, y + c * DECK_R))) continue;
+    if (buf && riverDist(x, y) < buf) continue;
+    if (buildingBoxes.some(bb => Math.hypot(Math.max(bb.x0 - x, 0, x - bb.x1), Math.max(bb.y0 - y, 0, y - bb.y1)) < DECK_R + .8)) continue;
+    if (keep) { let t = 0; treesNear(x, y, DECK_R + .6, () => t++); if (t) continue; }
+    const gx = H(x + 3, y) - H(x - 3, y), gy = H(x, y + 3) - H(x, y - 3);
+    yurts.push({ x: +x.toFixed(2), y: +y.toFixed(2), r: +Math.atan2(-gx, gy).toFixed(3) }); put(x, y); added++;
+  }
+  if (!added) { toast('No free space left with these rules. Try a smaller distance or allow clearing trees.'); return; }
+  selected = -1; commit(b); rebuild();
+  toast(`Added ${added} yurts. This scenario now has ${yurts.length}. Undo removes them again.`);
+};
+
+// export CSV
+const downloads = { save: async ({ filename, data }) => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([data], { type: 'text/csv' })); a.download = filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); } };
+$('exportCsv').onclick = async () => {
+  const O = site.origin, rows = [['number', 'latitude', 'longitude', 'x_pttm06', 'y_pttm06', 'elevation_m', 'deck_above_ground_m', 'tallest_leg_m', 'door_bearing_deg', 'nearest_yurt_m', 'river_m', 'inside_land', 'trees_under_deck', 'issues']];
+  yurts.forEach((y, i) => { const f = info[i], [lon, lat] = toLonLat(y.x, y.y);
+    rows.push([i + 1, lat.toFixed(7), lon.toFixed(7), (y.x + O.OX).toFixed(2), (y.y + O.OY).toFixed(2), (f.ground + O.Z0).toFixed(1), (f.top - f.ground).toFixed(2), f.tallest.toFixed(2),
+      Math.round(((180 - y.r * 180 / Math.PI) % 360 + 360) % 360), f.nearI >= 0 ? f.near.toFixed(1) : '', f.river.toFixed(0), f.inside, f.trees, '"' + f.issues.map(s => s[1]).join('; ') + '"']); });
+  const name = (current()?.name || 'scenario').replace(/[^\w\- ]+/g, '').trim() || 'scenario';
+  try { await downloads.save({ filename: `The Land - ${name}.csv`, data: rows.map(r => r.join(',')).join('\n') }); }
+  catch (e) { if (e?.code !== 'declined') toast('The file could not be saved here.'); }
+};
+
+// ---------- scenarios & storage ----------
+const SEED = site.yurts.map(y => ({ x: y.x, y: y.y, r: y.rot }));
+let store = null, scenarios = {}, currentId = null, saveState = 'loading';
+const LS = 'the-land-yurt-planner-v1';
+const lsGet = () => { try { return JSON.parse(localStorage.getItem(LS) || '{}'); } catch { return {}; } };
+const lsSet = v => { try { localStorage.setItem(LS, JSON.stringify(v)); } catch {} };
+const prefs = () => lsGet().prefs || {};
+const setPref = (k, v) => { const s = lsGet(); s.prefs = { ...(s.prefs || {}), [k]: v }; lsSet(s); };
+const current = () => scenarios[currentId];
+const newId = () => 's' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const pack = () => ({ name: current().name, yf: yurts.flatMap(y => [+y.x.toFixed(2), +y.y.toFixed(2), +y.r.toFixed(3)]), spacing: settings.spacing, buffer: settings.buffer, keepTrees: settings.keepTrees, count: yurts.length, updated: Date.now() });
+const unpackYurts = s => { const f = s.yf || [], o = []; for (let i = 0; i + 2 < f.length; i += 3) o.push({ x: f[i], y: f[i + 1], r: f[i + 2] }); return o; };
+
+function setSave(state, text) { saveState = state; const s = $('save'); s.className = 'save' + (state === 'busy' ? ' busy' : state === 'local' ? ' local' : ''); s.querySelector('span').textContent = text; }
+
+const localStore = {
+  kind: 'local',
+  async list() { return lsGet().scenarios || {}; },
+  async write(id, data) { const s = lsGet(); s.scenarios = { ...(s.scenarios || {}), [id]: data }; lsSet(s); },
+  async remove(id) { const s = lsGet(); if (s.scenarios) delete s.scenarios[id]; lsSet(s); },
+};
+async function makeDbStore() {
+  if (!window.claude?.use) return null;
+  const timeout = new Promise(r => setTimeout(() => r(null), 6000));
+  const [db, user] = await Promise.all([Promise.race([claude.use('db'), timeout]), Promise.race([claude.use('user'), timeout])]).catch(() => [null, null]);
+  if (!db || !user) return null;
+  const uid = await user.id().catch(() => null); if (!uid) return null;
+  const col = db.collection('data/users/' + uid);
+  return {
+    kind: 'db',
+    async list() { const q = await col.get(); const out = {}; q.docs.forEach(d => { if (d.id.startsWith('s')) out[d.id] = d.data(); }); return out; },
+    async write(id, data) { await col.doc(id).set(data); },
+    async remove(id) { await col.doc(id).delete(); },
+  };
+}
+let saveTimer = null, saving = false, dirty = false;
+function scheduleSave() { if (!currentId) return; dirty = true; setSave('busy', 'Saving…'); clearTimeout(saveTimer); saveTimer = setTimeout(flush, 900); }
+async function flush() {
+  if (saving) { saveTimer = setTimeout(flush, 400); return; }
+  if (!dirty || !currentId) return;
+  saving = true; dirty = false;
+  const id = currentId, data = pack(); scenarios[id] = data;
+  try { await store.write(id, data); setSave(store.kind === 'db' ? 'ok' : 'local', store.kind === 'db' ? 'Saved to your account' : 'Saved in this browser'); }
+  catch (e) {
+    if (store.kind === 'db') { store = localStore; await localStore.write(id, data); setSave('local', 'Saved in this browser only (your account could not save)'); }
+    else setSave('local', 'Could not save');
+  }
+  saving = false; renderScenarioList();
+}
+function renderScenarioList() {
+  const sel = $('scnSel'), ids = Object.keys(scenarios).sort((a, b) => (scenarios[b].updated || 0) - (scenarios[a].updated || 0));
+  sel.innerHTML = ids.map(id => { const s = scenarios[id], n = id === currentId ? yurts.length : (s.count ?? (s.yf || []).length / 3); return `<option value="${id}">${escapeHtml(s.name)} · ${n} yurts</option>`; }).join('');
+  sel.value = currentId; $('scnDel').disabled = ids.length < 2;
+}
+const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+async function openScenario(id) {
+  if (dirty) await flush();
+  currentId = id; setPref('last', id);
+  const s = scenarios[id]; yurts = unpackYurts(s);
+  settings = { spacing: s.spacing ?? 20, buffer: s.buffer ?? 50, keepTrees: s.keepTrees ?? true };
+  history.length = 0; $('undo').disabled = true; selected = -1;
+  applySettingsUI(); rebuild(); renderScenarioList();
+}
+async function createScenario(name, ys, from) {
+  const id = newId();
+  scenarios[id] = { name, yf: ys.flatMap(y => [y.x, y.y, y.r]), spacing: from?.spacing ?? 20, buffer: from?.buffer ?? 50, keepTrees: from?.keepTrees ?? true, count: ys.length, updated: Date.now() };
+  try { await store.write(id, scenarios[id]); } catch { store = localStore; await localStore.write(id, scenarios[id]); }
+  await openScenario(id);
+}
+$('scnSel').onchange = e => openScenario(e.target.value);
+function inlineForm(html, onOk) {
+  const f = $('scnForm'); f.hidden = false; f.innerHTML = `<div class="confirm">${html}<div class="row"><button class="primary" id="fOk">OK</button><button id="fNo">Cancel</button></div></div>`;
+  const inp = f.querySelector('input'); if (inp) { inp.focus(); inp.select(); inp.onkeydown = e => { if (e.key === 'Enter') $('fOk').click(); if (e.key === 'Escape') $('fNo').click(); }; }
+  $('fOk').onclick = async () => { f.hidden = true; await onOk(f); }; $('fNo').onclick = () => { f.hidden = true; };
+}
+$('scnNew').onclick = () => inlineForm(`<label class="lab" for="fName">Name of the new scenario</label><input type="text" id="fName" maxlength="60" value="Plan ${Object.keys(scenarios).length + 1}">
+  <label class="row" style="gap:7px"><input type="radio" name="fStart" id="fEmpty" checked> Start empty</label><label class="row" style="gap:7px"><input type="radio" name="fStart" id="fSeed"> Start from the original 26 yurts</label>`,
+  async () => { const name = $('fName').value.trim() || 'New plan'; await createScenario(name, $('fSeed').checked ? SEED : [], settings); toast(`Created "${name}".`); });
+$('scnDup').onclick = () => inlineForm(`<label class="lab" for="fName">Name of the copy</label><input type="text" id="fName" maxlength="60" value="${escapeHtml(current().name)} (copy)">`,
+  async () => { const name = $('fName').value.trim() || 'Copy'; await createScenario(name, yurts, settings); toast(`Copied to "${name}".`); });
+$('scnRen').onclick = () => inlineForm(`<label class="lab" for="fName">Rename scenario</label><input type="text" id="fName" maxlength="60" value="${escapeHtml(current().name)}">`,
+  async () => { const name = $('fName').value.trim(); if (!name) return; current().name = name; scheduleSave(); renderScenarioList(); });
+$('scnDel').onclick = () => inlineForm(`Delete "${escapeHtml(current().name)}" for good? This cannot be undone.`, async () => {
+  const id = currentId; delete scenarios[id]; try { await store.remove(id); } catch {} dirty = false;
+  const next = Object.keys(scenarios).sort((a, b) => (scenarios[b].updated || 0) - (scenarios[a].updated || 0))[0]; await openScenario(next); toast('Scenario deleted.'); });
+
+// ---------- labels ----------
+const labelEls = site.names.map(n => { const d = document.createElement('div'); d.className = 'place'; d.textContent = n.name.replace(/\.\d+$/, ''); $('labels').appendChild(d); return { d, v: new THREE.Vector3(n.x, H(n.x, n.y) + 6, -n.y) }; });
+const pv = new THREE.Vector3();
+function placeLabels() {
+  if ($('labels').hidden) return;
+  const c = cam(), w = innerWidth, h = innerHeight;
+  for (const L of labelEls) { pv.copy(L.v).project(c); const vis = pv.z < 1 && pv.z > -1 && Math.abs(pv.x) < 1.1 && Math.abs(pv.y) < 1.1;
+    L.d.style.display = vis ? '' : 'none'; if (vis) L.d.style.transform = `translate(${(pv.x * .5 + .5) * w}px, ${(-pv.y * .5 + .5) * h}px) translate(-50%,-100%)`; }
+}
+document.querySelectorAll('.place').forEach(d => { d.style.left = '0'; d.style.top = '0'; });
+
+// ---------- loop ----------
+function resize() {
+  renderer.setSize(innerWidth, innerHeight); persp.aspect = innerWidth / innerHeight; persp.updateProjectionMatrix(); sizeOrtho();
+  lineMats.forEach(m => m.resolution.set(innerWidth, innerHeight));
+}
+addEventListener('resize', resize);
+const needle = $('needle');
+renderer.setAnimationLoop(() => {
+  ctl().update();
+  const c = cam();
+  const px = innerWidth > 720 ? 30 : 34;
+  const s = topView ? px * 2 * TOPH / (innerHeight * topCam.zoom) : px / innerHeight * 2 * Math.tan(persp.fov * Math.PI / 360);
+  for (const sp of sprites) sp.scale.set(s, s, 1);
+  // compass: angle of north on screen
+  let ang = 0; if (!topView) { const d = new THREE.Vector3(); persp.getWorldDirection(d); ang = Math.atan2(d.x, -d.z); }
+  needle.setAttribute('transform', `rotate(${-ang * 180 / Math.PI} 15 15)`);
+  renderer.render(scene, c); placeLabels();
+});
+
+// ---------- boot ----------
+progress(.92, 'Opening your scenarios…');
+store = (await makeDbStore()) || localStore;
+try { scenarios = await store.list(); } catch { store = localStore; scenarios = await localStore.list(); }
+if (!Object.keys(scenarios).length) {
+  const id = newId(); scenarios[id] = { name: 'Starting layout', yf: SEED.flatMap(y => [y.x, y.y, y.r]), spacing: 20, buffer: 50, keepTrees: true, count: SEED.length, updated: Date.now() };
+  try { await store.write(id, scenarios[id]); } catch { store = localStore; await localStore.write(id, scenarios[id]); }
+}
+const last = prefs().last;
+await openScenario(scenarios[last] ? last : Object.keys(scenarios).sort((a, b) => (scenarios[b].updated || 0) - (scenarios[a].updated || 0))[0]);
+setSave(store.kind === 'db' ? 'ok' : 'local', store.kind === 'db' ? 'Your scenarios are saved to your account' : 'Your scenarios are saved in this browser');
+setTool('move');
+progress(1); $('loading').hidden = true;
+window.__planner = { persp, orbit, topCam, setView, get yurts() { return yurts; } };
+</script>
+
+</body>
+</html>

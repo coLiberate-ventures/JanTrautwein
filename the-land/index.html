@@ -82,6 +82,15 @@ input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px}
 .save.busy i{background:var(--accent)} .save.local i{background:var(--warn)}
 .confirm{background:var(--chip);border:1px solid var(--line);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:8px;font-size:13px}
 .toggle-sheet{display:none}
+.iconbtn{width:34px;height:34px;padding:0;display:inline-grid;place-items:center;border-radius:50%;font-weight:700}
+.mbar{display:none}
+.modal{position:fixed;inset:0;z-index:30;background:rgba(10,14,11,.5);display:grid;place-items:center;padding:16px}
+.modal .box{background:var(--panel);color:var(--fg);border-radius:16px;box-shadow:var(--shadow);max-width:460px;width:100%;max-height:calc(100% - 32px);overflow:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.modal h2{font-family:var(--f-display);font-weight:400;font-size:22px;margin:0}
+.modal h3{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:6px 0 0}
+.gest{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;font-size:14px;align-items:start}
+.gest b{white-space:nowrap}
+.seg.tools{grid-template-columns:repeat(4,1fr);grid-auto-flow:row}
 
 .card{position:fixed;z-index:6;right:max(16px,env(safe-area-inset-right,0px));top:calc(16px + env(safe-area-inset-top,0px));width:270px;
   background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px;display:flex;flex-direction:column;gap:10px}
@@ -106,6 +115,19 @@ input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px}
 kbd{font:600 11px var(--f-body);background:var(--chip);border:1px solid var(--line);border-radius:4px;padding:0 4px}
 
 @media (max-width:720px){
+  .panel:not(.open){display:none}
+  .mbar{display:flex;flex-direction:column;gap:8px;position:fixed;z-index:6;left:0;right:0;bottom:0;
+    padding:10px max(12px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));
+    background:color-mix(in srgb,var(--panel) 92%,transparent);border-top:1px solid var(--line);border-radius:16px 16px 0 0;box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+  .mbar .top{display:flex;align-items:center;gap:8px}
+  .mbar .n{font-family:var(--f-display);font-size:24px;line-height:1}
+  .mbar .n small{font-family:var(--f-body);font-size:12px;color:var(--muted);margin-left:4px}
+  .mbar .seg button{padding:8px 4px;font-size:13px}
+  .mbar.min{padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom,0px))}
+  .mbar.min .tools,.mbar.min .vseg,.mbar.min .mbtns{display:none}
+  .mbar:not(.min) .showctl{display:none}
+  .panel.open ~ .mbar{display:none}
+  .hint{bottom:auto;top:calc(10px + env(safe-area-inset-top,0px))}
   .panel{top:auto;bottom:calc(0px + env(safe-area-inset-bottom,0px));left:0;right:0;width:auto;border-radius:16px 16px 0 0;max-height:62%;
     padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
   .panel.collapsed .more,.panel.collapsed #scnBtns,.panel.collapsed .brand .eyebrow{display:none}
@@ -116,7 +138,7 @@ kbd{font:600 11px var(--f-body);background:var(--chip);border:1px solid var(--li
   .count b{font-size:44px}
   .card{top:calc(48px + env(safe-area-inset-top,0px));left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));width:auto;z-index:7;padding:12px 14px;gap:8px}
   .card .kv{grid-template-columns:auto auto auto auto;font-size:12px}
-  .hint{bottom:auto;top:calc(12px + env(safe-area-inset-top,0px));font-size:12px}
+  .hint{font-size:12px}
   .compass{display:none}
 }
 @media (pointer:coarse){.kbd{display:none}}
@@ -144,8 +166,8 @@ kbd{font:600 11px var(--f-body);background:var(--chip);border:1px solid var(--li
 <aside class="panel" id="panel" aria-label="Yurt planner">
   <div class="sec">
     <div class="brand">
-      <div><div class="eyebrow">Terra Sangha · Marvão · 15.8 ha</div><h1>Yurt Planner</h1></div>
-      <button class="ghost toggle-sheet" id="sheetBtn" aria-expanded="true">Less</button>
+      <div><div class="eyebrow" id="areaLbl">Terra Sangha · Marvão</div><h1>Yurt Planner</h1></div>
+      <div class="row" style="gap:6px;flex-wrap:nowrap"><button class="iconbtn" id="helpBtn" aria-label="How to use">?</button><button class="toggle-sheet" id="sheetBtn">Done</button></div>
     </div>
     <div class="row">
       <select id="scnSel" class="grow" aria-label="Scenario"></select>
@@ -158,11 +180,11 @@ kbd{font:600 11px var(--f-body);background:var(--chip);border:1px solid var(--li
   <div class="sec">
     <div class="count"><b id="nYurts">0</b><span id="nLabel">yurts placed</span></div>
     <div class="chips" id="chips"></div>
-    <div class="seg" role="group" aria-label="Tool">
-      <button id="tMove" aria-pressed="true">Move</button><button id="tAdd" aria-pressed="false">Add</button><button id="tDel" aria-pressed="false">Remove</button>
+    <div class="seg tools" role="group" aria-label="Mode">
+      <button data-tool="look" aria-pressed="false">Navigate</button><button data-tool="move" aria-pressed="true">Move</button><button data-tool="add" aria-pressed="false">Add</button><button data-tool="remove" aria-pressed="false">Remove</button>
     </div>
     <div class="seg" role="group" aria-label="View">
-      <button id="v3d" aria-pressed="true">3D view</button><button id="vTop" aria-pressed="false">Top view</button>
+      <button data-view="3d" aria-pressed="true">3D view</button><button data-view="top" aria-pressed="false">Top view</button>
     </div>
   </div>
   <div class="more">
@@ -199,10 +221,50 @@ kbd{font:600 11px var(--f-body);background:var(--chip);border:1px solid var(--li
       </div>
       <div id="clearForm" hidden></div>
       <div class="save" id="save"><i></i><span>Loading…</span></div>
-      <p class="note kbd"><kbd>A</kbd> add · <kbd>V</kbd> move · <kbd>T</kbd> top view · <kbd>Q</kbd>/<kbd>E</kbd> turn door · <kbd>Del</kbd> remove · <kbd>⌘Z</kbd> undo</p>
+      <p class="note kbd"><kbd>Shift</kbd>+drag moves the view · <kbd>N</kbd> navigate · <kbd>A</kbd> add · <kbd>V</kbd> move · <kbd>T</kbd> top view · <kbd>Q</kbd>/<kbd>E</kbd> turn door · <kbd>⌘Z</kbd> undo</p>
     </div>
   </div>
 </aside>
+
+<div class="mbar" id="mbar">
+  <div class="top">
+    <div class="n grow"><span id="mN">0</span><small>yurts</small></div>
+    <div class="seg vseg" role="group" aria-label="View"><button data-view="3d" aria-pressed="true">3D</button><button data-view="top" aria-pressed="false">Top</button></div>
+    <button class="iconbtn mbtns" id="mHelp" aria-label="How to use">?</button>
+    <button class="mbtns" id="mMore">More</button>
+    <button class="mbtns" id="mHide" aria-label="Hide controls">Hide</button>
+    <button class="showctl" id="mShow">Show controls</button>
+  </div>
+  <div class="seg tools" role="group" aria-label="Mode">
+    <button data-tool="look" aria-pressed="true">Navigate</button><button data-tool="move" aria-pressed="false">Move</button><button data-tool="add" aria-pressed="false">Add</button><button data-tool="remove" aria-pressed="false">Remove</button>
+  </div>
+</div>
+
+<div class="modal" id="help" hidden role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+  <div class="box">
+    <div class="row" style="justify-content:space-between"><h2 id="helpTitle">How to use the planner</h2><button id="helpClose">Close</button></div>
+    <p class="note" style="font-size:13.5px;margin:0">Pick a mode: <b>Navigate</b> to look around, <b>Move</b>, <b>Add</b> or <b>Remove</b> to work on yurts. While you work on yurts the camera stays still under one finger, so dragging moves the yurt and not the view.</p>
+    <div id="helpTouch">
+      <h3>Fingers</h3>
+      <div class="gest">
+        <b>1 finger drag</b><span>Navigate: move across the land. Move mode: drag a yurt.</span>
+        <b>Pinch</b><span>Zoom in and out (works in every mode).</span>
+        <b>2 finger drag</b><span>Turn and tilt the view (in 3D). In top view it moves the map.</span>
+        <b>Tap</b><span>Add mode: place a yurt. Remove mode: take one away. Tap a yurt to see its details.</span>
+      </div>
+    </div>
+    <div id="helpMouse">
+      <h3>Mouse and keyboard</h3>
+      <div class="gest">
+        <b>Drag</b><span>Turn the view (3D) or move the map (top view). Drag a yurt to move it.</span>
+        <b>Shift + drag</b><span>Move across the land. Right-drag does the same.</span>
+        <b>Scroll</b><span>Zoom in and out.</span>
+        <b>Keys</b><span><kbd>N</kbd> navigate · <kbd>V</kbd> move · <kbd>A</kbd> add · <kbd>X</kbd> remove · <kbd>T</kbd> top view · <kbd>Q</kbd>/<kbd>E</kbd> turn door · <kbd>Del</kbd> remove · <kbd>⌘Z</kbd> undo</span>
+      </div>
+    </div>
+    <p class="note" style="margin:0">Yurts can only be placed inside the land (gold outline). Your scenarios are saved in this browser.</p>
+  </div>
+</div>
 
 <div class="card" id="card" hidden>
   <div class="row" style="justify-content:space-between"><h2 id="cTitle">Yurt</h2><button class="ghost" id="cClose" aria-label="Close">Close</button></div>
@@ -253,6 +315,9 @@ const inTerrain = (lx, ly) => lx > T.x0 + 2 && lx < T.x0 + T.nx - 3 && ly < T.y1
 const boundary = site.boundary;
 function pip(x, y, poly) { let ins = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi) ins = !ins; } return ins; }
 const inLand = (x, y) => boundary.some(p => pip(x, y, p)) && !site.holes.some(p => pip(x, y, p));
+const RING8 = Array.from({ length: 8 }, (_, k) => [Math.cos(k * Math.PI / 4), Math.sin(k * Math.PI / 4)]);
+const validSpot = (x, y) => inTerrain(x, y) && inLand(x, y) && RING8.every(([a, b]) => inLand(x + a * 4, y + b * 4));
+$('areaLbl').textContent = `Terra Sangha · Marvão · ${(site.area_m2 / 10000).toFixed(1)} ha`;
 const riverPts = site.river.flat();
 function riverDist(x, y) {
   let best = 1e9;
@@ -582,7 +647,7 @@ function rebuildRings() {
 const persp = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 1, 30000);
 persp.position.set(ctr.x - 230, ctr.y + 430, ctr.z + 560);
 const orbit = new OrbitControls(persp, renderer.domElement);
-orbit.target.copy(ctr); orbit.enableDamping = true; orbit.dampingFactor = .09; orbit.maxPolarAngle = Math.PI * .47; orbit.minDistance = 15; orbit.maxDistance = 4000; orbit.screenSpacePanning = false;
+orbit.target.copy(ctr); orbit.zoomToCursor = true; orbit.enableDamping = true; orbit.dampingFactor = .09; orbit.maxPolarAngle = Math.PI * .47; orbit.minDistance = 15; orbit.maxDistance = 4000; orbit.screenSpacePanning = false;
 const TOPH = 360;
 const topCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 1, 5000);
 function sizeOrtho() { const a = innerWidth / innerHeight; topCam.left = -TOPH * a; topCam.right = TOPH * a; topCam.top = TOPH; topCam.bottom = -TOPH; topCam.updateProjectionMatrix(); }
@@ -594,10 +659,17 @@ topCtl.minZoom = .5; topCtl.maxZoom = 18; topCtl.zoomToCursor = true;
 topCtl.mouseButtons = { LEFT: THREE.MOUSE.PAN, MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.PAN };
 topCtl.touches = { ONE: THREE.TOUCH.PAN, TWO: THREE.TOUCH.DOLLY_PAN };
 topCtl.enabled = false;
+// touch: 1 finger moves across the land, 2 fingers pinch-zoom and turn/tilt (map apps); mouse: drag turns, shift/right-drag moves
+function applyGestures() {
+  const editing = tool !== 'look';
+  orbit.touches = { ONE: editing ? null : THREE.TOUCH.PAN, TWO: THREE.TOUCH.DOLLY_ROTATE };
+  topCtl.touches = { ONE: editing ? null : THREE.TOUCH.PAN, TWO: THREE.TOUCH.DOLLY_PAN };
+}
+let tool = touch ? 'look' : 'move';
 const cam = () => topView ? topCam : persp;
 const ctl = () => topView ? topCtl : orbit;
 function setView(top) {
-  topView = top; $('v3d').setAttribute('aria-pressed', !top); $('vTop').setAttribute('aria-pressed', top);
+  topView = top; document.querySelectorAll('[data-view]').forEach(b => b.setAttribute('aria-pressed', (b.dataset.view === 'top') === top));
   orbit.enabled = !top; topCtl.enabled = top;
   if (top) { const t = orbit.target.clone(); topCtl.target.copy(t); topCam.position.set(t.x, t.y + 1500, t.z + 0.01); topCam.zoom = Math.max(.6, Math.min(8, 900 / persp.position.distanceTo(orbit.target))); topCam.updateProjectionMatrix(); topCtl.update(); }
   else { const t = topCtl.target.clone(), d = Math.max(120, 900 / topCam.zoom); const off = persp.position.clone().sub(orbit.target).setLength(d); orbit.target.copy(t); persp.position.copy(t).add(off); orbit.update(); }
@@ -620,14 +692,25 @@ function groundHit(e) {
   }
   return null;
 }
-function yurtHit(e) { if (!yurts.length) return -1; setRay(e); const h = ray.intersectObject(pick, false); return h.length ? h[0].instanceId : -1; }
+function yurtHit(e) {
+  if (!yurts.length) return -1; setRay(e); const h = ray.intersectObject(pick, false); if (h.length) return h[0].instanceId;
+  const r = renderer.domElement.getBoundingClientRect(), tol = e.pointerType === 'touch' ? 34 : 12; let best = -1, bd = tol;
+  yurts.forEach((y, i) => { pv.set(y.x, (info[i]?.top ?? 0) + 1.5, -y.y).project(cam()); if (pv.z > 1) return;
+    const d = Math.hypot((pv.x * .5 + .5) * r.width - (e.clientX - r.left), (-pv.y * .5 + .5) * r.height - (e.clientY - r.top)); if (d < bd) { bd = d; best = i; } });
+  return best;
+}
 
 // ---------- interaction ----------
-let tool = 'move';
-function setTool(t) { tool = t; for (const [id, v] of [['tMove', 'move'], ['tAdd', 'add'], ['tDel', 'remove']]) $(id).setAttribute('aria-pressed', v === t); renderer.domElement.style.cursor = t === 'add' ? 'crosshair' : ''; setHint(); }
+function setTool(t) {
+  tool = t; document.querySelectorAll('[data-tool]').forEach(b => b.setAttribute('aria-pressed', b.dataset.tool === t));
+  renderer.domElement.style.cursor = t === 'add' ? 'crosshair' : ''; applyGestures(); setHint();
+}
 function setHint() {
-  const h = { move: touch ? 'Drag a yurt to move it · drag the ground to look around' : 'Drag a yurt to move it · drag the ground to look around · scroll to zoom',
-    add: 'Tap or click on the land to place a yurt', remove: 'Tap or click a yurt to remove it' }[tool];
+  const h = touch ? {
+    look: topView ? '1 finger moves the map · pinch to zoom' : '1 finger moves · 2 fingers turn and tilt · pinch to zoom',
+    move: 'Drag a yurt with 1 finger · 2 fingers move the view', add: 'Tap the land to place a yurt · 2 fingers move the view', remove: 'Tap a yurt to remove it · 2 fingers move the view' }[tool] : {
+    look: topView ? 'Drag to move the map · scroll to zoom' : 'Drag to turn · Shift+drag or right-drag to move · scroll to zoom',
+    move: topView ? 'Drag a yurt to move it · drag the ground to move the map' : 'Drag a yurt to move it · drag the ground to turn · Shift+drag to move', add: 'Click on the land to place a yurt', remove: 'Click a yurt to remove it' }[tool];
   $('hint').textContent = h;
 }
 let drag = null, down = null;
@@ -636,7 +719,8 @@ stage.addEventListener('pointerdown', e => {
   if (e.button !== 0 && e.pointerType === 'mouse') return;
   down = { x: e.clientX, y: e.clientY, t: performance.now(), id: e.pointerId };
   const i = yurtHit(e);
-  if (i >= 0 && tool !== 'remove') {
+  if (drag) return;
+  if (i >= 0 && (tool === 'move' || tool === 'add')) {
     const g = groundHit(e);
     drag = { i, dx: g ? yurts[i].x - g.x : 0, dy: g ? yurts[i].y - g.y : 0, moved: false, before: snapshot() };
     ctl().enabled = false; selected = i; el.setPointerCapture(e.pointerId); rebuild();
@@ -645,7 +729,11 @@ stage.addEventListener('pointerdown', e => {
 el.addEventListener('pointermove', e => {
   if (drag) {
     const g = groundHit(e); if (!g) return;
-    const y = yurts[drag.i]; y.x = g.x + drag.dx; y.y = g.y + drag.dy; drag.moved = true; rebuild();
+    const y = yurts[drag.i], nx = g.x + drag.dx, ny = g.y + drag.dy;
+    if (drag.wasValid === undefined) drag.wasValid = validSpot(y.x, y.y);
+    if (drag.wasValid && !validSpot(nx, ny)) { drag.blocked = true; return; }
+    if (!drag.wasValid && validSpot(nx, ny)) drag.wasValid = true;
+    y.x = nx; y.y = ny; drag.moved = true; rebuild();
   } else if (!touch && !down) {
     const i = yurtHit(e); el.style.cursor = i >= 0 ? (tool === 'remove' ? 'not-allowed' : 'grab') : (tool === 'add' ? 'crosshair' : '');
   }
@@ -655,11 +743,13 @@ function endPointer(e) {
   if (drag) {
     ctl().enabled = true;
     if (drag.moved) commit(drag.before);
+    if (drag.blocked) toast('Yurts stay inside the land (gold outline).');
     drag = null;
   } else if (click) {
     const i = yurtHit(e);
     if (tool === 'remove' && i >= 0) { const b = snapshot(); yurts.splice(i, 1); selected = -1; commit(b); rebuild(); }
-    else if (tool === 'add' && i < 0) { const g = groundHit(e); if (g) addYurt(g.x, g.y); }
+    else if (tool === 'add' && i < 0) { const g = groundHit(e); if (g) { if (validSpot(g.x, g.y)) addYurt(g.x, g.y); else toast('That spot is outside the land. Place yurts inside the gold outline.'); } }
+    else if (i >= 0 && tool === 'look') { selected = i; rebuild(); }
     else if (i < 0 && selected >= 0) { selected = -1; rebuild(); }
   }
   down = null;
@@ -682,11 +772,11 @@ addEventListener('keydown', e => {
   const k = e.key.toLowerCase();
   if ((e.metaKey || e.ctrlKey) && k === 'z') { e.preventDefault(); undo(); return; }
   if (e.metaKey || e.ctrlKey || e.altKey) return;
-  if (k === 'a') setTool('add'); else if (k === 'v') setTool('move'); else if (k === 'x') setTool('remove');
+  if (k === 'n') setTool('look'); else if (k === 'a') setTool('add'); else if (k === 'v') setTool('move'); else if (k === 'x') setTool('remove');
   else if (k === 't') setView(!topView);
   else if (k === 'q') rotateSel(Math.PI / 12); else if (k === 'e') rotateSel(-Math.PI / 12);
   else if (k === 'delete' || k === 'backspace') { e.preventDefault(); removeSel(); }
-  else if (k === 'escape') { selected = -1; rebuild(); }
+  else if (k === 'escape') { $('help').hidden = true; selected = -1; rebuild(); }
 });
 
 // ---------- history ----------
@@ -698,7 +788,7 @@ function undo() { if (!history.length) return; yurts = JSON.parse(history.pop())
 // ---------- panel ----------
 function chip(cls, n, text) { return `<span class="chip ${cls}${n ? '' : ' zero'}"><i class="dot"></i>${n} ${text}</span>`; }
 function updatePanel() {
-  const n = yurts.length; $('nYurts').textContent = n; $('nLabel').textContent = n === 1 ? 'yurt placed' : 'yurts placed';
+  const n = yurts.length; $('nYurts').textContent = n; $('mN').textContent = n; $('nLabel').textContent = n === 1 ? 'yurt placed' : 'yurts placed';
   const inside = info.filter(f => f.inside && !f.edge).length, out = info.filter(f => !f.inside).length, edge = info.filter(f => f.edge).length;
   const close = info.filter(f => f.near < settings.spacing).length, riv = settings.buffer ? info.filter(f => f.river < settings.buffer).length : 0;
   const bld = info.filter(f => f.building).length, trees = info.reduce((s, f) => s + f.trees, 0);
@@ -718,13 +808,20 @@ function updateCard() {
   ].map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
   $('cIssues').innerHTML = f.issues.length ? f.issues.map(([s, t]) => `<div><i class="dot" style="background:var(--${s})"></i>${t}</div>`).join('') : `<div><i class="dot"></i>Fits all the rules</div>`;
 }
-$('tMove').onclick = () => setTool('move'); $('tAdd').onclick = () => setTool('add'); $('tDel').onclick = () => setTool('remove');
-$('v3d').onclick = () => setView(false); $('vTop').onclick = () => setView(true);
+document.querySelectorAll('[data-tool]').forEach(b => b.onclick = () => setTool(b.dataset.tool));
+document.querySelectorAll('[data-view]').forEach(b => b.onclick = () => setView(b.dataset.view === 'top'));
+const openHelp = () => { $('helpTouch').hidden = !touch && innerWidth > 720; $('helpMouse').hidden = touch; $('help').hidden = false; $('helpClose').focus(); };
+$('helpBtn').onclick = openHelp; $('mHelp').onclick = openHelp;
+$('helpClose').onclick = () => { $('help').hidden = true; };
+$('help').onclick = e => { if (e.target === $('help')) $('help').hidden = true; };
+$('mMore').onclick = () => { $('panel').classList.add('open'); };
+$('mHide').onclick = () => { $('mbar').classList.add('min'); };
+$('mShow').onclick = () => { $('mbar').classList.remove('min'); };
 $('rotL').onclick = () => rotateSel(Math.PI / 12); $('rotR').onclick = () => rotateSel(-Math.PI / 12); $('cDel').onclick = removeSel;
 $('cClose').onclick = () => { selected = -1; rebuild(); };
 $('undo').onclick = undo;
-$('sheetBtn').onclick = () => { const p = $('panel'), col = p.classList.toggle('collapsed'); $('sheetBtn').textContent = col ? 'More' : 'Less'; $('sheetBtn').setAttribute('aria-expanded', !col); };
-if (innerWidth <= 720) { $('sheetBtn').click(); $('lNames').checked = false; $('labels').hidden = true; }
+$('sheetBtn').onclick = () => { $('panel').classList.remove('open'); };
+if (innerWidth <= 720) { $('lNames').checked = false; $('labels').hidden = true; }
 function applySettingsUI() {
   $('spacing').value = settings.spacing; $('spacingV').textContent = settings.spacing + ' m';
   $('buffer').value = settings.buffer; $('bufferV').textContent = settings.buffer ? settings.buffer + ' m' : 'off';
@@ -763,7 +860,7 @@ $('fill').onclick = () => {
   const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys), st = 2;
   let added = 0;
   for (let y = y1; y >= y0 && yurts.length < MAXN; y -= st) for (let x = x0; x <= x1 && yurts.length < MAXN; x += st) {
-    if (!free(x, y) || !inLand(x, y) || !inTerrain(x, y)) continue;
+    if (!free(x, y) || !validSpot(x, y)) continue;
     if (RING16.some(([a, c]) => !inLand(x + a * DECK_R, y + c * DECK_R))) continue;
     if (buf && riverDist(x, y) < buf) continue;
     if (buildingBoxes.some(bb => Math.hypot(Math.max(bb.x0 - x, 0, x - bb.x1), Math.max(bb.y0 - y, 0, y - bb.y1)) < DECK_R + .8)) continue;
@@ -915,7 +1012,8 @@ if (!Object.keys(scenarios).length) {
 const last = prefs().last;
 await openScenario(scenarios[last] ? last : Object.keys(scenarios).sort((a, b) => (scenarios[b].updated || 0) - (scenarios[a].updated || 0))[0]);
 setSave(store.kind === 'db' ? 'ok' : 'local', store.kind === 'db' ? 'Your scenarios are saved to your account' : 'Your scenarios are saved in this browser');
-setTool('move');
+setTool(tool);
+try { if (touch && !localStorage.getItem('the-land-help-seen')) { localStorage.setItem('the-land-help-seen', '1'); setTimeout(openHelp, 600); } } catch {}
 progress(1); $('loading').hidden = true;
 window.__planner = { persp, orbit, topCam, setView, get yurts() { return yurts; } };
 </script>

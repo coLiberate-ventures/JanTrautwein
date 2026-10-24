@@ -84,6 +84,10 @@ input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px}
 .toggle-sheet{display:none}
 .iconbtn{width:34px;height:34px;padding:0;display:inline-grid;place-items:center;border-radius:50%;font-weight:700}
 .mbar{display:none}
+.selpill{position:fixed;z-index:7;left:50%;transform:translateX(-50%);top:calc(10px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:8px;
+  background:var(--panel);border:1px solid var(--line);border-radius:999px;box-shadow:var(--shadow);padding:5px 6px 5px 14px;font-weight:600;font-size:13px;white-space:nowrap}
+.selpill button{padding:5px 10px;border-radius:999px;font-size:12.5px}
+.selpill .dot{display:inline-block}
 .modal{position:fixed;inset:0;z-index:30;background:rgba(10,14,11,.5);display:grid;place-items:center;padding:16px}
 .modal .box{background:var(--panel);color:var(--fg);border-radius:16px;box-shadow:var(--shadow);max-width:460px;width:100%;max-height:calc(100% - 32px);overflow:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12px}
 .modal h2{font-family:var(--f-display);font-weight:400;font-size:22px;margin:0}
@@ -265,6 +269,8 @@ kbd{font:600 11px var(--f-body);background:var(--chip);border:1px solid var(--li
     <p class="note" style="margin:0">Yurts can only be placed inside the land (gold outline). Your scenarios are saved in this browser.</p>
   </div>
 </div>
+
+<div class="selpill" id="selPill" hidden><i class="dot" id="selDot"></i><span id="selName">Yurt</span><button id="selInfo" aria-label="Show yurt details">ⓘ Info</button><button id="selX" aria-label="Deselect yurt">✕</button></div>
 
 <div class="card" id="card" hidden>
   <div class="row" style="justify-content:space-between"><h2 id="cTitle">Yurt</h2><button class="ghost" id="cClose" aria-label="Close">Close</button></div>
@@ -795,10 +801,17 @@ function updatePanel() {
   $('chips').innerHTML = chip('', inside, 'inside the land') + (out ? chip('bad', out, 'outside') : '') + (edge ? chip('warn', edge, 'on the boundary') : '') +
     chip('warn', close, 'too close') + chip('warn', riv, 'near the river') + (bld ? chip('warn', bld, 'at a building') : '') + chip('tree', trees, trees === 1 ? 'tree to clear' : 'trees to clear');
 }
+let cardOpen = false, cardFor = -1;
+const compact = () => innerWidth <= 720;
 function updateCard() {
-  const c = $('card');
-  if (selected < 0 || selected >= yurts.length) { c.hidden = true; return; }
+  const c = $('card'), pill = $('selPill');
+  if (selected !== cardFor) { cardFor = selected; cardOpen = false; }
+  if (selected < 0 || selected >= yurts.length) { c.hidden = true; pill.hidden = true; $('hint').hidden = false; return; }
   const y = yurts[selected], f = info[selected], [lon, lat] = toLonLat(y.x, y.y);
+  // phones: a small pill with an info button instead of the full card, so the yurt can be dragged freely
+  const pillOnly = compact() && !cardOpen;
+  pill.hidden = !pillOnly; $('hint').hidden = compact();
+  if (pillOnly) { $('selName').textContent = `Yurt ${selected + 1}`; $('selDot').style.background = `var(--${f.state})`; c.hidden = true; return; }
   c.hidden = false; $('cTitle').textContent = `Yurt ${selected + 1}`;
   const door = ((180 - y.r * 180 / Math.PI) % 360 + 360) % 360, dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
   $('cKv').innerHTML = [
@@ -818,7 +831,9 @@ $('mMore').onclick = () => { $('panel').classList.add('open'); };
 $('mHide').onclick = () => { $('mbar').classList.add('min'); };
 $('mShow').onclick = () => { $('mbar').classList.remove('min'); };
 $('rotL').onclick = () => rotateSel(Math.PI / 12); $('rotR').onclick = () => rotateSel(-Math.PI / 12); $('cDel').onclick = removeSel;
-$('cClose').onclick = () => { selected = -1; rebuild(); };
+$('cClose').onclick = () => { if (compact()) { cardOpen = false; updateCard(); } else { selected = -1; rebuild(); } };
+$('selInfo').onclick = () => { cardOpen = true; updateCard(); };
+$('selX').onclick = () => { selected = -1; rebuild(); };
 $('undo').onclick = undo;
 $('sheetBtn').onclick = () => { $('panel').classList.remove('open'); };
 if (innerWidth <= 720) { $('lNames').checked = false; $('labels').hidden = true; }

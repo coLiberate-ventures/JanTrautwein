@@ -221,7 +221,7 @@ kbd{font:600 11px var(--f-body);background:var(--chip);border:1px solid var(--li
       <div class="row">
         <button id="undo" disabled>Undo</button>
         <button id="exportCsv">Export CSV</button>
-        <button id="renum">Renumber north → south</button>
+        <button id="renum">Renumber top to bottom</button>
         <button id="clearAll" class="danger">Remove all</button>
       </div>
       <div id="clearForm" hidden></div>
@@ -296,7 +296,7 @@ import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
 
 const $ = id => document.getElementById(id);
-const V = '?v=4'; // bump when the data files change, so browsers don't mix old and new files
+const V = '?v=5'; // bump when the data files change, so browsers don't mix old and new files
 const touch = matchMedia('(pointer: coarse)').matches;
 const DECK_R = 5, WALL_R = 3, WALL_H = 2.0, ROOF_H = 1.45, CLEAR = 0.35, DECK_T = 0.15, MAXY = 1500;
 const progress = (p, m) => { $('loadbar').style.width = (p * 100) + '%'; if (m) $('loadmsg').textContent = m; };
@@ -858,8 +858,13 @@ let toastT;
 function toast(msg) { const t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, 4200); }
 
 // renumber from north to south (rows of about 6 m, then west to east)
-const byNorth = (a, b) => (Math.round(b.y / 6) - Math.round(a.y / 6)) || (a.x - b.x);
-$('renum').onclick = () => { if (yurts.length < 2) return; const b = snapshot(); yurts.sort(byNorth); selected = -1; commit(b); rebuild(); toast('Yurts are now numbered from north to south.'); };
+// reading order: rows from north to south (a new row starts 20 m further south), each row west to east
+function readingOrder(ys) {
+  const s = [...ys].sort((a, b) => b.y - a.y), out = []; let row = [];
+  for (const v of s) { if (row.length && row[0].y - v.y > 20) { out.push(...row.sort((a, b) => a.x - b.x)); row = []; } row.push(v); }
+  return out.concat(row.sort((a, b) => a.x - b.x));
+}
+$('renum').onclick = () => { if (yurts.length < 2) return; const b = snapshot(); yurts = readingOrder(yurts); selected = -1; commit(b); rebuild(); toast('Yurts are now numbered from top to bottom, left to right.'); };
 
 // remove all (inline confirm)
 $('clearAll').onclick = () => {
@@ -908,6 +913,7 @@ $('exportCsv').onclick = async () => {
 
 // ---------- scenarios & storage ----------
 const SEED = site.yurts.map(y => ({ x: y.x, y: y.y, r: y.rot }));
+const SEED23 = (site.yurts23 || []).map(y => ({ x: y.x, y: y.y, r: y.rot }));
 let store = null, scenarios = {}, currentId = null, saveState = 'loading';
 const LS = 'the-land-yurt-planner-v1';
 const lsGet = () => { try { return JSON.parse(localStorage.getItem(LS) || '{}'); } catch { return {}; } };
@@ -1026,22 +1032,25 @@ renderer.setAnimationLoop(() => {
 progress(.92, 'Opening your scenarios…');
 store = (await makeDbStore()) || localStore;
 try { scenarios = await store.list(); } catch { store = localStore; scenarios = await localStore.list(); }
-if (!Object.keys(scenarios).length) {
-  const id = newId(); scenarios[id] = { name: 'Suggested layout', seedV: 3, yf: SEED.flatMap(y => [y.x, y.y, y.r]), spacing: 20, buffer: 50, keepTrees: true, count: SEED.length, updated: Date.now() };
-  try { await store.write(id, scenarios[id]); } catch { store = localStore; await localStore.write(id, scenarios[id]); }
-}
-// suggested layout v3: replace untouched older starting layouts, and give everyone the new one once
+// suggested layouts v4: replace untouched older suggested layouts, and give everyone the full and the 23-yurt layout once
 let openSuggested = null;
 {
-  const SEEDV = 3, same = (a, b) => a.length === b.length && a.every((v, i) => Math.abs(v - b[i]) < 0.02);
-  const olds = [(site.seed_v1 || []).flat(), (site.seed_v2 || []).flat()];
-  for (const [id, sc] of Object.entries(scenarios)) if (sc.name === 'Starting layout' && olds.some(o => same(sc.yf || [], o))) {
+  const SEEDV = 4;
+  // compare positions only (door angles round differently through the CSV)
+  const xy = f => { const o = []; for (let i = 0; i + 2 < f.length; i += 3) o.push(f[i], f[i + 1]); return o; };
+  const same = (a, b) => a.length === b.length && a.every((v, i) => Math.abs(v - b[i]) < 0.05);
+  const olds = [site.seed_v1, site.seed_v2, site.seed_v3, site.yurts.map(y => [y.x, y.y, y.rot])].filter(Boolean).map(o => xy(o.flat()));
+  for (const [id, sc] of Object.entries(scenarios)) if ((sc.seedV || 0) < SEEDV && /^(Starting|Suggested) layout$/.test(sc.name) && olds.some(o => same(xy(sc.yf || []), o))) {
     delete scenarios[id]; try { await store.remove(id); } catch {}
   }
   if (!Object.values(scenarios).some(sc => sc.seedV === SEEDV)) {
-    const id = newId(); scenarios[id] = { name: 'Suggested layout', seedV: SEEDV, yf: SEED.flatMap(y => [y.x, y.y, y.r]), spacing: 20, buffer: 50, keepTrees: true, count: SEED.length, updated: Date.now() };
-    try { await store.write(id, scenarios[id]); } catch { store = localStore; await localStore.write(id, scenarios[id]); }
-    openSuggested = id;
+    const add = async (name, ys) => {
+      const id = newId(); scenarios[id] = { name, seedV: SEEDV, yf: ys.flatMap(y => [y.x, y.y, y.r]), spacing: 20, buffer: 50, keepTrees: true, count: ys.length, updated: Date.now() };
+      try { await store.write(id, scenarios[id]); } catch { store = localStore; await localStore.write(id, scenarios[id]); }
+      return id;
+    };
+    if (SEED23.length) await add('Lighter layout', SEED23);
+    openSuggested = await add('Suggested layout', SEED);
   }
 }
 // yurts may only stand inside the land: move any saved yurt outside it to a free spot in the north, near yurt 19

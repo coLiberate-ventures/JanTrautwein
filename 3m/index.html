@@ -1,0 +1,812 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Make More Money Game</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a game manual. Hero with a live looking scoreboard, then the rules, the moves deck, and the entry form. */
+:root{
+  --bg:#F2F4F9; --surface:#FFFFFF; --ink:#141D33; --muted:#566079; --line:#D9DEEA;
+  --accent:#FFB400; --on-accent:#141D33; --money:#178A5E; --money-soft:#DDF3E9;
+  --board:#141D33; --board-ink:#EEF2FA; --board-muted:#8E9AB8; --board-line:#2B3756;
+  --display:"Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+  --body:"Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0D1322; --surface:#161F35; --ink:#EDF1F9; --muted:#9BA6C0; --line:#28334F;
+  --accent:#FFC23A; --on-accent:#141D33; --money:#3BD394; --money-soft:#123A2C;
+  --board:#1A2541; --board-ink:#EEF2FA; --board-muted:#8E9AB8; --board-line:#33416A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D1322; --surface:#161F35; --ink:#EDF1F9; --muted:#9BA6C0; --line:#28334F;
+  --accent:#FFC23A; --on-accent:#141D33; --money:#3BD394; --money-soft:#123A2C;
+  --board:#1A2541; --board-ink:#EEF2FA; --board-muted:#8E9AB8; --board-line:#33416A; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+.wrap{max-width:1120px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);line-height:1.05;margin:0;text-wrap:balance;letter-spacing:-0.02em}
+h2{font-size:clamp(32px,5vw,52px);font-weight:800}
+h3{font-size:22px;font-weight:700;letter-spacing:-0.01em}
+p{margin:0}
+a{color:inherit}
+.label{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:19px;color:var(--muted);max-width:62ch}
+section{padding-block:72px;border-top:1px solid var(--line)}
+.sec-head{display:grid;gap:14px;margin-bottom:40px;max-width:720px}
+
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:18px;
+  padding:14px 24px;border-radius:999px;text-decoration:none;border:2px solid var(--ink);transition:transform .15s ease, box-shadow .15s ease}
+.btn-primary{background:var(--accent);color:var(--on-accent);border-color:var(--on-accent);box-shadow:4px 4px 0 var(--ink)}
+.btn-primary:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.btn-ghost{background:transparent;color:var(--ink)}
+.btn-ghost:hover{background:var(--surface)}
+.btn:focus-visible,summary:focus-visible{outline:3px solid var(--money);outline-offset:3px}
+
+/* nav */
+nav{display:flex;justify-content:space-between;align-items:center;padding-block:22px;gap:16px}
+.logo{font-family:var(--display);font-weight:800;font-size:22px;display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo b{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--accent);color:var(--on-accent);border:2px solid var(--ink);font-size:16px}
+nav .btn{font-size:15px;padding:9px 18px;box-shadow:3px 3px 0 var(--ink)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;padding-block:40px 80px}
+.hero > *{min-width:0}
+.hero h1{font-size:clamp(46px,8vw,92px);font-weight:800;letter-spacing:-0.035em}
+.hero h1 em{font-style:normal;background:linear-gradient(transparent 62%, var(--accent) 62%, var(--accent) 92%, transparent 92%)}
+.hero-copy{display:grid;gap:26px}
+.hook{font-family:var(--display);font-weight:700;font-size:clamp(22px,2.6vw,28px);line-height:1.2;letter-spacing:-0.01em;max-width:30ch}
+.cta-row{display:flex;flex-wrap:wrap;gap:14px}
+.facts{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);font-size:13px;font-weight:500;padding:6px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+
+.board{background:var(--board);color:var(--board-ink);border-radius:22px;padding:26px;font-family:var(--mono);
+  box-shadow:8px 8px 0 var(--accent);display:grid;gap:20px;transform:rotate(1.2deg)}
+.board-top{display:flex;justify-content:space-between;align-items:center;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--board-muted)}
+.live{display:inline-flex;align-items:center;gap:8px;color:var(--board-ink)}
+.live i{width:9px;height:9px;border-radius:50%;background:#3BD394;animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.25}}
+.score{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.score div{border:1px solid var(--board-line);border-radius:12px;padding:12px 14px}
+.score small{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--board-muted)}
+.score strong{font-size:24px;font-variant-numeric:tabular-nums}
+.score .up{color:#3BD394}
+.bar{height:12px;border-radius:99px;background:var(--board-line);overflow:hidden}
+.bar span{display:block;height:100%;width:68%;background:linear-gradient(90deg,#3BD394,#FFC23A);border-radius:99px}
+.bar-row{display:flex;justify-content:space-between;font-size:12px;color:var(--board-muted);margin-top:8px}
+.log{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:13.5px}
+.log li{display:flex;justify-content:space-between;gap:12px;padding-bottom:8px;border-bottom:1px dashed var(--board-line)}
+.log li:last-child{border-bottom:0;padding-bottom:0}
+.log b{color:#FFC23A;font-weight:700;white-space:nowrap}
+.board-foot{font-size:11px;color:var(--board-muted);text-align:right}
+
+/* letter */
+.letter{display:grid;grid-template-columns:220px 1fr;gap:48px}
+.letter > *{min-width:0}
+.letter-body{display:grid;gap:18px;font-size:19px;max-width:64ch}
+.letter-body .big{font-family:var(--display);font-weight:700;font-size:clamp(26px,3.4vw,36px);line-height:1.15;letter-spacing:-0.02em}
+.sig{font-family:var(--display);font-weight:700;font-size:20px}
+
+/* values */
+.values{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+.value{padding-top:16px;border-top:3px solid var(--ink);display:grid;gap:8px;align-content:start}
+.value p{color:var(--muted);font-size:16px}
+
+/* level up loop */
+.loop{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;font-weight:700}
+.loop span{padding:6px 12px;border:2px solid var(--ink);border-radius:999px;background:var(--surface)}
+.loop span.lvl{background:var(--accent);color:var(--on-accent);border-color:var(--on-accent)}
+.loop i{font-style:normal;color:var(--money)}
+
+/* rules */
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;display:grid;gap:10px;align-content:start}
+.rule .label{color:var(--money)}
+.rule p{color:var(--muted);font-size:16px}
+
+/* journey */
+.journey{display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:step}
+.step{padding:0 24px 0 0;display:grid;gap:12px;align-content:start;position:relative}
+.step .num{font-family:var(--mono);font-weight:700;font-size:13px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  background:var(--surface);border:2px solid var(--ink);position:relative;z-index:1}
+.step::before{content:"";position:absolute;top:21px;left:44px;right:0;height:2px;background:repeating-linear-gradient(90deg,var(--ink) 0 6px,transparent 6px 12px)}
+.step:last-child::before{display:none}
+.step.final .num{background:var(--accent);color:var(--on-accent)}
+.step p{color:var(--muted);font-size:16px}
+.audits{display:flex;flex-wrap:wrap;gap:6px}
+.audits span{font-family:var(--mono);font-size:12px;padding:3px 8px;border-radius:6px;background:var(--money-soft);color:var(--money);font-weight:700}
+
+/* moves */
+.moves{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.move{background:var(--surface);border:2px solid var(--ink);border-radius:16px;padding:18px;display:grid;gap:14px;align-content:space-between;min-height:150px;
+  transition:transform .18s ease, box-shadow .18s ease}
+.move:hover{transform:translateY(-4px) rotate(-1deg);box-shadow:4px 6px 0 var(--accent)}
+.move h3{font-size:19px;line-height:1.15}
+.move-top{display:flex;justify-content:space-between;align-items:center}
+.tag{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.plus{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--money)}
+.moves-note{margin-top:28px;color:var(--muted);max-width:62ch}
+
+/* fit */
+.fit{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.fit > div{border-radius:20px;padding:28px;display:grid;gap:16px;align-content:start}
+.fit .yes{background:var(--surface);border:2px solid var(--ink)}
+.fit .no{border:2px dashed var(--line)}
+.fit ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.fit li{display:grid;grid-template-columns:26px 1fr;gap:8px}
+.fit li::before{font-family:var(--mono);font-weight:700}
+.yes li::before{content:"+";color:var(--money)}
+.no li::before{content:"×";color:var(--muted)}
+.no li{color:var(--muted)}
+.filter{margin-top:32px;font-family:var(--display);font-weight:700;font-size:clamp(24px,3.4vw,34px);line-height:1.2;letter-spacing:-0.02em;max-width:28ch}
+.filter span{color:var(--money)}
+
+/* details */
+.specs{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--ink);border-radius:20px;overflow:hidden;background:var(--surface)}
+.spec{padding:22px 24px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:grid;gap:6px}
+.spec:nth-child(3n){border-right:0}
+.spec:nth-last-child(-n+3){border-bottom:0}
+.spec strong{font-family:var(--display);font-size:22px;font-weight:700;line-height:1.2}
+.spec p{color:var(--muted);font-size:15px}
+
+/* apply */
+.apply{background:var(--board);color:var(--board-ink);border-radius:28px;padding:56px clamp(22px,5vw,64px);display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.apply > *{min-width:0}
+.apply h2{color:var(--board-ink)}
+.apply .lede{color:var(--board-muted)}
+.apply .label{color:#FFC23A}
+.apply-steps{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.apply-steps li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;padding:16px;border:1px solid var(--board-line);border-radius:14px}
+.apply-steps b{font-family:var(--mono);color:#FFC23A;font-size:14px;padding-top:2px}
+.apply-steps strong{font-family:var(--display);font-size:19px;display:block}
+.apply-steps span{color:var(--board-muted);font-size:15px}
+.apply .btn-primary{border-color:var(--on-accent);box-shadow:4px 4px 0 #FFC23A55}
+.seats{display:flex;gap:6px;align-items:center;font-family:var(--mono);font-size:13px;color:var(--board-muted)}
+.seats i{width:18px;height:18px;border-radius:5px;border:2px solid #FFC23A}
+
+/* faq */
+.faq{display:grid;gap:10px;max-width:820px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 22px}
+summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:19px;padding-block:16px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--mono);color:var(--money)}
+details[open] summary::after{content:"−"}
+details p{color:var(--muted);padding-bottom:18px;max-width:66ch}
+
+/* calculator */
+.calc-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px;margin-bottom:28px}
+.calc-head .sec-head{margin-bottom:0}
+.seg button,.src{font-family:var(--body);font-weight:600;font-size:15px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.seg{display:inline-flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.seg button{border:0;padding:6px 14px;font-family:var(--mono)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.seg button:focus-visible,.src:focus-visible,input:focus-visible,.stepper button:focus-visible{outline:3px solid var(--money);outline-offset:2px}
+.calc{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:start}
+.calc > *{min-width:0}
+.inputs{background:var(--surface);border:2px solid var(--ink);border-radius:20px;padding:24px;display:grid;gap:22px;align-content:start}
+.field{display:grid;gap:8px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.duo > *{min-width:0}
+.field-head{display:flex;justify-content:space-between;align-items:baseline;gap:4px 12px;flex-wrap:wrap}
+.field label,.field .q{font-weight:600}
+.field output{font-family:var(--mono);font-weight:700;font-size:17px;font-variant-numeric:tabular-nums}
+input[type="range"]{width:100%;accent-color:var(--money);height:28px;margin:0}
+.hint{font-size:14px;color:var(--muted)}
+.sources{display:flex;flex-wrap:wrap;gap:8px}
+.src[aria-pressed="true"]{background:var(--money-soft);border-color:var(--money);color:var(--money)}
+
+.hand{display:grid;gap:8px}
+.mv{display:grid;grid-template-columns:1fr auto 78px;gap:8px 14px;align-items:center;padding:10px 12px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);transition:border-color .15s, box-shadow .15s, transform .15s}
+.mv > *{min-width:0}
+.mv.on{border-color:var(--ink);background:var(--surface);box-shadow:2px 2px 0 var(--accent)}
+.mv.bump{transform:translateX(3px)}
+.mv-name{font-weight:600;font-size:15px;line-height:1.25}
+.mv-rate{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:2px}
+.mv-rate input{width:48px;font-family:var(--mono);font-size:13px;font-weight:700;padding:2px 4px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);text-align:center}
+.stepper{display:flex;align-items:center;gap:6px}
+.stepper button{width:32px;height:32px;flex:none;border-radius:9px;border:2px solid var(--ink);background:var(--surface);color:var(--ink);font-family:var(--mono);font-weight:700;font-size:17px;line-height:1;cursor:pointer}
+.stepper output{min-width:78px;font-family:var(--mono);font-weight:700;font-size:12.5px;text-align:center;font-variant-numeric:tabular-nums}
+.mv-earn{font-family:var(--mono);font-weight:700;font-size:13px;color:var(--money);text-align:right;font-variant-numeric:tabular-nums}
+
+.result{background:var(--board);color:var(--board-ink);border-radius:20px;padding:24px;display:grid;gap:16px;align-content:start;position:sticky;top:max(16px, env(safe-area-inset-top, 0px))}
+.result .label{color:var(--board-muted)}
+.result .big{font-family:var(--display);font-weight:800;font-size:clamp(42px,5.4vw,58px);line-height:1;font-variant-numeric:tabular-nums;transition:opacity .2s}
+.result.off .big,.result.off .chart{opacity:.3}
+.breakdown{font-family:var(--mono);font-size:13px;color:var(--board-muted);display:grid;gap:2px}
+.breakdown b{color:var(--board-ink);font-weight:700}
+.chart{margin:0;display:grid;gap:8px}
+.chart svg{width:100%;height:auto;display:block}
+.c-band{fill:#3BD394;opacity:.18}
+.c-plan{stroke:#3BD394;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.c-low{stroke:#FFC23A;stroke-width:2.5;stroke-dasharray:6 5;fill:none}
+.c-grid{stroke:var(--board-line);stroke-width:1}
+.c-txt{fill:var(--board-muted);font-family:var(--mono);font-size:11px}
+.c-dot{fill:#3BD394;stroke:var(--board);stroke-width:2}
+.c-now{fill:var(--board-ink);stroke:var(--board);stroke-width:2}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--board-muted)}
+.legend i{display:inline-block;width:16px;height:8px;border-radius:3px;margin-right:6px;vertical-align:middle}
+.lg-plan{background:#3BD394}
+.lg-low{background:repeating-linear-gradient(90deg,#FFC23A 0 5px,transparent 5px 8px)}
+.ba{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;font-family:var(--mono);font-size:14px}
+.ba:empty{display:none}
+.ba .x{background:#3BD394;color:#0D1322;padding:3px 10px;border-radius:99px;font-weight:700}
+.ba .x.double{background:#FFC23A}
+.ba em{font-style:normal;color:#FFC23A;font-weight:700}
+.verdict{display:grid;gap:6px;padding-top:16px;border-top:1px dashed var(--board-line)}
+.verdict h3{font-size:26px}
+.verdict p{color:var(--board-muted)}
+.result[data-tier="low"] .verdict h3{color:var(--board-muted)}
+.result[data-tier="stretch"] .verdict h3{color:#FFC23A}
+.result[data-tier="yes"] .verdict h3,.result[data-tier="nobrainer"] .verdict h3{color:#3BD394}
+.meter-wrap{position:relative;padding-top:8px}
+.meter{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;height:12px}
+.meter span{border-radius:4px}
+.meter span:nth-child(1){background:var(--board-line)}
+.meter span:nth-child(2){background:#FFC23A}
+.meter span:nth-child(3){background:#3BD39499}
+.meter span:nth-child(4){background:#3BD394}
+.needle{position:absolute;top:0;width:6px;height:28px;border-radius:3px;background:var(--board-ink);box-shadow:0 0 0 3px var(--board);transform:translateX(-50%);transition:left .35s cubic-bezier(.3,1.4,.5,1)}
+.meter-labels{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;margin-top:10px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--board-muted)}
+.result .btn-primary{justify-self:start;border-color:var(--on-accent);box-shadow:4px 4px 0 #FFC23A55}
+@media (max-width:960px){.calc{grid-template-columns:1fr}.result{position:static}}
+@media (max-width:560px){
+  .inputs,.result{padding:18px}
+  .duo{grid-template-columns:1fr}
+  .mv{grid-template-columns:1fr auto}
+  .mv-info{grid-column:1 / -1}
+  .mv-earn{text-align:right}
+}
+.seg.wide{display:flex;flex-wrap:wrap;border-radius:14px}
+.seg.wide button{flex:1 1 auto;font-family:var(--body);font-weight:600;border-radius:10px;padding:8px 14px}
+.seg [data-mode]:focus-visible{outline:3px solid var(--money);outline-offset:2px}
+.salary-note{border:2px dashed var(--line);border-radius:14px;padding:18px;display:grid;gap:6px}
+.salary-note p{color:var(--muted);font-size:15px}
+/* safe space */
+.safe-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.safe-grid > div{background:var(--money-soft);border-radius:18px;padding:22px;display:grid;gap:8px;align-content:start}
+.safe-grid h3{color:var(--money)}
+.safe-grid p{font-size:16px}
+@media (max-width:960px){.safe-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:640px){.safe-grid{grid-template-columns:1fr}}
+footer{padding-block:40px 56px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;color:var(--muted);font-size:14px}
+
+@media (max-width:960px){
+  .hero{grid-template-columns:1fr;gap:44px}
+  .board{transform:none;max-width:520px}
+  .letter{grid-template-columns:1fr;gap:20px}
+  .values{grid-template-columns:1fr 1fr}
+  .rules{grid-template-columns:1fr 1fr}
+  .moves{grid-template-columns:repeat(3,1fr)}
+  .journey{grid-template-columns:1fr 1fr;row-gap:36px}
+  .step::before{display:none}
+  .apply{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  section{padding-block:56px}
+  .values,.rules,.fit,.journey{grid-template-columns:1fr}
+  .moves{grid-template-columns:1fr 1fr}
+  .move{min-height:130px}
+  .specs{grid-template-columns:1fr}
+  .spec{border-right:0}
+  .spec:nth-last-child(-n+3){border-bottom:1px solid var(--line)}
+  .spec:last-child{border-bottom:0}
+  nav .btn{display:none}
+}
+@media (max-width:380px){.moves{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* Testimonials (added) */
+.voices{display:grid;gap:20px}
+.voice{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px;display:grid;gap:16px;max-width:760px}
+.voice blockquote{margin:0;font-family:var(--display);font-weight:700;font-size:clamp(22px,2.6vw,28px);line-height:1.25;letter-spacing:-0.01em}
+.voice figcaption{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--money)}
+</style>
+
+<div class="wrap">
+  <nav>
+    <a class="logo" href="#top"><b>M³</b>Make More Money Game</a>
+    <a class="btn btn-primary" href="#apply">Apply for a seat</a>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="hero-copy">
+      <span class="label">Group coaching · Founding round</span>
+      <h1>The <em>Make More Money</em> Game</h1>
+      <p class="hook">Join this game if you want to… you guessed it: make more money!</p>
+      <p class="lede">In this group coaching container we play for 3 months with 5 to 6 players. Weekly hot seat coaching, daily Money Moves, mindset audios + a solid accountability system.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#apply">Apply for a seat</a>
+        <a class="btn btn-ghost" href="#rules">See how it works</a>
+      </div>
+      <div class="facts">
+        <span class="chip">5 to 6 players</span>
+        <span class="chip">3 months</span>
+        <span class="chip">Weekly hot seats</span>
+        <span class="chip">Daily Money Moves</span>
+      </div>
+    </div>
+
+    <aside class="board" aria-label="Example scoreboard">
+      <div class="board-top"><span>Player scoreboard</span><span class="live"><i></i>Week 6</span></div>
+      <div class="score">
+        <div><small>Baseline / month</small><strong>€4,800</strong></div>
+        <div><small>Target / month</small><strong>€8,000</strong></div>
+        <div><small>This month</small><strong class="up">€6,950</strong></div>
+        <div><small>Money Moves</small><strong>41</strong></div>
+      </div>
+      <div>
+        <div class="bar"><span></span></div>
+        <div class="bar-row"><span>Progress to target</span><span>68%</span></div>
+      </div>
+      <ul class="log">
+        <li>Raised coaching package price<b>+1 move</b></li>
+        <li>Messaged 6 past clients<b>+1 move</b></li>
+        <li>Asked 2 clients for referrals<b>+1 move</b></li>
+        <li>Booked 3 sales calls<b>+1 move</b></li>
+      </ul>
+      <div class="board-foot">Example player</div>
+    </aside>
+  </header>
+
+  <section>
+    <div class="letter">
+      <span class="label">Why this, why now</span>
+      <div class="letter-body">
+        <p class="big">For the first time, I'm building a container with only one focus: you make more money.</p>
+        <p>Most of my work happens one to one, and it's holistic. We look at the whole person. And with almost every client, the same thread shows up: growing the business and making more money.</p>
+        <p>So this round is different. Everyone who joins has the same goal. We make sure you make more money, and we make sure it's fun. Making more money isn't difficult. It usually means stepping a little outside your comfort zone, again and again, until that becomes your new normal.</p>
+        <p class="sig">Jan</p>
+      </div>
+    </div>
+    <div class="values">
+      <div class="value"><h3>More money, more service</h3><p>Making more money means providing more value. Nobody sells their soul here.</p></div>
+      <div class="value"><h3>It's a game</h3><p>We keep it playful and exciting. Wins get celebrated. Fear gets laughed at a little.</p></div>
+      <div class="value"><h3>Allies all the way</h3><p>Everyone plays their own game. We're not competing, and everyone wants to see you win.</p></div>
+      <div class="value"><h3>Every level welcome</h3><p>It's fine to be at a different financial level. We're all here to level up from where we are.</p></div>
+    </div>
+  </section>
+
+  <section id="rules">
+    <div class="sec-head">
+      <span class="label">The rules of the game</span>
+      <h2>Same rhythm every week. Your own game inside it.</h2>
+      <p class="lede">This isn't a course with modules. It's a container. You bring your business, your offer and your goals. And besides the money, something even more exciting happens: you level up as a character. You reach new levels by upgrading your belief system, and one of the best ways to do that is through new experiences you create by taking action.</p>
+      <div class="loop" aria-label="How you level up"><span>Take action</span><i>→</i><span>New experiences</span><i>→</i><span>New beliefs</span><i>→</i><span class="lvl">Next level</span></div>
+    </div>
+    <div class="rules">
+      <article class="rule"><span class="label">Every week</span><h3>The game call</h3><p>90 minutes live. Wins round, hot seat coaching, and your Money Move commitments for the coming week.</p></article>
+      <article class="rule"><span class="label">Every day</span><h3>Money Moves</h3><p>You take action daily on the things that actually bring in revenue. Small moves, every day, add up fast.</p></article>
+      <article class="rule"><span class="label">All the time</span><h3>Accountability</h3><p>You say what you'll do, and the group helps you do it. Commitments are tracked and celebrated.</p></article>
+      <article class="rule"><span class="label">Your AI ally</span><h3>AI on your side</h3><p>Every call is recorded, so you can talk to your AI about what we discussed. Sales calls get analyzed with AI so you close more.</p></article>
+      <article class="rule"><span class="label">Every week</span><h3>Money mindset audio</h3><p>A short meditation each week to upgrade how you think and feel about money, so the actions come easier.</p></article>
+      <article class="rule"><span class="label">Last week of the month</span><h3>Level Up Week</h3><p>No call. You review your numbers, celebrate your wins and set your sights for the next month.</p></article>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">How the 3 months unfold</span>
+      <h2>From starting point to final score.</h2>
+    </div>
+    <div class="journey">
+      <div class="step"><span class="num">01</span><h3>Know your numbers</h3><p>A personal onboarding to see where you stand and set your target.</p><div class="audits"><span>Money Audit</span><span>Offer Audit</span><span>Pipeline Audit</span></div></div>
+      <div class="step"><span class="num">02</span><h3>Momentum first</h3><p>In week one we go straight for quick wins and fast cash, so you feel the game working right away.</p></div>
+      <div class="step"><span class="num">03</span><h3>Play every week</h3><p>Calls, hot seats, daily Money Moves and Level Up Weeks. Repeat, adjust, grow.</p></div>
+      <div class="step final"><span class="num">04</span><h3>Final score</h3><p>We close together and share our before and after numbers: the totals and how much we multiplied our income. No ranking, no comparing. Then we celebrate each other.</p></div>
+    </div>
+  </section>
+
+  <section id="safe">
+    <div class="sec-head">
+      <span class="label">A safe space for money talk</span>
+      <h2>We talk numbers. We don't compete.</h2>
+      <p class="lede">Sharing what you make can feel exposing. Here it's the opposite. Talking about money openly is part of the fun, and we're all in the right mindset for it.</p>
+    </div>
+    <div class="safe-grid">
+      <div><h3>No leaderboard</h3><p>Nobody wins by making the most money or multiplying it the most. Players are never ranked against each other.</p></div>
+      <div><h3>Your own game</h3><p>Some players want to earn more. Others want to earn the same while working less. You choose the game you play.</p></div>
+      <div><h3>Open and kind</h3><p>We share numbers to celebrate and learn, never to judge. What's shared in the group stays in the group.</p></div>
+      <div><h3>You are not your numbers</h3><p>There's much more to life than this game. We don't define ourselves by the money we make.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">The deck</span>
+      <h2>What counts as a Money Move?</h2>
+      <p class="lede">Any action that generates revenue or brings it closer. Here are some of the cards you'll be playing.</p>
+    </div>
+    <div class="moves">
+      <article class="move"><div class="move-top"><span class="tag">Offer</span><span class="plus">+1</span></div><h3>Make a new offer</h3></article>
+      <article class="move"><div class="move-top"><span class="tag">Offer</span><span class="plus">+1</span></div><h3>Raise your prices</h3></article>
+      <article class="move"><div class="move-top"><span class="tag">Outreach</span><span class="plus">+1</span></div><h3>Reach out to past clients</h3></article>
+      <article class="move"><div class="move-top"><span class="tag">Outreach</span><span class="plus">+1</span></div><h3>Follow up with open leads</h3></article>
+      <article class="move"><div class="move-top"><span class="tag">Sales</span><span class="plus">+1</span></div><h3>Book sales calls</h3></article>
+      <article class="move"><div class="move-top"><span class="tag">Sales</span><span class="plus">+1</span></div><h3>Ask for the sale, clearly</h3></article>
+      <article class="move"><div class="move-top"><span class="tag">Referrals</span><span class="plus">+1</span></div><h3>Ask for referrals</h3></article>
+      <article class="move"><div class="move-top"><span class="tag">Proof</span><span class="plus">+1</span></div><h3>Ask for testimonials</h3></article>
+      <article class="move"><div class="move-top"><span class="tag">Visibility</span><span class="plus">+1</span></div><h3>Add a call to action to every post</h3></article>
+      <article class="move"><div class="move-top"><span class="tag">Visibility</span><span class="plus">+1</span></div><h3>Send an offer to your email list</h3></article>
+      <article class="move"><div class="move-top"><span class="tag">Retention</span><span class="plus">+1</span></div><h3>Invite clients to continue</h3></article>
+      <article class="move"><div class="move-top"><span class="tag">Partners</span><span class="plus">+1</span></div><h3>Pitch a collaboration</h3></article>
+    </div>
+    <p class="moves-note">Moves count, not amounts. Everyone plays their own game, at their own level.</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">Who's playing</span>
+      <h2>Is this your game?</h2>
+    </div>
+    <div class="fit">
+      <div class="yes">
+        <h3>You're in the right place if</h3>
+        <ul>
+          <li>You run a business, or you know what you want to sell.</li>
+          <li>Your offer doesn't have to be perfect yet. We can shape it together.</li>
+          <li>You're ready to take action every week, even when it feels a bit uncomfortable.</li>
+          <li>You see money as the result of value and service.</li>
+          <li>You can genuinely celebrate other people's wins.</li>
+        </ul>
+      </div>
+      <div class="no">
+        <h3>This is not for you if</h3>
+        <ul>
+          <li>You'd make money at any cost, including your integrity.</li>
+          <li>You want to learn about money without doing anything differently.</li>
+          <li>You're looking for a course to watch rather than a game to play.</li>
+          <li>You need someone else to do the work for you.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="filter">If you don't believe you can make more than you invest here, <span>this isn't for you.</span></p>
+  </section>
+
+  <section id="check">
+    <div class="calc-head">
+      <div class="sec-head">
+        <span class="label">Check your game</span>
+        <h2>How much do you want to make?</h2>
+        <p class="lede">Play with your numbers, then say how sure you are. Only count money from your business. A salary doesn't count here.</p>
+      </div>
+      <div class="seg" role="group" aria-label="Currency"><button type="button" data-cur="€" aria-pressed="true">€</button><button type="button" data-cur="$" aria-pressed="false">$</button></div>
+    </div>
+
+    <div class="calc">
+      <div class="inputs">
+        <div class="field">
+          <span class="q">Where will the money come from?</span>
+          <div class="sources" role="group" aria-label="Money source">
+            <button class="src" type="button" data-src="business" aria-pressed="true">My existing business</button>
+            <button class="src" type="button" data-src="new" aria-pressed="false">A new business</button>
+            <button class="src" type="button" data-src="salary" aria-pressed="false">A salary</button>
+          </div>
+        </div>
+
+        <div class="salary-note" id="salary-note" hidden>
+          <strong>A salary doesn't count in this game.</strong>
+          <p>This game is about money you create yourself, through your own business or one you're starting. If you have a business idea on the side, pick "A new business" and play with it.</p>
+        </div>
+
+        <div class="stack" id="calc-body">
+          <div class="field">
+            <span class="q">How do you want to calculate?</span>
+            <div class="seg wide" role="group" aria-label="Calculation mode">
+              <button type="button" data-mode="goal" aria-pressed="true">Set a goal</button>
+              <button type="button" data-mode="moves" aria-pressed="false">Build from Money Moves</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field-head"><label for="now">You make now per month</label><output id="now-out"></output></div>
+            <input type="range" id="now" min="0" max="30000" step="250" value="4000">
+          </div>
+
+          <div class="field" data-panel="goal">
+            <div class="field-head"><label for="goal">You want to make per month by month 3</label><output id="goal-out"></output></div>
+            <input type="range" id="goal" min="0" max="60000" step="250" value="8000">
+            <span class="hint">Your goal moves up with you. We count a step by step climb toward it over the 3 months.</span>
+          </div>
+
+          <div class="duo" data-panel="moves" hidden>
+            <div class="field">
+              <div class="field-head"><label for="price">Price of your main offer now</label><output id="price-out"></output></div>
+              <input type="range" id="price" min="100" max="10000" step="100" value="1000">
+            </div>
+            <div class="field">
+              <div class="field-head"><label for="newprice">Your price from week 1</label><output id="newprice-out"></output></div>
+              <input type="range" id="newprice" min="100" max="15000" step="100" value="1200">
+            </div>
+          </div>
+
+          <div class="field" data-panel="moves" hidden>
+            <span class="q">Potential Money Moves for the next 3 months</span>
+            <div class="hand" id="hand"></div>
+            <span class="hint">The rates are examples, so change them to match your business. Weekly moves count for 12 weeks. Every sale uses your new price.</span>
+          </div>
+
+          <div class="field">
+            <div class="field-head"><label for="conf">How sure are you that you'll hit it?</label><output id="conf-out"></output></div>
+            <input type="range" id="conf" min="10" max="100" step="5" value="70">
+          </div>
+        </div>
+      </div>
+
+      <div class="result" id="result" aria-live="polite">
+        <span class="label" id="r-label">Extra money in 3 months</span>
+        <div class="big" id="r-big"></div>
+        <div class="breakdown"><span id="r-range"></span></div>
+        <figure class="chart">
+          <svg id="chart" viewBox="0 0 420 170" role="img" aria-label="Your monthly income over the next 3 months"></svg>
+          <figcaption class="legend"><span><i class="lg-plan"></i>Your plan</span><span><i class="lg-low"></i>Cautious case</span></figcaption>
+        </figure>
+        <p class="ba" id="r-ba"></p>
+        <div class="meter-wrap" aria-hidden="true">
+          <div class="meter"><span></span><span></span><span></span><span></span></div>
+          <div class="needle" id="r-needle"></div>
+          <div class="meter-labels"><span>Not yet</span><span>Stretch</span><span>For you</span><span>No brainer</span></div>
+        </div>
+        <div class="verdict"><h3 id="r-title"></h3><p id="r-text"></p></div>
+        <a class="btn btn-primary" href="#apply">Apply for a seat</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">The details</span>
+      <h2>Small group. Real attention.</h2>
+    </div>
+    <div class="specs">
+      <div class="spec"><span class="label">Length</span><strong>3 months</strong><p>A focused stretch to build real momentum.</p></div>
+      <div class="spec"><span class="label">Calls</span><strong>Weekly, 90 minutes</strong><p>Tuesday or Wednesday afternoon. Exact time confirmed before kickoff.</p></div>
+      <div class="spec"><span class="label">Group size</span><strong>5 to 6 players</strong><p>Everyone gets hot seat time.</p></div>
+      <div class="spec"><span class="label">Off weeks</span><strong>Last week of each month</strong><p>Level Up Week for review and reflection.</p></div>
+      <div class="spec"><span class="label">Format</span><strong>Live online, recorded</strong><p>Rewatch anything, and ask your AI about it.</p></div>
+      <div class="spec"><span class="label">Investment</span><strong>Shared in your fit call</strong><p>Founding round, first players only.</p></div>
+    </div>
+  </section>
+
+  <section id="voices">
+    <div class="voices">
+      <span class="label">What players say</span>
+      <figure class="voice">
+        <blockquote>I went from feeling discouraged to feeling inspired to get back to doing sales and after a few messages I got 3 mentoring clients bringing 3k a month extra. It felt easy and fun while before I believed I needed to work hard to make money.</blockquote>
+        <figcaption>Rui Vas</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="apply">
+    <div class="apply">
+      <div style="display:grid;gap:22px">
+        <span class="label">Join the founding round</span>
+        <h2>Ready to play?</h2>
+        <p class="lede">This is the first round of the Make More Money Game. Seats are limited so every player gets real attention. Apply and let's see if it's a fit.</p>
+        <div class="cta-row"><a class="btn btn-primary" id="apply-link" href="#apply">Start your application</a></div>
+        <div class="seats" aria-label="6 seats"><i></i><i></i><i></i><i></i><i></i><i></i><span>6 seats</span></div>
+      </div>
+      <ol class="apply-steps">
+        <li><b>01</b><div><strong>Apply</strong><span>A few short questions about your business, your offer and your money goal.</span></div></li>
+        <li><b>02</b><div><strong>Fit call</strong><span>A short call with me to see if the game is right for you, and to share the investment.</span></div></li>
+        <li><b>03</b><div><strong>Join the game</strong><span>Your onboarding audits, then we get moving in week one.</span></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">Questions</span>
+      <h2>Before you apply</h2>
+    </div>
+    <div class="faq">
+      <details><summary>I don't have my offer fully figured out. Can I still join?</summary><p>Yes. You need to know roughly what you want to sell. If the offer needs work, we shape it together in the first weeks so you can start selling it.</p></details>
+      <details><summary>What if the others make much more money than me?</summary><p>That's completely fine. Everyone plays their own game. Going from €3,000 to €6,000 a month means you doubled your income, and that's a huge win. We count Money Moves, not amounts, and we celebrate every level up.</p></details>
+      <details><summary>Do I have to share my numbers?</summary><p>We share before and after numbers because celebrating progress is part of the game. It's a safe space: no ranking, no judging, and nobody is compared to anyone else. If it feels uncomfortable at first, we go at your pace.</p></details>
+      <details><summary>Can my game be about working less?</summary><p>Yes. Some players want to make more money. Others want to make the same money in fewer hours. Both are great games to play here.</p></details>
+      <details><summary>What if I miss a call?</summary><p>Every call is recorded. You can watch it back and talk to your AI about what was discussed, so nothing gets lost.</p></details>
+      <details><summary>How much time does it take?</summary><p>Plan for the 90 minute call each week plus your daily Money Moves. Most moves are small actions you can do in a focused part of your day.</p></details>
+      <details><summary>Do I need to be good with AI?</summary><p>No. We show you how to use it for the things that help you make money, like reviewing your sales calls and remembering everything from our sessions.</p></details>
+    </div>
+  </section>
+
+  <footer>
+    <span>The Make More Money Game</span>
+    <span>Hosted by Jan Trautwein</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  // Thresholds for extra income over 3 months. INVESTMENT is the program price.
+  var INVESTMENT = 5000, STRETCH = 3000, NO_BRAINER = 10000, WEEKS = 12;
+  // Extra income ramps up 1 : 2 : 3 across the three months, as a share of the 3 month total.
+  var RAMP = [0, 1/6, 2/6, 3/6];
+  var cur = '€', source = 'business', mode = 'goal';
+  var $ = function(id){ return document.getElementById(id); };
+  var fmt = function(n){ return cur + Math.round(n).toLocaleString('en-US'); };
+  var short = function(n){ return n >= 1000 ? cur + (Math.round(n / 100) / 10) + 'k' : cur + Math.round(n); };
+
+  var MOVES = [
+    { id: 'past', name: 'Reach out to past clients', unit: 'people', step: 5, max: 100, start: 20, rate: 10, pre: '1 in', post: 'buys again' },
+    { id: 'leads', name: 'Follow up with open leads', weekly: true, step: 1, max: 30, start: 3, rate: 10, pre: '1 in', post: 'buys' },
+    { id: 'refs', name: 'Ask for referrals', weekly: true, step: 1, max: 20, start: 1, rate: 5, pre: '1 in', post: 'becomes a client' },
+    { id: 'posts', name: 'Posts or videos with a call to action', weekly: true, step: 1, max: 14, start: 2, rate: 20, pre: '1 sale per', post: 'posts' },
+    { id: 'mail', name: 'Offer emails to your list', weekly: true, step: 1, max: 7, start: 1, rate: 10, pre: '1 sale per', post: 'emails' }
+  ];
+  var count = {}, rate = {};
+  MOVES.forEach(function(m){ count[m.id] = m.start; rate[m.id] = m.rate; });
+
+  function needle(x){
+    x = Math.max(0, x);
+    if (x < STRETCH) return x / STRETCH * 25;
+    if (x < INVESTMENT) return 25 + (x - STRETCH) / (INVESTMENT - STRETCH) * 25;
+    if (x < NO_BRAINER) return 50 + (x - INVESTMENT) / (NO_BRAINER - INVESTMENT) * 25;
+    return Math.min(99, 75 + (x - NO_BRAINER) / NO_BRAINER * 25);
+  }
+
+  function confName(c){ return c < 0.4 ? 'Wishful' : c < 0.7 ? 'Hopeful' : c < 1 ? 'Confident' : 'Certain'; }
+
+  function buildHand(){
+    var el = $('hand');
+    MOVES.forEach(function(m){
+      var row = document.createElement('div');
+      row.className = 'mv'; row.id = 'mv-' + m.id;
+      row.innerHTML = '<div class="mv-info"><div class="mv-name"></div><div class="mv-rate"></div></div>' +
+        '<div class="stepper"><button type="button" data-dir="-1">−</button><output></output><button type="button" data-dir="1">+</button></div>' +
+        '<span class="mv-earn"></span>';
+      row.querySelector('.mv-name').textContent = m.name;
+      var input = document.createElement('input');
+      input.type = 'number'; input.min = 1; input.max = 500; input.value = m.rate;
+      input.id = 'rate-' + m.id; input.inputMode = 'numeric';
+      input.setAttribute('aria-label', m.name + ' rate');
+      input.addEventListener('input', function(){ var v = parseInt(input.value, 10); if (v >= 1) { rate[m.id] = Math.min(500, v); render(); } });
+      input.addEventListener('change', function(){ input.value = rate[m.id]; });
+      row.querySelector('.mv-rate').append(m.pre + ' ', input, ' ' + m.post);
+      row.querySelectorAll('button').forEach(function(btn){
+        btn.setAttribute('aria-label', (btn.dataset.dir === '1' ? 'More: ' : 'Less: ') + m.name);
+        btn.addEventListener('click', function(){
+          count[m.id] = Math.max(0, Math.min(m.max, count[m.id] + m.step * +btn.dataset.dir));
+          row.classList.add('bump'); setTimeout(function(){ row.classList.remove('bump'); }, 150);
+          render();
+        });
+      });
+      el.appendChild(row);
+    });
+  }
+
+  function linkUp(lowId, highId){
+    var lo = $(lowId), hi = $(highId), prev = +lo.value;
+    lo.addEventListener('input', function(){
+      var d = +lo.value - prev; prev = +lo.value;
+      hi.value = Math.min(+hi.max, Math.max(+lo.value, +hi.value + d));
+      render();
+    });
+    hi.addEventListener('input', function(){ if (+hi.value < +lo.value) hi.value = lo.value; render(); });
+  }
+
+  function drawChart(now, total, c){
+    var W = 420, H = 170, L = 48, R = 12, T = 12, B = 26;
+    var plan = RAMP.map(function(k){ return now + total * k; });
+    var low = RAMP.map(function(k){ return now + total * k * c; });
+    var top = Math.max(plan[3], now + 1000) * 1.06;
+    var bottom = now > 0 ? Math.max(0, now - Math.max(plan[3] - now, now * 0.2) * 0.5) : 0;
+    var x = function(i){ return L + i * (W - L - R) / 3; };
+    var y = function(v){ return T + (1 - (v - bottom) / (top - bottom)) * (H - T - B); };
+    var pts = function(arr){ return arr.map(function(v, i){ return x(i).toFixed(1) + ',' + y(v).toFixed(1); }).join(' '); };
+    var out = '';
+    for (var g = 0; g <= 3; g++){
+      var v = bottom + (top - bottom) * g / 3, yy = y(v).toFixed(1);
+      out += '<line class="c-grid" x1="' + L + '" x2="' + (W - R) + '" y1="' + yy + '" y2="' + yy + '"/>';
+      out += '<text class="c-txt" x="' + (L - 8) + '" y="' + (+yy + 4) + '" text-anchor="end">' + short(v) + '</text>';
+    }
+    ['Now', 'Month 1', 'Month 2', 'Month 3'].forEach(function(t, i){
+      out += '<text class="c-txt" x="' + x(i) + '" y="' + (H - 6) + '" text-anchor="' + (i === 0 ? 'start' : i === 3 ? 'end' : 'middle') + '">' + t + '</text>';
+    });
+    if (c < 1) {
+      out += '<polygon class="c-band" points="' + pts(plan) + ' ' + pts(low).split(' ').reverse().join(' ') + '"/>';
+      out += '<polyline class="c-low" points="' + pts(low) + '"/>';
+    }
+    out += '<polyline class="c-plan" points="' + pts(plan) + '"/>';
+    plan.forEach(function(v, i){ out += '<circle class="' + (i ? 'c-dot' : 'c-now') + '" cx="' + x(i).toFixed(1) + '" cy="' + y(v).toFixed(1) + '" r="4.5"/>'; });
+    $('chart').innerHTML = out;
+  }
+
+  function beforeAfter(before, after){
+    if (after <= before) return '';
+    if (before <= 0) return '<span>New income ' + fmt(after) + ' / month by month 3</span>';
+    var m = after / before, mt = (m >= 10 ? Math.round(m) : Math.round(m * 100) / 100) + 'x';
+    return '<span>' + fmt(before) + ' → ' + fmt(after) + ' / month</span><span class="x' + (m >= 2 ? ' double' : '') + '">' + mt + '</span>' +
+      (m >= 2 ? '<em>Income doubled!</em>' : '<span>+' + Math.round((m - 1) * 100) + '%</span>');
+  }
+
+  var tiers = {
+    none: ['Set your goal', 'Move the sliders to see where your goal lands.'],
+    low: ['Not yet', 'Your goal is smaller than this game. If part of you knows you can aim higher, raise the number and see how it feels.'],
+    stretch: ['This might be a stretch', 'Your goal is close to what you would invest. It can work, and it will ask you to stretch. Let\'s look at it together in a fit call.'],
+    yes: ['This game is for you', 'Your goal covers your investment in the game. Now it\'s about playing every single week.'],
+    nobrainer: ['No brainer', 'Seems like you can\'t lose. You\'re going to crush this game 100%.'],
+    salary: ['Salary doesn\'t count', 'This game is about money you create yourself, through your own business.']
+  };
+
+  function totalFromMoves(){
+    var p = +$('newprice').value, total = 0;
+    MOVES.forEach(function(m){
+      var n = count[m.id], earn = n * (m.weekly ? WEEKS : 1) / rate[m.id] * p;
+      total += earn;
+      var row = $('mv-' + m.id);
+      row.classList.toggle('on', n > 0);
+      row.querySelector('output').textContent = m.weekly ? n + ' / week' : n + ' ' + m.unit;
+      row.querySelector('.mv-earn').textContent = '+' + fmt(earn);
+    });
+    return total;
+  }
+
+  function render(){
+    var salary = source === 'salary';
+    $('salary-note').hidden = !salary;
+    $('calc-body').hidden = salary;
+    document.querySelectorAll('[data-panel]').forEach(function(p){ p.hidden = p.dataset.panel !== mode; });
+
+    var now = +$('now').value, c = +$('conf').value / 100, total;
+    $('now-out').textContent = fmt(now);
+    $('conf-out').textContent = Math.round(c * 100) + '% · ' + confName(c);
+    if (mode === 'goal'){
+      var goal = +$('goal').value;
+      $('goal-out').textContent = fmt(goal);
+      total = Math.max(0, goal - now) * 2;
+    } else {
+      var p0 = +$('price').value, p1 = +$('newprice').value;
+      $('price-out').textContent = fmt(p0);
+      $('newprice-out').textContent = fmt(p1) + (p1 > p0 ? '  +' + Math.round((p1 / p0 - 1) * 100) + '%' : '');
+      total = totalFromMoves();
+    }
+
+    var safe = salary ? 0 : total * c, t;
+    if (salary) t = 'salary';
+    else if (safe <= 0) t = 'none';
+    else if (safe < STRETCH) t = 'low';
+    else if (safe < INVESTMENT) t = 'stretch';
+    else if (safe < NO_BRAINER) t = 'yes';
+    else t = 'nobrainer';
+
+    var res = $('result');
+    res.dataset.tier = t;
+    res.classList.toggle('off', salary);
+    $('r-label').textContent = c < 1 && !salary ? 'Extra money in 3 months, cautious case' : 'Extra money in 3 months';
+    $('r-big').textContent = '+' + fmt(safe);
+    $('r-range').innerHTML = salary || total <= 0 ? '' : c < 1
+      ? 'Likely range <b>+' + fmt(safe) + '</b> to <b>+' + fmt(total) + '</b>'
+      : 'You have full confidence you\'re going to make this money.';
+    drawChart(now, salary ? 0 : total, c);
+    $('r-ba').innerHTML = salary ? '' : beforeAfter(now, now + total * RAMP[3] * c);
+    $('r-needle').style.left = needle(safe) + '%';
+    $('r-title').textContent = tiers[t][0];
+    $('r-text').textContent = tiers[t][1];
+  }
+
+  function group(selector, attr, set){
+    var btns = document.querySelectorAll(selector);
+    btns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        set(btn.getAttribute(attr));
+        btns.forEach(function(b){ b.setAttribute('aria-pressed', b === btn); });
+        render();
+      });
+    });
+  }
+  group('[data-src]', 'data-src', function(v){ source = v; });
+  group('[data-cur]', 'data-cur', function(v){ cur = v; });
+  group('[data-mode]', 'data-mode', function(v){ mode = v; });
+  buildHand();
+  linkUp('now', 'goal');
+  linkUp('price', 'newprice');
+  $('conf').addEventListener('input', render);
+  render();
+})();
+</script>
+
+</body></html>

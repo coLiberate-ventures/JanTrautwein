@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Life as a Game | The Overlook</title>
+<style>
+:root{color-scheme:dark;--ink:#f4ecdb;--muted:#c5bba6;--gold:#f1c484;--line:#cfad7350;--base:#141712;--display:Baskervville,Baskerville,Georgia,serif;--body:Atkinson Hyperlegible Next,Optima,system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-height:100dvh;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 35%,#303529,var(--base) 65%);font:16px/1.5 var(--body);color:var(--ink)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:2px solid #fff0b8;outline-offset:5px}
+.presentation{width:min(100%,calc((100dvh - 120px) * 1.777));max-width:1920px}
+.top,.nav{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px clamp(12px,2vw,26px)}
+.brand{font:clamp(19px,2.2vw,31px)/1 var(--display);margin:0}
+.kicker{font-size:10px;letter-spacing:.23em;text-transform:uppercase;color:var(--gold)}
+.fullscreen,.close,.music-toggle{border:1px solid var(--line);background:#201f18;border-radius:4px;padding:4px 10px;font-size:13px}
+.controls{display:flex;align-items:center;gap:clamp(6px,1.25vw,16px);flex-wrap:wrap;justify-content:flex-end}
+.audio-controls{display:flex;align-items:center;gap:6px}
+.music-toggle{white-space:nowrap}
+.music-toggle[aria-pressed=true]{color:var(--gold);border-color:#cfa96c}
+.volume{width:clamp(40px,6vw,90px);accent-color:var(--gold);margin:0}
+.stage{position:relative;isolation:isolate;aspect-ratio:1672/941;overflow:hidden;background:#33372b;border-block:1px solid var(--line)}
+.world,.drift,.artwork,.pinfield{position:absolute;inset:0}
+.world{--focus:1;transform:scale(var(--focus));transform-origin:var(--origin,50% 50%);transition:transform 650ms cubic-bezier(.2,.7,.2,1)}
+.drift{will-change:transform;pointer-events:none;transform:scale(1.055)}
+.artwork,.pinfield{width:100%;height:100%;pointer-events:none}
+.artwork{display:block;object-fit:fill}
+.light{position:absolute;left:var(--light-x);top:var(--light-y);width:var(--light-size,7%);aspect-ratio:var(--light-aspect,1);transform:translate(-50%,-50%);background:radial-gradient(ellipse,#fff9d6 0%,#ffd184c2 10%,#e59b365c 27%,transparent 65%);mix-blend-mode:screen;opacity:.19;transition:opacity .35s}
+.light[data-light=quest]{opacity:.63}
+.light[data-light=camp]{transform:translate(-63%,-50%);background:radial-gradient(ellipse at 63% 50%,#ffe8b696 0%,#ffc97d60 14%,transparent 46%),radial-gradient(ellipse at 49% 53%,#f2ac544d 0%,transparent 56%)}
+.light[data-light=camp]::after{display:none}
+.light::after{content:'';position:absolute;inset:18%;background:radial-gradient(ellipse at center,#ffe8ad60,transparent 60%);animation:breathe 4.8s ease-in-out infinite alternate}
+.pinfield:has(.pin[data-id=quest]:is(:hover,:focus-visible,[aria-expanded=true])) [data-light=quest],
+.pinfield:has(.pin[data-id=plan]:is(:hover,:focus-visible,[aria-expanded=true])) [data-light=plan],
+.pinfield:has(.pin[data-id=level]:is(:hover,:focus-visible,[aria-expanded=true])) [data-light=level],
+.pinfield:has(.pin[data-id=camp]:is(:hover,:focus-visible,[aria-expanded=true])) [data-light=camp]{opacity:1}
+@keyframes breathe{to{transform:scale(1.5);opacity:.35}}
+.shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,#0d110e8c,transparent 27%),radial-gradient(ellipse at center,transparent 49%,#14171050)}
+.pin{position:absolute;left:var(--left);top:var(--top);display:grid;justify-items:center;gap:5px;transform:translate(-50%,-50%);border:0;background:none;padding:4px;pointer-events:auto;white-space:nowrap}
+.rune{width:clamp(24px,2.7vw,39px);aspect-ratio:1;display:grid;place-items:center;border:1px solid #efd5a5;background:#1d221bdc;color:#ffdb99;border-radius:50%;box-shadow:0 0 0 4px #211e1b52,0 0 18px #f6bc6b55;font-size:clamp(15px,1.7vw,23px);line-height:1;transition:background .2s,color .2s}
+.pin:is(:hover,:focus-visible,[aria-expanded=true]) .rune{background:#f5cf91;color:#25231a;box-shadow:0 0 0 5px #f1c67e38,0 0 30px #ffc176a0}
+.pin-label{background:#171b16e8;border:1px solid var(--line);border-radius:3px;padding:2px 8px;font-size:clamp(10px,1.15vw,15px);box-shadow:0 3px 12px #0006}
+.card{position:absolute;z-index:3;left:var(--card-x,12px);top:var(--card-y,12px);width:min(435px,52%);max-height:calc(100% - 24px);overflow:auto;background:linear-gradient(135deg,#23291fd9,#171b15d4);backdrop-filter:blur(8px);border:1px solid #b59966;border-radius:6px;padding:clamp(15px,2.4vw,33px);box-shadow:0 15px 55px #0b100ac9;animation:arrive .25s ease-out}
+.card[hidden]{display:none}
+@keyframes arrive{from{opacity:0;translate:0 8px}}
+.close{position:absolute;top:9px;right:10px;width:33px;height:33px;padding:0;font-size:22px;line-height:1}
+.card h2{font:clamp(22px,3vw,39px)/1.05 var(--display);margin:8px 26px 12px 0}
+.card h2:focus{outline:none}
+.card p{margin:0;font-size:clamp(12px,1.35vw,18px)}
+.card p + p{margin-top:.65em}
+.identity{margin:14px 0 0;padding-top:12px;border-top:1px solid var(--line)}
+.identity figcaption{font-size:12px;color:var(--gold);margin-bottom:8px}
+.identity ol{display:flex;align-items:stretch;gap:5px;margin:0;padding:0;list-style:none}
+.identity li{position:relative;flex:1;min-width:0;display:grid;place-items:center;padding:5px 3px;text-align:center;border:1px solid var(--line);border-radius:3px;background:#d8bc8110;font-size:11px;line-height:1.15}
+.identity li + li{margin-left:8px}
+.identity li + li::before{content:'→';position:absolute;left:-12px;top:50%;translate:0 -50%;color:var(--gold)}
+.nav{justify-content:center;flex-wrap:wrap;gap:6px clamp(8px,2vw,32px);font-size:13px}
+.nav button{background:none;border:1px solid var(--line);padding:4px 10px;color:var(--muted)}
+.nav button:is(:hover,[aria-expanded=true]){color:var(--gold);border-color:var(--gold)}
+:fullscreen.presentation{display:grid;grid-template-rows:auto minmax(0,1fr) auto;width:100%;height:100%;max-width:none;margin:0;background:var(--base)}
+:fullscreen.presentation .stage{width:min(100%,calc((100dvh - 132px) * 1672 / 941));aspect-ratio:1672/941;align-self:center;justify-self:center}
+:fullscreen.presentation .viewport{position:absolute;inset:0;overflow:hidden}
+@media(max-width:690px){
+ body{align-items:start}.presentation{margin-top:12px}
+ .pin-label{display:none}.pin{padding:8px}
+ .stage{aspect-ratio:auto}
+ .viewport{position:relative;aspect-ratio:1672/941;overflow:hidden}
+ .card{position:relative;inset:auto;width:auto;max-height:none;margin:12px}
+ :fullscreen.presentation .card{position:absolute;left:var(--card-x,12px);top:var(--card-y,12px);width:min(435px,calc(100% - 24px));max-height:calc(100% - 24px);margin:0}
+ .nav{gap:5px 12px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script src="/analytics.js" defer></script>
+</head>
+<body>
+<main class="presentation" id="presentation">
+<header class="top">
+<div><div class="kicker">Life as a Game</div><h1 class="brand">How we work together</h1></div>
+<div class="controls">
+<div class="audio-controls">
+<button class="music-toggle" id="music-toggle" type="button" aria-pressed="false">Music off</button>
+<input class="volume" id="volume" type="range" min="0" max="100" value="12" aria-label="Music volume">
+</div>
+<button class="fullscreen" id="fullscreen" type="button">Full screen</button>
+</div>
+</header>
+<section class="stage" id="stage" aria-label="Valley Overlook">
+<div class="viewport">
+<div class="world" id="world">
+<div class="drift" id="drift">
+<img class="artwork" src="/laag-offer/valley-overlook.png" alt="">
+<div class="shade"></div>
+<div class="pinfield">
+<div class="light" data-light="quest" style="--light-x:64.9%;--light-y:4.3%;--light-size:9%" aria-hidden="true"></div>
+<div class="light" data-light="plan" style="--light-x:21.41%;--light-y:67.59%;--light-size:9.2%;--light-aspect:1.35" aria-hidden="true"></div>
+<div class="light" data-light="level" style="--light-x:31.52%;--light-y:44%;--light-size:5.5%" aria-hidden="true"></div>
+<div class="light" data-light="camp" style="--light-x:89.89%;--light-y:51.22%;--light-size:5.8%;--light-aspect:1.65" aria-hidden="true"></div>
+<button class="pin" data-id="quest" style="--left:65%;--top:16%" type="button"><span class="rune" aria-hidden="true">✧</span><span class="pin-label">Choose your quest</span></button>
+<button class="pin" data-id="plan" style="--left:22%;--top:77%" type="button"><span class="rune" aria-hidden="true">◈</span><span class="pin-label">Make a game plan</span></button>
+<button class="pin" data-id="level" style="--left:38%;--top:50%" type="button"><span class="rune" aria-hidden="true">↑</span><span class="pin-label">Level up your character</span></button>
+<button class="pin" data-id="camp" style="--left:82%;--top:52%" type="button"><span class="rune" aria-hidden="true">⌂</span><span class="pin-label">Optimize your environment</span></button>
+</div>
+</div>
+</div>
+</div>
+<section class="card" id="card" aria-labelledby="card-title" hidden>
+<button class="close" id="close" type="button" aria-label="Close explanation">×</button>
+<div class="kicker" id="card-place"></div>
+<h2 id="card-title" tabindex="-1"></h2>
+<p id="card-description"></p>
+<p id="card-detail" hidden></p>
+<figure class="identity" id="identity" hidden>
+<figcaption>From the inside out</figcaption>
+<ol aria-label="Identity shapes thoughts and feelings, which shape actions, which shape results">
+<li>Identity</li><li>Thoughts and feelings</li><li>Actions</li><li>Results</li>
+</ol>
+</figure>
+</section>
+</section>
+<nav class="nav" aria-label="Coaching pillars">
+<button data-id="quest" type="button">Choose your quest</button>
+<button data-id="plan" type="button">Make a game plan</button>
+<button data-id="level" type="button">Level up your character</button>
+<button data-id="camp" type="button">Optimize your environment</button>
+</nav>
+</main>
+<audio id="music" preload="none" loop src="/laag-offer/rain-intro-fantasy.mp3"></audio>
+<script>
+const scenes = {
+  quest: {
+    title: 'Choose your quest', place: 'The summit', origin: '65% 15%',
+    description: 'We’ll get clear on the life you’d love to create and choose a quest that matters to you, so you wake up inspired by what you’re working toward.'
+  },
+  plan: {
+    title: 'Make a game plan', place: 'The planning table', origin: '22% 77%',
+    description: 'We’ll work backward from your vision to build a plan for creating the life you want. We’ll set milestones and choose what to focus on each week, so you know what to do when you wake up and can stay focused when distractions come up.'
+  },
+  level: {
+    title: 'Level up your character', place: 'The training ground', origin: '38% 50%',
+    description: 'We’ll build the skills and confidence your quest asks of you. Together we’ll make a learning plan with books, resources, and things you can practice, so challenges that used to feel out of reach become easier to handle.',
+    detail: 'We’ll also work on how you see yourself. That shapes how you think and feel, what you do, and the results you get.'
+  },
+  camp: {
+    title: 'Optimize your environment', place: 'Base camp', origin: '82% 52%',
+    description: 'We’ll shape your calendar, surroundings, and what you pay attention to, so the habits you want are easier to start and distractions and unhelpful habits are harder to fall into.'
+  }
+};
+const stage = document.querySelector('#stage');
+const world = document.querySelector('#world');
+const card = document.querySelector('#card');
+const title = document.querySelector('#card-title');
+const buttons = [...document.querySelectorAll('button[data-id]')];
+const drift = document.querySelector('#drift');
+const motion = matchMedia('(prefers-reduced-motion: reduce)');
+let selected = null;
+let opener = null;
+let x = 0, y = 0, targetX = 0, targetY = 0, frame = 0;
+let lastFrameTime = 0;
+let sceneWidth = drift.clientWidth;
+let sceneHeight = drift.clientHeight;
+
+function positionScene() {
+  const slideX = x * Math.min(12, sceneWidth * .008);
+  const slideY = y * Math.min(8, sceneHeight * .009);
+  drift.style.transform = `perspective(${Math.max(750, sceneWidth * 1.25)}px)
+    translate3d(${slideX}px, ${slideY}px, 0)
+    rotateX(${y * 3}deg) rotateY(${-x * 3.8}deg) scale(1.055)`;
+}
+
+function animate(now) {
+  // Use elapsed time so the same glide works on standard and high refresh displays.
+  const ease = 1 - Math.exp(-Math.min(now - lastFrameTime, 50) / 125);
+  lastFrameTime = now;
+  x += (targetX - x) * ease;
+  y += (targetY - y) * ease;
+  const settled = Math.hypot(targetX - x, targetY - y) < .002;
+  if (settled) {
+    x = targetX;
+    y = targetY;
+  }
+  positionScene();
+  frame = settled ? 0 : requestAnimationFrame(animate);
+}
+
+function move(px, py) {
+  targetX = px;
+  targetY = py;
+  if (!frame && (x !== targetX || y !== targetY)) {
+    lastFrameTime = performance.now();
+    frame = requestAnimationFrame(animate);
+  }
+}
+
+stage.addEventListener('pointermove', event => {
+  if (motion.matches || selected || event.pointerType !== 'mouse') return;
+  const bounds = drift.parentElement.getBoundingClientRect();
+  move(1 - 2 * (event.clientX - bounds.left) / bounds.width,
+       1 - 2 * (event.clientY - bounds.top) / bounds.height);
+});
+stage.addEventListener('pointerleave', () => move(0, 0));
+motion.addEventListener('change', () => {
+  if (motion.matches) {
+    cancelAnimationFrame(frame);
+    frame = 0;
+    x = y = targetX = targetY = 0;
+    positionScene();
+  }
+  world.style.setProperty('--focus', selected && !motion.matches ? 1.15 : 1);
+});
+
+let placementFrame = 0;
+const compact = matchMedia('(max-width:690px)');
+const pins = Object.fromEntries(buttons.filter(button => button.classList.contains('pin'))
+  .map(button => [button.dataset.id, button]));
+
+function positionCard() {
+  if (!selected || (compact.matches && !document.fullscreenElement)) return;
+  const stageBounds = stage.getBoundingClientRect();
+  const pin = pins[selected].getBoundingClientRect();
+  const gap = 12;
+  const width = card.offsetWidth;
+  const height = card.offsetHeight;
+  const center = (pin.left + pin.right) / 2 - stageBounds.left;
+  const below = pin.bottom - stageBounds.top + gap;
+  let left = center - width / 2;
+  let top = below;
+  if (selected === 'level' || selected === 'plan') {
+    const right = pin.right - stageBounds.left + gap;
+    if (right + width <= stageBounds.width - gap) {
+      left = right;
+      top = (pin.top + pin.bottom) / 2 - stageBounds.top - height / 2;
+    }
+  }
+  if (selected === 'camp') {
+    left = pin.left - stageBounds.left - width - gap;
+    top = (pin.top + pin.bottom) / 2 - stageBounds.top - height / 2;
+  }
+  if (top === below && below + height > stageBounds.height - gap) {
+    const above = pin.top - stageBounds.top - gap - height;
+    if (above >= gap) top = above;
+  }
+  const fit = (value, size, limit) => Math.max(gap, Math.min(value, limit - size - gap));
+  card.style.setProperty('--card-x', fit(left, width, stageBounds.width) + 'px');
+  card.style.setProperty('--card-y', fit(top, height, stageBounds.height) + 'px');
+}
+
+function followCamera() {
+  cancelAnimationFrame(placementFrame);
+  positionCard();
+  if (motion.matches) return;
+  const until = performance.now() + 700;
+  function tick(now) {
+    if (!selected) return;
+    positionCard();
+    if (now < until) placementFrame = requestAnimationFrame(tick);
+  }
+  placementFrame = requestAnimationFrame(tick);
+}
+
+new ResizeObserver(() => {
+  sceneWidth = drift.clientWidth;
+  sceneHeight = drift.clientHeight;
+  positionScene();
+  positionCard();
+}).observe(stage);
+document.addEventListener('fullscreenchange', positionCard);
+
+function show(id, source) {
+  selected = id;
+  const scene = scenes[id];
+  buttons.forEach(button => button.setAttribute('aria-expanded', String(button.dataset.id === id)));
+  if (scene) {
+    opener = source;
+    move(0, 0);
+    world.style.setProperty('--origin', scene.origin);
+    title.textContent = scene.title;
+    document.querySelector('#card-place').textContent = scene.place;
+    document.querySelector('#card-description').textContent = scene.description;
+    const detail = document.querySelector('#card-detail');
+    detail.textContent = scene.detail ?? '';
+    detail.hidden = !scene.detail;
+    document.querySelector('#identity').hidden = id !== 'level';
+    card.hidden = false;
+    title.focus({preventScroll:true});
+  } else {
+    card.hidden = true;
+    opener?.focus({preventScroll:true});
+    opener = null;
+  }
+  world.style.setProperty('--focus', scene && !motion.matches ? 1.15 : 1);
+  followCamera();
+}
+buttons.forEach(button => {
+  const id = button.dataset.id;
+  button.setAttribute('aria-label', scenes[id].title);
+  button.setAttribute('aria-controls', 'card');
+  button.setAttribute('aria-expanded', 'false');
+  button.addEventListener('click', () => show(selected === id ? null : id, button));
+});
+document.querySelector('#close').addEventListener('click', () => show(null));
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && selected) show(null);
+});
+const music = document.querySelector('#music');
+const musicToggle = document.querySelector('#music-toggle');
+const volume = document.querySelector('#volume');
+function applyVolume() {
+  music.volume = Number(volume.value) / 100;
+}
+function updateMusicButton() {
+  musicToggle.setAttribute('aria-pressed', String(!music.paused));
+  musicToggle.textContent = music.paused ? 'Music off' : 'Music on';
+}
+applyVolume();
+volume.addEventListener('input', applyVolume);
+music.addEventListener('playing', updateMusicButton);
+music.addEventListener('pause', updateMusicButton);
+musicToggle.addEventListener('click', async () => {
+  if (!music.paused) {
+    music.pause();
+    return;
+  }
+  try {
+    await music.play();
+  } catch {
+    updateMusicButton();
+  }
+});
+const presentation = document.querySelector('#presentation');
+const fullscreen = document.querySelector('#fullscreen');
+fullscreen.hidden = !document.fullscreenEnabled;
+fullscreen.addEventListener('click', async () => {
+  try {
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else await presentation.requestFullscreen();
+  } catch {
+    fullscreen.hidden = true;
+  }
+});
+document.addEventListener('fullscreenchange', () => {
+  fullscreen.textContent = document.fullscreenElement ? 'Exit full screen' : 'Full screen';
+});
+</script>
+</body>
+</html>

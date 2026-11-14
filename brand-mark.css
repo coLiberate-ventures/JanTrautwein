@@ -1,0 +1,83 @@
+/* Header logo variants. Preview with ?brand=a|b|c (set on <html> by site-menu.js).
+   The old mark is a "△" text glyph, which each device draws from a different
+   fallback font. Every variant replaces it with a drawn SVG mark, so it looks the
+   same everywhere and can be aligned to the name precisely. */
+
+html[data-brand] .brand {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  /* Same box height as the old glyph, so the header keeps its height. */
+  min-height: 42.5px;
+  color: var(--ink, #191B1E);
+}
+
+html[data-brand] .brand > span[aria-hidden] {
+  flex: none;
+  margin: 0;
+  font-size: 0;
+  color: transparent;
+  background: center / contain no-repeat;
+}
+
+/* A · Gold mark: the favicon's bronze triangle and dot, sized to the name. */
+html[data-brand="a"] .brand {
+  gap: 11px;
+  font: 600 17px/1 Manrope, sans-serif;
+  letter-spacing: -.025em;
+}
+html[data-brand="a"] .brand > span[aria-hidden] {
+  /* A touch taller than the capitals, base on the baseline. */
+  width: 16px;
+  height: 14px;
+  transform: translateY(1px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 38 34'%3E%3Cpath d='M19 2.5 35.5 31.5h-33Z' fill='none' stroke='%23BE9160' stroke-width='3.4' stroke-linejoin='round'/%3E%3Ccircle cx='19' cy='11.5' r='3' fill='%23191B1E'/%3E%3C/svg%3E");
+}
+
+/* B · Serif signature: the name in Lora, with a small solid bronze mark. */
+html[data-brand="b"] .brand {
+  gap: 10px;
+  font: 500 20px/1 Lora, serif;
+  letter-spacing: -.005em;
+}
+html[data-brand="b"] .brand > span[aria-hidden] {
+  width: 17px;
+  height: 15px;
+  transform: translateY(.75px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 26'%3E%3Cpath d='M15 1 29 25H1Z' fill='%23BE9160'/%3E%3Ccircle cx='15' cy='16.5' r='3' fill='%23F3F1EB'/%3E%3C/svg%3E");
+}
+
+/* C · Badge lockup: the favicon tile, then the name in spaced capitals with a
+   small italic line under it. */
+html[data-brand="c"] .brand {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  row-gap: 5px;
+  align-content: center;
+  align-items: center;
+  font: 600 12.5px/1 Manrope, sans-serif;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+html[data-brand="c"] .brand > span[aria-hidden] {
+  grid-row: 1 / span 2;
+  width: 34px;
+  height: 34px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231A1B1D'/%3E%3Cpath d='M32 13 52.5 48.5h-41Z' fill='none' stroke='%23C0915C' stroke-width='5' stroke-linejoin='round'/%3E%3Ccircle cx='32' cy='23.5' r='4' fill='%23F3EDE2'/%3E%3C/svg%3E");
+}
+html[data-brand="c"] .brand::after {
+  content: "Personal coaching";
+  font: italic 400 12.5px/1 Lora, serif;
+  letter-spacing: .01em;
+  text-transform: none;
+  color: var(--muted, #555752);
+}
+
+@media (max-width: 800px) {
+  html[data-brand="a"] .brand { font-size: 16px; gap: 10px; }
+  html[data-brand="b"] .brand { font-size: 19px; }
+  html[data-brand="c"] .brand { font-size: 12px; column-gap: 11px; }
+  html[data-brand="c"] .brand > span[aria-hidden] { width: 32px; height: 32px; }
+}

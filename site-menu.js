@@ -1,9 +1,5 @@
 /* Shared mobile menu. Lives outside the React root so re-renders never remove it. */
 (function () {
-  /* Header logo preview: ?brand=a|b|c|d|e|f switches the logo variant (see brand-mark.css). */
-  var brand = new URLSearchParams(location.search).get('brand');
-  if (/^[abcdef]$/.test(brand || '')) document.documentElement.setAttribute('data-brand', brand);
-
   var links = [
     ['Home', 'index.html'],
     ['Coaching', 'coaching.html'],

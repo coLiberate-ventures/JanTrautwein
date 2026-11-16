@@ -12,16 +12,17 @@
     }
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll('a[href*="contact.html"]').forEach(function (link) {
-      link.addEventListener("click", function () {
-        track("contact");
-      });
-    });
-    document.querySelectorAll('a[href*="t.me/jantrautwein"]').forEach(function (link) {
-      link.addEventListener("click", function () {
-        track("telegram");
-      });
-    });
-  });
+  // Capture-phase delegation so clicks still count after the homepage
+  // hydrates and replaces the prerendered links.
+  document.addEventListener(
+    "click",
+    function (event) {
+      var a = event.target && event.target.closest && event.target.closest("a");
+      if (!a) return;
+      var href = a.getAttribute("href") || a.href || "";
+      if (href.indexOf("contact.html") !== -1) track("contact");
+      else if (href.indexOf("t.me/jantrautwein") !== -1) track("telegram");
+    },
+    true
+  );
 })();

@@ -1,4 +1,4 @@
-/* Header logo variants. Preview with ?brand=a|b|c|d (set on <html> by site-menu.js).
+/* Header logo variants. Preview with ?brand=a|b|c|d|e|f (set on <html> by site-menu.js).
    The old mark is a "△" text glyph, which each device draws from a different
    fallback font. Every variant replaces it with a drawn SVG mark, so it looks the
    same everywhere and can be aligned to the name precisely. */
@@ -83,7 +83,9 @@ html[data-brand="c"] .brand::after {
   font-weight: 100 900;
   font-display: swap;
 }
-html[data-brand="d"] .brand {
+html[data-brand="d"] .brand,
+html[data-brand="e"] .brand,
+html[data-brand="f"] .brand {
   gap: 11px;
   font: 700 18px/1 Lexend, "Avenir Next", "Segoe UI", system-ui, sans-serif;
   letter-spacing: -.035em;
@@ -97,11 +99,33 @@ html[data-brand="d"] .brand > span[aria-hidden] {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='48 65 136 121'%3E%3Cpath d='M48 183 110 72q6-10 12 0L184 183Z' fill='%23191B1E'/%3E%3Cpath d='M116 130 133 155 116 180 99 155Z' fill='%23D4B483'/%3E%3C/svg%3E");
 }
 
+
+/* E · Lighter play-site triangle: the same rounded single peak as D, drawn as
+   an ink outline so it is not as heavy as the solid black mark. No diamond. */
+html[data-brand="e"] .brand > span[aria-hidden] {
+  width: 26px;
+  height: 24px;
+  transform: translateY(-3px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='42 61 148 128'%3E%3Cpath d='M48 183 110 72q6-10 12 0L184 183Z' fill='none' stroke='%23191B1E' stroke-width='11' stroke-linejoin='miter'/%3E%3C/svg%3E");
+}
+
+/* F · The E outline, with a small sand-gold diamond kept inside, quietly. */
+html[data-brand="f"] .brand > span[aria-hidden] {
+  width: 26px;
+  height: 24px;
+  transform: translateY(-3px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='42 61 148 128'%3E%3Cpath d='M48 183 110 72q6-10 12 0L184 183Z' fill='none' stroke='%23191B1E' stroke-width='11' stroke-linejoin='miter'/%3E%3Cpath d='M116 136 129 156 116 176 103 156Z' fill='%23D4B483'/%3E%3C/svg%3E");
+}
+
 @media (max-width: 800px) {
   html[data-brand="a"] .brand { font-size: 16px; gap: 10px; }
   html[data-brand="b"] .brand { font-size: 19px; }
   html[data-brand="c"] .brand { font-size: 12px; column-gap: 11px; }
   html[data-brand="c"] .brand > span[aria-hidden] { width: 32px; height: 32px; }
-  html[data-brand="d"] .brand { font-size: 16.5px; gap: 10px; }
-  html[data-brand="d"] .brand > span[aria-hidden] { width: 24px; height: 22px; }
+  html[data-brand="d"] .brand,
+  html[data-brand="e"] .brand,
+  html[data-brand="f"] .brand { font-size: 16.5px; gap: 10px; }
+  html[data-brand="d"] .brand > span[aria-hidden],
+  html[data-brand="e"] .brand > span[aria-hidden],
+  html[data-brand="f"] .brand > span[aria-hidden] { width: 24px; height: 22px; }
 }

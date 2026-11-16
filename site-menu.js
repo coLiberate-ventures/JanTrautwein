@@ -6,7 +6,8 @@
     ['My Story', 'story.html'],
     ['Client voices', 'client-voices.html'],
     ['AI mentoring', 'index.html#ai'],
-    ['Journey', 'index.html#journey']
+    ['Journey', 'index.html#journey'],
+    ['Player Me', 'index.html#player-me']
   ];
   var arrow = '<span class="arrow-ne" aria-hidden="true"></span>';
   var page = location.pathname.split('/').pop() || 'index.html';

@@ -1,4 +1,6 @@
 (function () {
+  if (window.__janUmamiInit) return;
+  window.__janUmamiInit = true;
   var websiteId = "1bced3ef-ae2b-41ac-ad39-d2af38af2837";
   var sentPageview = false;
   var s = document.createElement("script");

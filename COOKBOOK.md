@@ -196,7 +196,7 @@ CSS/HTML/JS). Lessons:
   Prefer anchoring inserts to a unique marker, or insert right before `</script>`. After any
   string-surgery, sanity-check: `typeof eachFunction` is `"function"`, and load the page to check
   the console.
-- Every page needs the PostHog snippet before `</head>` (analytics is site-wide).
+- Every page needs the Umami snippet before `</head>` (analytics is site-wide). Include `analytics.js` (with a cache-buster query, e.g. `analytics.js?v=…`): it loads `https://journey.jantrautwein.com/stats/script.js` and tracks two click events — `contact` on links to `contact.html`, and `telegram` on links to `t.me/jantrautwein`. Do not add PostHog.
 
 ---
 
@@ -222,12 +222,12 @@ CSS/HTML/JS). Lessons:
 - Source of truth (working folder): `CLAUDE CO-WORK/PROJECTS/Coaching Adventure/`.
 - Deploy repo is SEPARATE: `Claude Website 2026/DEPLOY/` → GitHub `coLiberate-ventures/JanTrautwein`
   → GitHub Pages → jantrautwein.com. Each app is a subfolder there (`/vision-map-flight/` etc.).
-- Flow: copy app folder into DEPLOY, ensure PostHog snippet present, `git add` only that folder,
+- Flow: copy app folder into DEPLOY, ensure the Umami `analytics.js` snippet is present, `git add` only that folder,
   commit (co-author line), push to `main`. Push prints "Bypassed rule violations" — that's normal,
   it succeeds. If the remote moved: stash untracked, `git fetch && git rebase origin/main`, pop.
 - GitHub Pages takes ~1–2 min; the CDN can serve a STALE file (esp. swapped audio) for ~90s even
   with a cache-buster — poll the byte size until it matches before trusting a test.
-- A user `/deploy` skill exists that automates the DEPLOY-repo commit/push + PostHog check.
+- A user `/deploy` skill exists that automates the DEPLOY-repo commit/push + Umami snippet check.
 
 ---
 

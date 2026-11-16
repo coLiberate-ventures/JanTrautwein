@@ -1,0 +1,39 @@
+/* Header logo: the play-site style mark (a single rounded triangle with a
+   sand-gold diamond) and the name in Lexend. Replaces the old "△" text glyph,
+   which each device drew from a different fallback font. */
+@font-face {
+  font-family: Lexend;
+  src: url("fonts/lexend.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  /* Same box height as the old glyph, so the header keeps its height. */
+  min-height: 42.5px;
+  color: var(--ink, #191B1E);
+  gap: 11px;
+  font: 700 18px/1 Lexend, "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  letter-spacing: -.035em;
+}
+
+.brand > span[aria-hidden] {
+  flex: none;
+  margin: 0;
+  font-size: 0;
+  color: transparent;
+  /* Tight crop around the peak so the mark fills its box; slight lift so the
+     heavy base sits with the type (triangles otherwise look low). */
+  width: 26px;
+  height: 24px;
+  transform: translateY(-3px);
+  background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='48 65 136 121'%3E%3Cpath d='M48 183 110 72q6-10 12 0L184 183Z' fill='%23191B1E'/%3E%3Cpath d='M116 130 133 155 116 180 99 155Z' fill='%23D4B483'/%3E%3C/svg%3E");
+}
+
+@media (max-width: 800px) {
+  .brand { font-size: 16.5px; gap: 10px; }
+  .brand > span[aria-hidden] { width: 24px; height: 22px; }
+}

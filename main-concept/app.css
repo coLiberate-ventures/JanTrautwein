@@ -3,3 +3,5 @@
 @media(max-width:800px){.player-me{width:88%;padding:50px 0 80px}.pm-card{grid-template-columns:1fr;gap:34px;padding:34px 7% 38px;border-radius:18px}.pm-media{order:-1}.pm-brand{margin-bottom:26px}.player-me h2{font-size:36px}.pm-text{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.pm-media img,.pm-play{transition:none}}
 .logo-marquee{cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}.logo-marquee.is-dragging{cursor:grabbing}.logo-marquee img{-webkit-user-drag:none;pointer-events:none}
+
+.voice-portrait span{display:none}
